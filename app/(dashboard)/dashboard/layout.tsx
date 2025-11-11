@@ -13,17 +13,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-
-  if (!session) {
-    redirect("/login");
-  }
-
+  
   return (
     // 2. Add 'flex flex-col' to the aside
     <div className="flex min-h-screen">

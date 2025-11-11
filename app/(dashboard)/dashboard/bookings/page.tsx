@@ -1,5 +1,3 @@
-// app/(dashboard)/dashboard/bookings/page.tsx
-
 import {
   Table,
   TableBody,
@@ -11,29 +9,69 @@ import {
 import prisma from "@/lib/prisma";
 import { Booking } from "@prisma/client";
 import { formatDate } from "@/lib/utils";
+import { PaginationControls } from "@/components/ui/pagination-controls"; // Import Pagination
 
-// We will NOT import 'Booking' because the import is broken.
-// We will get the type directly from the function.
+// Define the expected return structure
+interface PaginatedData {
+    data: Booking[];
+    metadata: {
+        totalPosts: number;
+        totalPages: number;
+        currentPage: number;
+        limit: number;
+    };
+}
 
-async function getBookings() {
+// --- FIX 1: Update fetch function to accept pagination params ---
+async function getBookings(page: number, limit: number): Promise<PaginatedData> {
+  const skip = (page - 1) * limit;
+
+  // Define a safe fallback for metadata
+  const emptyResult = { data: [], metadata: { totalPosts: 0, totalPages: 1, currentPage: page, limit: limit } };
+
   try {
-    // This line will work fine because prisma.booking *does* exist
-    // The error is in VS Code's *type-checking*, not in the runtime.
+    // 1. Get total count
+    const totalPosts = await prisma.booking.count();
+
+    // 2. Get paginated bookings
     const bookings = await prisma.booking.findMany({
       orderBy: {
         createdAt: 'desc',
       },
+      skip: skip,
+      take: limit,
     });
-    return bookings;
+    
+    // 3. Construct and return the full paginated response
+    return {
+        data: bookings,
+        metadata: {
+            totalPosts: totalPosts,
+            totalPages: Math.ceil(totalPosts / limit),
+            currentPage: page,
+            limit: limit,
+        },
+    };
+    
   } catch (error) {
     console.error("Failed to fetch bookings:", error);
-    return [];
+    return emptyResult;
   }
 }
+// -----------------------------------------------------------------
 
 
-export default async function BookingsPage() {
-  const bookings = await getBookings();
+// --- FIX 2: Update default export to accept searchParams ---
+export default async function BookingsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
+  
+  // Await the searchParams Promise to resolve the parameters
+  const resolvedSearchParams = await searchParams;
+  
+  const currentPage = parseInt(resolvedSearchParams.page || '1', 10); // Access from resolved object
+  const limit = 10; // Set display limit
+  
+  // Fetch data using the current page and limit
+  const { data: bookings, metadata } = await getBookings(currentPage, limit);
 
   return (
     <div className="w-full">
@@ -56,10 +94,10 @@ export default async function BookingsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {/* We use our new 'Booking' type here */}
             {bookings.map((booking: Booking, index: number) => (
               <TableRow key={booking.id}>
-                <TableCell>{index + 1}</TableCell>
+                {/* Calculate S.No based on current page */}
+                <TableCell>{(currentPage - 1) * limit + index + 1}</TableCell> 
                 <TableCell>{formatDate(booking.createdAt)}</TableCell>
                 <TableCell>{booking.fromLocation}</TableCell>
                 <TableCell>{booking.toLocation}</TableCell>
@@ -78,6 +116,12 @@ export default async function BookingsPage() {
           </p>
         )}
       </div>
+
+      {/* FIX 3: Add Pagination Controls */}
+      <PaginationControls 
+        currentPage={metadata.currentPage}
+        totalPages={metadata.totalPages}
+      />
     </div>
   );
 }

@@ -17,12 +17,8 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  if (totalPages <= 1) {
-    return null; // Don't show controls if only one page exists
-  }
-  
-  if (!searchParams) {
-    return null; 
+  if (!searchParams || totalPages <= 1) {
+    return null; // Return early *after* hooks are called
   }
 
   // Calculate the stable base search parameters string

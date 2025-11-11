@@ -14,7 +14,8 @@ function BlogTableLoading() {
 }
 
 // --- Main Server Component Page ---
-export default function ManageBlogsParentPage() {
+export default  function ManageBlogsParentPage({ searchParams }: { searchParams: { page?: string } }) {
+
   return (
     <div className="w-full space-y-8">
       <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
@@ -28,7 +29,7 @@ export default function ManageBlogsParentPage() {
       {/* 2. Server Component (Table) is rendered with Suspense */}
       <Suspense fallback={<BlogTableLoading />}>
         {/* BlogTable is now an async Server Component */}
-        <BlogTable /> 
+        <BlogTable searchParams={searchParams} />
       </Suspense>
     </div>
   );
