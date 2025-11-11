@@ -1,0 +1,68 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Blog[]
+}
+
+model Booking {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  fromLocation  String
+  toLocation    String
+  departureDate DateTime
+  returnDate    DateTime 
+  travelClass   String   
+  adults        Int
+  infants       Int
+  createdAt     DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String   
+  email     String   
+  company   String?  
+  message   String   
+  createdAt DateTime @default(now())
+}
+
+model Blog {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  slug          String   @unique 
+  category      String  
+  content       String
+  image         String
+  metaTitle     String
+  metaDesc      String
+  metaKeywords  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  author        User     @relation(fields: [authorId], references: [id])
+  authorId      String   @db.ObjectId
+  faqs          Faq[]    
+}
+
+model Faq {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  question  String
+  answer    String
+  blog      Blog     @relation(fields: [blogId], references: [id])
+  blogId    String   @db.ObjectId
+}
+
+
