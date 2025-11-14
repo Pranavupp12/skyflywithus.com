@@ -1,14 +1,6 @@
 "use client";
 
 import * as React from "react";
-import {
-    Pyramid,
-    Castle,
-    Mountain,
-    TowerControl,
-    Building,
-    Landmark,
-} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface CardItem {
@@ -69,7 +61,7 @@ export const ExpandingCards = React.forwardRef<
             className={cn(
                 "w-full max-w-7xl gap-2",
                 "grid",
-                "h-[400px]",
+                "h-[360px] md:h-[320px]",
                 "transition-[grid-template-columns,grid-template-rows] duration-500 ease-out",
                 className,
             )}

@@ -1,3 +1,4 @@
+import { PreFooterBanner } from '@/components/home_components/PreFooterBanner';
 import { Footer } from '@/components/main_components/Footer';
 import SiteHeader from '@/components/main_components/SiteHeader';
 
@@ -9,11 +10,12 @@ export default function MainLayout({
   return (
     // We remove <html>, <body>, and SessionProvider.
     // We just return the layout for the main site.
-    <div className="flex flex-col min-h-screen bg-indigo-50">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <SiteHeader /> 
       <main className="flex-grow ">
         {children}
       </main>
+      <PreFooterBanner />
       <Footer />
     </div>
   );

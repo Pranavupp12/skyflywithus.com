@@ -59,7 +59,7 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
       <Button
         variant="default"
         className={cn(
-            "w-10 bg-indigo-600 hover:bg-indigo-700 cursor-default"
+            "w-10 bg-[#FFA749] hover:bg-[#FF8C00] cursor-default"
         )}
       >
         {currentPage}

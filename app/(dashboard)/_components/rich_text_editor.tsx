@@ -5,7 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { Button } from '@/components/ui/button';
 import {
   Bold, Italic, Underline, Link, Heading1, Heading2, Heading3,
-  AlignLeft, AlignCenter, AlignRight, AlignJustify
+  AlignLeft, AlignCenter, AlignRight, AlignJustify, List ,ListOrdered
 } from 'lucide-react';
 import UnderlineExtension from '@tiptap/extension-underline';
 import LinkExtension from '@tiptap/extension-link';
@@ -74,6 +74,13 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
       </Button>
       <Button type="button" onClick={() => editor.chain().focus().setTextAlign('justify').run()} variant={editor.isActive({ textAlign: 'justify' }) ? 'secondary' : 'outline'} size="sm">
         <AlignJustify className="h-4 w-4" />
+      </Button>
+
+      <Button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} variant={editor.isActive('bulletList') ? 'default' : 'outline'} size="sm">
+        <List className="h-4 w-4" />
+      </Button>
+      <Button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} variant={editor.isActive('orderedList') ? 'default' : 'outline'} size="sm">
+        <ListOrdered className="h-4 w-4" />
       </Button>
     </div>
   );

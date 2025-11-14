@@ -40,13 +40,13 @@ const teamMembers = [
 
 export function MeetTheTeam() {
   return (
-    <section className="bg-white rounded-2xl mt-20 mb-20 dark:bg-gray-900 ">
+    <section className=" mt-10 mb-20 dark:bg-gray-900 mx-10 md:mx-5 ">
       <div className="p-10 mx-auto">
         
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-5xl font-regular text-gray-900 dark:text-white mb-4">
-            Meet <span className="text-indigo-500 font-semibold">Our Team</span>
+            Meet <span className="text-[#FF8C00] font-semibold">Our Team</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             We are a passionate group of travelers, creators, and tech enthusiasts
@@ -59,7 +59,7 @@ export function MeetTheTeam() {
           {teamMembers.map((member) => (
             <div
               key={member.name}
-              className="bg-indigo-50 dark:bg-gray-800 rounded-lg shadow-lg p-6 text-center"
+              className="bg-white dark:bg-gray-800 rounded-lg p-6 text-center"
             >
               {/* Member Image */}
               <div className="relative w-32 h-32 mx-auto mb-4">
@@ -76,7 +76,7 @@ export function MeetTheTeam() {
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
                 {member.name}
               </h3>
-              <p className="text-indigo-500 font-lg mb-2">{member.role}</p>
+              <p className="text-[#FFA749] font-lg mb-2">{member.role}</p>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                 {member.bio}
               </p>
@@ -84,12 +84,12 @@ export function MeetTheTeam() {
               {/* Social Links */}
               <div className="flex justify-center space-x-4 text-gray-500 dark:text-gray-400">
                 <Link href={member.social.twitter} passHref>
-                  <span className="cursor-pointer hover:text-indigo-500">
+                  <span className="cursor-pointer hover:text-[#FFA749]">
                     <Twitter className="h-5 w-5" />
                   </span>
                 </Link>
                 <Link href={member.social.linkedin} passHref>
-                  <span className="cursor-pointer hover:text-indigo-500">
+                  <span className="cursor-pointer hover:text-[#FFA749]">
                     <Linkedin className="h-5 w-5" />
                   </span>
                 </Link>

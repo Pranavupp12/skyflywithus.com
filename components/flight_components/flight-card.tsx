@@ -81,7 +81,7 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
                         alt="View from airplane window"
                         className="w-full h-full object-cover"
                     />
-                    <div className="absolute top-0 right-0 p-3 bg-indigo-600 rounded-bl-xl shadow-md">
+                    <div className="absolute top-0 right-0 p-3 bg-[#FF8C00] rounded-bl-xl shadow-md">
                         <span className="text-white text-xl font-bold">${price}</span>
                     </div>
                 </div>

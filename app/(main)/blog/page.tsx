@@ -62,11 +62,11 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const { data: allBlogs, metadata } = await getAllBlogs(currentPage);
 
   return (
-    <main className="mx-10 md:mx-20 bg-white rounded-2xl p-10 mt-20 mb-20">
+    <main className="mx-10 md:mx-15 mt-20 mb-20">
       {/* Page Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-5xl font-regular text-gray-900 dark:text-white mb-4">
-          Our <span className="text-indigo-500 font-semibold">Blogs</span>
+      <div className="text-center mb-10">
+        <h1 className="text-5xl font-regular text-black dark:text-white mb-4">
+          Our <span className="text-[#FF8C00] font-semibold">Blogs</span>
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           All the latest travel tips, airline guides, and booking advice from
@@ -75,7 +75,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
       </div>
 
       {/* NEW: Browse by Category Section */}
-      <div className="mb-16">
+      <div className="mb-10">
         <h2 className="text-2xl font-regular mb-6 text-center">
           Browse by Category
         </h2>
@@ -84,7 +84,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
             <Link
               key={category.slug}
               href={`/blog/category/${category.slug}`}
-              className="bg-indigo-50 hover:bg-indigo-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-indigo-500 dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-colors"
+              className="bg-[#FF8C00] hover:bg-[#FFA749] dark:bg-gray-800 dark:hover:bg-gray-700 text-white dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-colors"
             >
               {category.name}
             </Link>
@@ -92,10 +92,6 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
         </div>
       </div>
 
-      {/* "All Articles" Grid */}
-      <h2 className="text-3xl md:text-5xl font-semibold text-indigo-500 mb-8 text-center">
-        All Articles 
-      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {allBlogs.length > 0 ? (
             allBlogs.map((article) => (

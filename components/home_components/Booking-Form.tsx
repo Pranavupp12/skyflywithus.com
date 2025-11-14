@@ -8,7 +8,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { AirportAutocomplete } from './AirportAutocomplete';
 import {
   CalendarIcon,
@@ -20,10 +19,18 @@ import {
   PlaneTakeoff,
   PlaneLanding,
   Search,
+  CheckCircle,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { useRouter } from 'next/navigation'; // <-- Import useRouter
+import { Volkhov } from 'next/font/google'; // <-- 1. Import the new font
+
+// 2. Initialize the font (Oswald needs a bold weight to be visible)
+const volkhov = Volkhov({
+  subsets: ['latin'],
+  weight: '700', 
+});
 
 // Reusable component for the form fields
 function BookingField({
@@ -112,63 +119,80 @@ export function BookingForm() {
   };
 
   return (
-    <section className="container pt-20 text-center" id="booking-form-section">
-      
+    <section className="w-full bg-[#FF8C00] pt-25 mx-15 pb-25 text-center" id="booking-form-section">
       {/* 2. Image Container */}
-      <div className="w-full md:block hidden max-w-7xl mx-auto h-[250px] rounded-[3rem] overflow-hidden relative mb-[-50px] z-10 shadow-lg">
+     <div className=" md:block hidden h-[400px] rounded-2xl overflow-hidden relative mb-[-10px] z-10">
         <Image
-          src="/images/booking-form-bg.jpg"
-          fill // 2. Use the 'fill' prop
-          className="object-cover brightness-90" // 3. Use 'object-cover' for objectFit
+          src="/images/booking-banner-2.png"
+          fill
+          className="object-cover"
           priority={true}
           sizes="(max-width: 768px) 100vw, 100vw"
           alt="Airplane landing"
         />
 
-        {/* 1. Title - Moved INSIDE the image container */}
-        <h1 className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          text-3xl md:text-6xl font-normal text-white mb-14"
+        {/* Title */}
+        {/* FIX: Moved title up by changing 'top-1/2' to 'top-[40%]' and removing mb-14 */}
+       { <h1 className="absolute z-10 top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2
+          text-3xl md:text-7xl font-extrabold text-white drop-shadow-xl"
         >
-          Find <span className="font-bold ">Next Place</span> to visit
-        </h1>
+          Your <span className={`${volkhov.className}`}>Trip</span> Starts here
+        </h1>}
        
       </div>
 
+      {/* Feature Pills */}
+      {/* FIX: Increased negative margin to pull pills higher onto the image */}
+      <div className="relative z-20 flex flex-wrap justify-center gap-3 mt-[-60px] mb-5">
+        <div className="flex items-center gap-2 rounded-full bg-white shadow-md px-4 py-1.5">
+          <CheckCircle className="h-4 w-4 text-[#FF8C00]" />
+          <span className="text-sm font-medium text-gray-700">Best Price Guarantee</span>
+        </div>
+        <div className="flex items-center gap-2 rounded-full bg-white shadow-md px-4 py-1.5">
+          <CheckCircle className="h-4 w-4 text-[#FF8C00]" />
+          <span className="text-sm font-medium text-gray-700">24/7 Customer Support</span>
+        </div>
+        <div className="flex items-center gap-2 rounded-full bg-white shadow-md px-4 py-1.5">
+          <CheckCircle className="h-4 w-4 text-[#FF8C00]" />
+          <span className="text-sm font-medium text-gray-700">No Hidden Fees</span>
+        </div>
+      </div>
+
       {/* 3. Form Card */}
-      <Card className="w-full max-w-6xl mx-auto p-6 md:p-8 shadow-2xl relative z-20">
+      <Card className="max-w-6xl mx-8 md:mx-auto p-6 md:p-8 relative z-20 ">
         <CardContent className="p-0">
-          <form onSubmit={handleSubmit} className="space-y-6 text-indigo-500">
+          <form onSubmit={handleSubmit} className="space-y-6">
             
             {/* Top Row: From, Dates, To, Return Date */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
               
               {/* From (Departure ID) */}
-              <BookingField icon={<PlaneTakeoff className="h-4 w-4" />} label="From">
+              <BookingField icon={<PlaneTakeoff className="h-4 w-4 text-[#FF8C00]" />} label="From">
                 <AirportAutocomplete
                   placeholder="City or Airport Code (e.g., London)"
                   value={fromValue}
                   // We only need the ID, so we ignore the name for now
                   onChange={(id) => setFromValue(id)} 
-                  className="text-indigo-500"
+                  className="text-black"
                 />
               </BookingField>
               
               {/* Departure Date (Outbound Date) */}
-              <BookingField icon={<CalendarIcon className="h-4 w-4" />} label="Departure">
+              <BookingField icon={<CalendarIcon className="h-4 w-4 text-[#FF8C00]" />} label="Departure">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full justify-start text-left font-bold border-0 border-b rounded-none p-0 text-lg",
+                        "w-full justify-start text-left font-semibold border-0 border-b rounded-none p-0 text-md",
                         !fromDate && "text-muted-foreground"
                       )}
                     >
-                      {fromDate ? format(fromDate, "PP") : <span className="text-indigo-500">D/M/Y</span>}
+                      {fromDate ? format(fromDate, "PP") : <span className="text-black">Select a date</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
-                    <Calendar mode="single" selected={fromDate} onSelect={setFromDate} disabled={(date) => date < today} initialFocus />
+                    <Calendar mode="single" selected={fromDate} onSelect={setFromDate} disabled={(date) => date < today} autoFocus />
                   </PopoverContent>
                 </Popover>
               </BookingField>
@@ -181,31 +205,31 @@ export function BookingForm() {
                 type="button"
                 onClick={handleSwap}
               >
-                <ArrowRightLeft className="h-4 w-4" />
+                <ArrowRightLeft className="h-4 w-4 text-[#FF8C00]" />
               </Button>
 
               {/* To (Arrival ID) */}
-              <BookingField icon={<PlaneLanding className="h-4 w-4" />} label="To">
+              <BookingField icon={<PlaneLanding className="h-4 w-4 text-[#FF8C00]" />} label="To">
                 <AirportAutocomplete
                   placeholder="City or Airport Code (e.g., Dubai)"
                   value={toValue}
                   onChange={(id) => setToValue(id)}
-                  className="text-indigo-500"
+                  className="text-black"
                 />
               </BookingField>
 
               {/* Return Date (Return Date) */}
-              <BookingField icon={<CalendarIcon className="h-4 w-4" />} label="Return">
+              <BookingField icon={<CalendarIcon className="h-4 w-4 text-[#FF8C00]" />} label="Return">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full justify-start text-left font-bold border-0 border-b rounded-none p-0 text-lg",
+                        "w-full justify-start text-left font-semibold border-0 border-b rounded-none p-0 text-md",
                         !toDate && "text-muted-foreground"
                       )}
                     >
-                      {toDate ? format(toDate, "PP") : <span className="text-indigo-500">D/M/Y</span>}
+                      {toDate ? format(toDate, "PP") : <span className="text-black">Select a date</span>}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0">
@@ -219,12 +243,12 @@ export function BookingForm() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
               
               {/* Travel Class */}
-              <BookingField icon={<Armchair className="h-4 w-4" />} label="Travel Class">
+              <BookingField icon={<Armchair className="h-4 w-4 text-[#FF8C00]" />} label="Travel Class">
                 <Select 
                   defaultValue={travelClass} // Use state value
                   onValueChange={setTravelClass} 
                 >
-                  <SelectTrigger className="w-full font-bold border-0 border-b rounded-none p-0 text-lg focus:ring-0 focus:ring-offset-0">
+                  <SelectTrigger className="w-full font-semibold border-0 border-b rounded-none p-0 text-md focus:ring-0 focus:ring-offset-0">
                     <SelectValue placeholder="Choose your Class" />
                   </SelectTrigger>
                   <SelectContent>
@@ -238,12 +262,12 @@ export function BookingForm() {
               </BookingField>
 
               {/* Travelers (Adults only for API) */}
-              <BookingField icon={<Users className="h-4 w-4" />} label="Travelers">
+              <BookingField icon={<Users className="h-4 w-4 text-[#FF8C00]" />} label="Travelers">
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-left font-bold border-0 border-b rounded-none p-0 text-lg"
+                      className="w-full justify-start text-left font-semibold border-0 border-b rounded-none p-0 text-md"
                     >
                       <span className="truncate">{passengersLabel}</span>
                     </Button>
@@ -270,7 +294,7 @@ export function BookingForm() {
               </BookingField>
 
               {/* Submit Button */}
-              <Button type="submit" size="lg" className="w-full h-14 text-lg bg-indigo-500 hover:bg-indigo-700" disabled={loading}>
+              <Button type="submit" size="lg" className="w-full h-14 text-lg bg-[#FF8C00] hover:bg-[#FFA749]" disabled={loading}>
                 {loading ? "Searching..." : (
                   <>
                     <Search className="mr-2 h-5 w-5" />

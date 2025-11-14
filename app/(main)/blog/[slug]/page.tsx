@@ -138,7 +138,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
               <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{post.authorName}</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">{post.publishDate}</p>
             </div>
-            <span className="ml-auto bg-indigo-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+            <span className="ml-auto bg-[#FF8C00] text-white text-xs font-semibold px-3 py-1 rounded-full">
               {post.category}
             </span>
           </div>
@@ -173,13 +173,13 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
         <aside className="lg:w-1/3 space-y-8">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg sticky top-24">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              More in <span className="text-indigo-500">{post.category}</span>
+              More in <span className="text-[#FF8C00]">{post.category}</span>
             </h2>
             <div className="space-y-4">
               {relatedBlogs.length > 0 ? (
                 relatedBlogs.map(relatedPost => (
                   <Link key={relatedPost.id} href={`/blog/${relatedPost.slug}`} passHref>
-                    <div className="p-3 rounded-md hover:bg-indigo-100 dark:hover:bg-gray-700 transition cursor-pointer">
+                    <div className="p-3 rounded-md hover:bg-[#FFCA91] dark:hover:bg-gray-700 transition cursor-pointer">
 
                       {/* 1. Post Title */}
                       <p className="font-medium text-gray-900 dark:text-white line-clamp-2 mb-2">

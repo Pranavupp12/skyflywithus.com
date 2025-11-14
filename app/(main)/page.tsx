@@ -1,10 +1,10 @@
 
 import { BookingForm } from "@/components/home_components/Booking-Form";
-import { AboutUsSection } from "@/components/home_components/About-Us-section";
 import { PopularDestinations } from "@/components/home_components/Popular-Destinations";
 import { RecentArticles } from "@/components/home_components/Recent-Articles";
 import { Testimonials } from "@/components/home_components/Testimonials";
 import type { Metadata } from 'next';
+import { WhyChooseUs } from "@/components/home_components/WhyChooseUs";
 
 export const metadata: Metadata = {
   title: 'Find Cheap Flights & Travel Guides', // This will override the default
@@ -14,12 +14,12 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
 
-    <main className="flex min-h-screen flex-col items-center justify-between px-10 md:px-20">
+    <main className="flex min-h-screen flex-col items-center justify-between ">
       <BookingForm />
-      <AboutUsSection/>
+      <WhyChooseUs/>
       <PopularDestinations/>
-      <RecentArticles/>
       <Testimonials/>
+      <RecentArticles/>
     </main>
   );
 }

@@ -30,22 +30,34 @@ const logos = [
         alt: "Indigo Airlinez",
         src: "/images/brands/indigo.svg",
     },
+     {
+        alt: "Indigo Airlinezz",
+        src: "/images/brands/Qatar.svg",
+    },
+     {
+        alt: "Indigo Airlinezzz",
+        src: "/images/brands/indigo.svg",
+    },
+     {
+        alt: "KLM Airlinezz",
+        src: "/images/brands/klm.svg",
+    },
      
     
 ];
 
 export function HappyPartners() {
   return (
-    <section className="relative bg-white rounded-2xl mx-auto p-10 mt-20 max-w-full w-full">
-      <h2 className="mb-5 text-center font-regular text-3xl tracking-tight md:text-5xl ">
+    <section className="relative mx-10 mt-10  md:mx-5 max-w-full w-full">
+      {/*<h2 className="mb-5 text-center  font-regular text-4xl  md:text-5xl ">
         <span className="text-black">Our</span>{" "}
-        <span className=" text-indigo-500 font-semibold">Happy Partners</span>
+        <span className=" text-[#FF8C00] font-semibold">Partners</span>
       </h2>
-      <div className="mx-auto my-5 h-px max-w-sm bg-indigo-500 [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
+      <div className="mx-auto my-5 h-px max-w-sm bg-[#FF8C00] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />*/}
 
       <LogoCloud logos={logos} />
 
-      <div className="mt-5 h-px bg-indigo-500 [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
+      {/*<div className="mt-5 h-px bg-[#FF8C00] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />*/}
     </section>
   );
 }

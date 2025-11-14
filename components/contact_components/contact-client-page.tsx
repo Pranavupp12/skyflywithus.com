@@ -16,15 +16,15 @@ export default function ContactPageClient() {
 
   const contactMethods = [
     {
-      icon: <HiOutlineMail className="w-6 h-6 text-indigo-500" />,
+      icon: <HiOutlineMail className="w-6 h-6 " />,
       contact: "support@skyflywithus.com",
     },
     {
-      icon: <HiOutlinePhone className="w-6 h-6 text-indigo-500" />,
+      icon: <HiOutlinePhone className="w-6 h-6 " />,
       contact: "+1 (555) 123-4567",
     },
     {
-      icon: <HiOutlineLocationMarker className="w-6 h-6 text-indigo-500" />,
+      icon: <HiOutlineLocationMarker className="w-6 h-6 " />,
       contact: "123 Aviation Ave, New York, NY",
     },
   ];
@@ -66,16 +66,16 @@ export default function ContactPageClient() {
 
   return (
     <main >
-      <div className="bg-white rounded-2xl mx-10 md:mx-30 mt-20 mb-20 p-10">
-        <div className="max-w-lg mx-auto gap-12 justify-between lg:flex lg:max-w-none">
+      <div className=" mx-10 md:mx-30 mt-20 mb-20 ">
+        <div className="max-w-lg mx-auto gap-6 justify-between lg:flex lg:max-w-5xl">
           {/* Left Side: Contact Info */}
           <div className="max-w-lg space-y-3">
-            <h3 className="text-indigo-600 font-semibold">Contact</h3>
-            <p className="text-gray-800 dark:text-white text-3xl font-semibold sm:text-4xl">
+            <h3 className="text-[#FF8C00] text-lg font-semibold">Contact</h3>
+            <p className="text-black dark:text-white text-3xl font-semibold sm:text-4xl">
               Let us know how we can help
             </p>
-            <p>
-              We’re here to help and answer any question you might have. We look
+            <p className="text-gray-800 text-lg dark:text-gray-300">
+              We are here to help and answer any question you might have. We look
               forward to hearing from you! Please fill out the form, or use
               the contact information below.
             </p>
@@ -83,7 +83,7 @@ export default function ContactPageClient() {
               <ul className="mt-6 flex flex-wrap gap-x-10 gap-y-6 items-center">
                 {contactMethods.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-x-3">
-                    <div className="flex-none text-gray-400">{item.icon}</div>
+                    <div className="flex-none text-[#FF8C00]">{item.icon}</div>
                     <p className="text-gray-700 dark:text-gray-300">{item.contact}</p>
                   </li>
                 ))}
@@ -91,7 +91,7 @@ export default function ContactPageClient() {
             </div>
           </div>
           {/* Right Side: Form */}
-          <div className="flex-1 mt-12 sm:max-w-lg lg:max-w-md">
+          <div className="flex-1 p-10 border border-[#FF8C00] bg-white rounded-xl mt-12 sm:max-w-lg lg:max-w-md">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="full-name" className="font-medium">
@@ -119,7 +119,7 @@ export default function ContactPageClient() {
               </div>
               <Button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700"
+                className="w-full bg-[#FF8C00] hover:bg-[#FFA749]"
                 disabled={loading}
               >
                 {loading ? "Submitting..." : "Submit"}

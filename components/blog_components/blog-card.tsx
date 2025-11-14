@@ -45,7 +45,7 @@ export function BlogCard({ article }: ArticleCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-            <span className="bg-indigo-500 text-white text-xs font-semibold px-2 py-1 rounded">
+            <span className="bg-[#FF8C00] text-white text-xs font-semibold px-2 py-1 rounded">
               {article.category}
             </span>
           </div>

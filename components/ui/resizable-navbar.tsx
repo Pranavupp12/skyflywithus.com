@@ -11,6 +11,13 @@ import {
 
 import React, { useRef, useState } from "react";
 import { Plane } from "lucide-react"; // Make sure lucide-react is installed
+import { Volkhov } from 'next/font/google'; // <-- 1. Import the new font
+
+// 2. Initialize the font (Oswald needs a bold weight to be visible)
+const volkhov = Volkhov({
+  subsets: ['latin'],
+  weight: '700', 
+});
 
 interface NavbarProps {
     children: React.ReactNode;
@@ -122,7 +129,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <motion.div
             onMouseLeave={() => setHovered(null)}
             className={cn(
-                "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium text-zinc-600 transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
+                "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium transition duration-200 hover:text-zinc-800 lg:flex lg:space-x-2",
                 className,
             )}
         >
@@ -130,14 +137,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
                 <a
                     onMouseEnter={() => setHovered(idx)}
                     onClick={onItemClick}
-                    className="relative px-4 py-2 text-primary dark:text-neutral-300"
+                    className="relative px-4 py-2 text-black dark:text-neutral-300"
                     key={`link-${idx}`}
                     href={item.link}
                 >
                     {hovered === idx && (
                         <motion.div
                             layoutId="hovered"
-                            className="absolute inset-0 h-full w-full rounded-full bg-indigo-300 dark:bg-neutral-800"
+                            className="absolute inset-0 h-full w-full rounded-full bg-[#FFCA91] dark:bg-neutral-800"
                         />
                     )}
                     <span className="relative z-20">{item.name}</span>
@@ -226,9 +233,9 @@ export const MobileNavToggle = ({
     onClick: () => void;
 }) => {
     return isOpen ? (
-        <IconX className="text-indigo-500 dark:text-white" onClick={onClick} />
+        <IconX className="text-black dark:text-white" onClick={onClick} />
     ) : (
-        <IconMenu2 className="text-indigo-500 dark:text-white" onClick={onClick} />
+        <IconMenu2 className="text-black dark:text-white" onClick={onClick} />
     );
 };
 
@@ -239,9 +246,9 @@ export const NavbarLogo = () => {
             href="/"
             className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
         >
-            <Plane className="h-7 w-7 text-indigo-500" />
-            <span className="text-xl font-semibold text-indigo-500 dark:text-white">
-               SkyFlyWithUs
+            <Plane className="h-7 w-7 text-black" />
+            <span className="text-lg font-medium text-black dark:text-white">
+              SkyFlywithus
             </span>
         </a>
     );
@@ -270,7 +277,7 @@ export const NavbarButton = ({
 
     const variantStyles = {
         primary:
-            "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] bg-indigo-500 text-white",
+            "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] bg-[#FF8C00] text-white",
         secondary: "bg-transparent shadow-none dark:text-white",
         dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
         gradient:

@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+
 import { Plane } from "lucide-react";
 import { SidebarFooter } from "../_components/SidebarFooter";
 import { SidebarNav } from "../_components/SidebarNav";

@@ -7,17 +7,17 @@ import { Plane } from 'lucide-react';
 
 export function Testimonials() {
     return (
-        <section className="mt-20 mb-20 bg-white rounded-2xl p-10">
-            <div className="max-w-7xl space-y-8 ">
+        <section className="mt-20 mb-20 mx-10 md:mx-15 p-10 md:p-0">
+            <div className="max-w-8xl space-y-8 ">
                 <div className="relative z-10 mx-auto max-w-xl text-center md:space-y-12">
-                    <h2 className="text-4xl font-medium font-regular lg:text-5xl mb-4">Loved by <span className='text-indigo-500 font-bold'>Travelers</span>, <span className='text-indigo-500 font-bold'>Trusted</span> by <span className='text-indigo-500 font-bold'>Thousands</span></h2>
+                    <h2 className="text-4xl font-medium font-regular lg:text-5xl mb-4">Trusted by <span className='text-[#FF8C00] font-bold'>Travelers</span></h2>
                     <p className='text-lg text-gray-600'>See what our happy customers have to say about their booking experience with SkyFlyWithUs.</p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-rows-2">
                     <Card className="grid grid-rows-[auto_1fr] gap-8 sm:col-span-2 sm:p-6 lg:row-span-2">
                         <CardHeader>
-                            <div className="p-2 bg-indigo-500 rounded-lg w-fit">
+                            <div className="p-2 bg-[#FF8C00] rounded-lg w-fit">
                                 <Plane className="h-6 w-6 text-white" />
                             </div>
                         </CardHeader>
@@ -31,7 +31,7 @@ export function Testimonials() {
                                     </Avatar>
                                     <div>
                                         <cite className="text-sm font-medium">Sarah Thompson</cite>
-                                        <span className="text-indigo-500 block text-sm">Frequent Flyer</span>
+                                        <span className="text-[#FF8C00] block text-sm">Frequent Flyer</span>
                                     </div>
                                 </div>
                             </blockquote>
@@ -48,7 +48,7 @@ export function Testimonials() {
                                     </Avatar>
                                     <div>
                                         <cite className="text-sm font-medium">Jonathan Yombo</cite>
-                                        <span className="text-indigo-500 block text-sm">Travel Blogger</span>
+                                        <span className="text-[#FF8C00] block text-sm">Travel Blogger</span>
                                     </div>
                                     </div>
                             </blockquote>
@@ -65,7 +65,7 @@ export function Testimonials() {
                                         </Avatar>
                                         <div>
                                         <cite className="text-sm font-medium">Yucel Faruksahan</cite>
-                                        <span className="text-indigo-500 block text-sm">Digital Nomad</span>
+                                        <span className="text-[#FF8C00] block text-sm">Digital Nomad</span>
                                     </div>
                                     </div>
                                 </blockquote>
@@ -81,7 +81,7 @@ export function Testimonials() {
                                     </Avatar>
                                     <div>
                                     <p className="text-sm font-medium">Rodrigo Aguilar</p>
-                                    <span className="text-indigo-500 block text-sm">Vacation Planner</span>
+                                    <span className="text-[#FF8C00] block text-sm">Vacation Planner</span>
                                     </div>
                                 </div>
                             </blockquote>

@@ -38,7 +38,7 @@ export function FlightSpinner({
                 {/* Left: From Details */}
                 <div className="text-right space-y-1">
                     <p className="text-sm text-gray-500">From</p>
-                    <p className="text-3xl font-bold text-indigo-600 uppercase">{departure_id}</p>
+                    <p className="text-3xl font-bold text-[#FF8C00] uppercase">{departure_id}</p>
                     <p className="text-sm text-gray-700">{outbound_date}</p>
                 </div>
 
@@ -54,23 +54,23 @@ export function FlightSpinner({
                 {/* Right: To Details */}
                 <div className="text-left space-y-1">
                     <p className="text-sm text-gray-500">To</p>
-                    <p className="text-3xl font-bold text-indigo-600 uppercase">{arrival_id}</p>
+                    <p className="text-3xl font-bold text-[#FF8C00] uppercase">{arrival_id}</p>
                     <p className="text-sm text-gray-700">{return_date}</p>
                 </div>
             </div>
             <div className="grid grid-cols-3  pt-4 w-full max-w-lg">
                 <div className="flex items-center justify-center gap-2">
-                    <Users className="h-5 w-5 text-indigo-500" />
+                    <Users className="h-5 w-5 text-[#FF8C00]" />
                     <span className="text-gray-700 font-medium">{passengers}</span>
                 </div>
                 {/* Infants (Only shows if infants > 0) */}
                 <div className="flex items-center justify-center gap-2">
-                    <Baby className="h-5 w-5 text-indigo-500" />
+                    <Baby className="h-5 w-5 text-[#FF8C00]" />
                     <span className="text-gray-700 font-medium">{infants} </span>
                 </div>
 
                 <div className="flex items-center justify-center gap-2">
-                    <Armchair className="h-5 w-5 text-indigo-500" />
+                    <Armchair className="h-5 w-5 text-[#FF8C00]" />
                     <span className="text-gray-700 font-medium capitalize">{travelClass}</span>
                 </div>
             </div>

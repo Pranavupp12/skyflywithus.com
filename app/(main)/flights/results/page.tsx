@@ -137,7 +137,7 @@ export default function FlightResultsPage({ searchParams }: any) {
 
         return (
             <main className="flex min-h-[500px] bg-white rounded-2xl mx-10 md:mx-80  mb-20 mt-20 flex-col items-center justify-center p-10">
-                <h2 className="text-3xl md:text-5xl font-bold text-indigo-700 mb-3">
+                <h2 className="text-3xl md:text-5xl font-bold text-[#FF8C00] mb-3">
                     {/* Status text is used if available, otherwise generic message */}
                     {statusText}
                 </h2>
@@ -157,20 +157,20 @@ export default function FlightResultsPage({ searchParams }: any) {
 
                 {/* --- NEW CORPORATE BOOKING CALL-TO-ACTION --- */}
                 <p className="text-lg font-medium text-gray-800 mt-6 mb-4">
-                    You can also contact our team for <span className='text-indigo-500'>Corporate bookings and discounts</span>!
+                    You can also contact our team for <span className='text-[#FF8C00]'>Corporate bookings and discounts</span>!
                 </p>
 
                 <div className="flex justify-center space-x-4">
                     {/* 1. Button for Contact Page */}
                     <Link href="/contact" passHref>
-                        <Button variant="outline" className="bg-white border-indigo-600 text-indigo-600">
+                        <Button variant="outline" className="bg-white border-[#FF8C00] text-[#FF8C00] hover:bg-[#FFCA91] hover:text-white">
                             Contact Our Team
                         </Button>
                     </Link>
 
                     {/* 2. Back to Home Button */}
                     <Link href="/" passHref>
-                        <Button className="bg-indigo-600 hover:bg-indigo-700">
+                        <Button className="bg-[#FF8C00] hover:bg-[#FFCA91]">
                             Back to Home
                         </Button>
                     </Link>
@@ -184,13 +184,13 @@ export default function FlightResultsPage({ searchParams }: any) {
         return (
             <main className="mx-10 md:mx-20 bg-white rounded-2xl p-10 mb-20 mt-20">
                 <h1 className="text-3xl md:text-5xl font-regular mb-3 text-black">
-                    Flights from <span className='text-indigo-500 font-semibold'>{params.get('departure_id')}</span> to <span className='text-indigo-500 font-semibold'>{params.get('arrival_id')}</span>
+                    Flights from <span className='text-[#FF8C00] font-semibold'>{params.get('departure_id')}</span> to <span className='text-[#FF8C00] font-semibold'>{params.get('arrival_id')}</span>
                 </h1>
 
                 <div className="space-y-6">
                     <h2 className="text-2xl font-semibold border-b pb-2">
                         {flightResults?.price_insights?.lowest_price > 0 && (
-                            <span className="ml-4 text-base font-normal text-indigo-600">
+                            <span className="ml-4 text-base font-normal text-[#FF8C00]">
                                 (Lowest Price: ${flightResults.price_insights.lowest_price})
                             </span>
                         )}
@@ -214,7 +214,7 @@ export default function FlightResultsPage({ searchParams }: any) {
             <div className="text-center p-12 border rounded-lg bg-gray-50">
                 <p className="text-lg font-medium">No flights found matching your criteria. Please try different dates or airports.</p>
                 <Link href="/">
-                    <Button className="mt-4 bg-indigo-600 hover:bg-indigo-700">New Search</Button>
+                    <Button className="mt-4 text-white bg-[#FF8C00] hover:bg-[#FFCA91]">New Search</Button>
                 </Link>
             </div>
         </main>
