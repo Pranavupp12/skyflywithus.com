@@ -66,8 +66,8 @@ export default function FlightResultsPage({ searchParams }: any) {
         setLoading(true);
         setStatusText('');
 
-        const apiUrl = `/api/flights?${params.toString()}`;
-        //const apiUrl = `/api/fail-search`;
+        //const apiUrl = `/api/flights?${params.toString()}`;
+        const apiUrl = `/api/fail-search`;
 
         const searchPayload = Object.fromEntries(params);
 
@@ -136,8 +136,8 @@ export default function FlightResultsPage({ searchParams }: any) {
         const classText = params.get('travel_class') || 'Economy';
 
         return (
-            <main className="flex min-h-[500px] bg-white rounded-2xl mx-10 md:mx-80  mb-20 mt-20 flex-col items-center justify-center p-10">
-                <h2 className="text-3xl md:text-5xl font-bold text-[#FF8C00] mb-3">
+            <main className="flex min-h-[500px] bg-white rounded-2xl mx-5 md:mx-80 mb-20 mt-20 flex-col items-center justify-center p-10">
+                <h2 className="text-2xl sm:text-5xl font-bold text-[#FF8C00] mb-3">
                     {/* Status text is used if available, otherwise generic message */}
                     {statusText}
                 </h2>
@@ -156,7 +156,7 @@ export default function FlightResultsPage({ searchParams }: any) {
                 />
 
                 {/* --- NEW CORPORATE BOOKING CALL-TO-ACTION --- */}
-                <p className="text-lg font-medium text-gray-800 mt-6 mb-4">
+                <p className="text-md md:text-lg text-center font-medium text-gray-800 mt-6 mb-4">
                     You can also contact our team for <span className='text-[#FF8C00]'>Corporate bookings and discounts</span>!
                 </p>
 
