@@ -46,7 +46,7 @@ export default function SiteHeader() {
                     <div className="flex items-center gap-4">
                         {/* 2. Your single button */}
 
-                        <NavbarButton variant="primary" href="/#booking-form-section">
+                        <NavbarButton variant="primary" href="/#booking-form-section " aria-label="Button to book flights">
                             Book Instantly
                         </NavbarButton>
                         </div>
@@ -82,6 +82,7 @@ export default function SiteHeader() {
                                 variant="primary"
                                 className="w-full"
                                 href="/#booking-form-section"
+                                aria-label="Button to book flights"
                                 >
                                 Book Instantly
                             </NavbarButton>

@@ -24,7 +24,7 @@ const features = [
 export function WhyChooseUs() {
   return (
     <section className="mt-20 bg-gray-100 dark:bg-gray-900">
-      <div className=" mx-3 md:mx-15 md:p-0 p-10">
+      <div className="mx-5 md:mx-15">
         
         {/* Section Header */}
         <div className="text-center mb-12">

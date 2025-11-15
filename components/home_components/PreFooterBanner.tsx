@@ -13,12 +13,12 @@ export function PreFooterBanner() {
   };
 
   return (
-    <section className=" mx-3 md:mx-10 mb-20">
-      <div className="bg-[#FF8C00] p-5 rounded-2xl overflow-hidden  flex flex-col md:flex-row items-center justify-center relative shadow-lg">
+    <section className="mx-3 md:mx-10 mb-20">
+      <div className="bg-[#FF8C00] p-2 rounded-2xl overflow-hidden  flex flex-col md:flex-row items-center justify-center relative shadow-lg">
         
         {/* Left Side: Image of Happy Person */}
         {/* --- ADJUSTED SIZE CLASSES HERE --- */}
-        <div className="relative w-full md:w-[60%] max-w-[450px] h-[300px] md:h-[400px] flex-shrink-0 mb-3 md:mb-0 md:mr-12">
+        <div className="relative w-full md:w-[60%] max-w-[450px] h-[300px] md:h-[400px] flex-shrink-0 mb-1 md:mb-0 md:mr-12">
           <Image
             src="/images/happy-cust-wbg2.png" // <--- CONFIRM THIS IMAGE PATH
             alt="Happy traveler looking at a phone"
@@ -31,10 +31,10 @@ export function PreFooterBanner() {
 
         {/* Right Side: Text and Button */}
         <div className="w-full md:w-auto text-center md:text-left flex flex-col items-center md:items-start">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-3 leading-tight">
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-2 leading-tight">
             Ready for Your Next <br className="hidden md:inline"/> Adventure?
           </h2>
-          <div className="flex items-center text-white mb-6">
+          <div className="flex items-center text-white mb-2">
             <p className="text-lg md:text-xl opacity-90">
               Discover amazing destinations and book your dream trip with us today!
             </p>

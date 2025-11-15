@@ -112,7 +112,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
   // The sidebar will be static until we create a dedicated 'related posts' API.
 
   return (
-    <main className="mx-10 md:mx-20 mt-20 mb-20">
+    <main className="mx-5 md:mx-15 mt-20 mb-20">
       <div className="flex flex-col lg:flex-row gap-8">
 
         {/* Main Content Area (2/3 width) */}
@@ -127,7 +127,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
           </div>
 
           {/* Blog Title */}
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
             {post.title}
           </h1>
 
@@ -158,7 +158,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
 
           {/* Blog Content */}
           <div
-            className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-200 mb-10"
+            className="prose dark:prose-invert max-w-none text-gray-700  dark:text-gray-200 mb-10"
             // WARNING: Since Tiptap outputs HTML, we must use this.
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
@@ -171,7 +171,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
 
         {/* Sidebar (1/3 width) */}
         <aside className="lg:w-1/3 space-y-8">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg sticky top-24">
+          <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg sticky top-24">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
               More in <span className="text-[#FF8C00]">{post.category}</span>
             </h2>

@@ -40,8 +40,8 @@ const teamMembers = [
 
 export function MeetTheTeam() {
   return (
-    <section className=" mt-10 mb-20 dark:bg-gray-900 mx-10 md:mx-5 ">
-      <div className="p-10 mx-auto">
+    <section className="mt-10 mb-20 dark:bg-gray-900 mx-5 md:mx-15 ">
+      <div className=" ">
         
         {/* Section Header */}
         <div className="text-center mb-12">

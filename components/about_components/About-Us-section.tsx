@@ -8,7 +8,7 @@ export function AboutUsSection() {
   // Placeholder image URL - you will replace this
   
   return (
-    <section className=" rounded-2xl mx-10 md:mx-15 mt-25 p-10">
+    <section className=" rounded-2xl mx-5 md:mx-15 mt-25 ">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
         {/* Left Column: Text Content */}
@@ -47,21 +47,21 @@ export function AboutUsSection() {
       </div>
 
       {/* Statistics Section (below the two columns) */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-16 text-center">
+      <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-16 text-center">
         {/* Statistic 1 */}
         <div className="flex flex-col items-center">
-          <h3 className="text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">10+</h3>
-          <p className="text-gray-600 dark:text-gray-300">Years Experience</p>
+          <h3 className=" text-3xl md:text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">10+</h3>
+          <p className=" text-sm text-gray-600 dark:text-gray-300">Years Experience</p>
         </div>
         {/* Statistic 2 */}
         <div className="flex flex-col items-center">
-          <h3 className="text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">10K+</h3>
-          <p className="text-gray-600 dark:text-gray-300">People Trust FlightFareMart</p>
+          <h3 className="text-3xl md:text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">10K+</h3>
+          <p className=" text-sm text-gray-600 dark:text-gray-300">People Trust FlightFareMart</p>
         </div>
         {/* Statistic 3 */}
         <div className="flex flex-col items-center">
-          <h3 className="text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">98 %</h3>
-          <p className="text-gray-600 dark:text-gray-300">Satisfied Clients</p>
+          <h3 className="text-3xl md:text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">98 %</h3>
+          <p className=" text-sm text-gray-600 dark:text-gray-300">Satisfied Clients</p>
         </div>
       </div>
     </section>

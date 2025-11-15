@@ -105,7 +105,7 @@ export default async function CategoryBlogPage({ params, searchParams }: Categor
   const { data: filteredBlogs, metadata } = await getFilteredBlogs(category.name, currentPage);
 
   return (
-    <main className="mx-10 md:mx-20  mt-20 mb-20">
+    <main className="mx-5 md:mx-15  mt-20 mb-20">
       {/* Page Header with Breadcrumbs */}
       <div className="text-center mb-12">
         <div className="text-sm text-gray-500 mb-2">
@@ -113,7 +113,7 @@ export default async function CategoryBlogPage({ params, searchParams }: Categor
           <span className="mx-2">&gt;</span>
           <span>{category.name}</span>
         </div>
-        <h1 className="text-5xl font-semibold text-[#FF8C00] dark:text-white mb-4">
+        <h1 className="text-3xl md:text-5xl font-semibold text-[#FF8C00] dark:text-white mb-4">
           {category.name}
         </h1>
         <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">

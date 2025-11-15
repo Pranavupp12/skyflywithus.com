@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-// Import the card and its data type
 import { BlogCard, Article } from "@/components/blog_components/blog-card";
 
 // --- Data Fetching Function ---
@@ -35,9 +33,9 @@ export async function RecentArticles() {
   const recentArticles = await getRecentBlogs();
 
   return (
-    <section className=" mx-3 md:mx-5 mb-20 p-10 ">
+    <section className="mx-5 md:mx-20 mb-20 ">
       {/* Heading and View All Button */}
-      <div className="relative flex justify-center items-center mb-12">
+      <div className="relative flex justify-center items-center mb-10">
         {/* 1. Centered Text Block */}
         <div className="text-center">
           <h2 className="text-5xl font-regular text-black dark:text-white mb-2">
@@ -53,10 +51,10 @@ export async function RecentArticles() {
           href="/blog"
           passHref
           // This positions the button on the right, vertically centered
-          className="absolute right-0 bottom-0 md:top-1/3 -translate-y-0 md:-translate-y-1/2"
+          className="absolute right-0 top-1/3 -translate-y-0"
         >
-          <Button variant="ghost" className="text-[#FF8C00] text-xs sm:text-md hover:text-white">
-            View All <ArrowRight className="ml-2 h-4 w-4" />
+          <Button variant="ghost" className="text-[#FF8C00] text-sm hover:text-white hidden lg:block">
+            View All 
           </Button>
         </Link>
       </div>

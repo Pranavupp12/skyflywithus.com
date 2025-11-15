@@ -62,7 +62,7 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const { data: allBlogs, metadata } = await getAllBlogs(currentPage);
 
   return (
-    <main className="mx-10 md:mx-15 mt-20 mb-20">
+    <main className="mx-5 md:mx-15 mt-20 mb-20">
       {/* Page Header */}
       <div className="text-center mb-10">
         <h1 className="text-5xl font-regular text-black dark:text-white mb-4">

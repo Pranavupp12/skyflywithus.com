@@ -68,7 +68,7 @@ export default function ContactPageClient() {
 
   return (
     <main >
-      <div className=" mx-10 md:mx-30 mt-20 mb-20 ">
+      <div className=" mx-5 md:mx-30 mt-20 mb-20 ">
         <div className="max-w-lg mx-auto gap-6 justify-between lg:flex lg:max-w-5xl">
           {/* Left Side: Contact Info */}
           <div className="max-w-lg space-y-3">

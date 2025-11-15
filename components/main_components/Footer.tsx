@@ -16,12 +16,12 @@ const noto_sans = Noto_Sans({
 
 // --- Categories for Blog links ---
 const categories = [
-  { name: "Cancellation and Refund", slug: "cancellation-and-refund" },
+  { name: "Cancellation & Refund", slug: "cancellation-and-refund" },
   { name: "Change Flight", slug: "change-flight" },
   { name: "Compensation", slug: "compensation" },
   { name: "Seat Upgrade", slug: "seat-upgrade" },
   { name: "Voucher", slug: "voucher" },
-  { name: "Lost and Found", slug: "lost-and-found" },
+  { name: "Lost & Found", slug: "lost-and-found" },
   { name: "Check In", slug: "check-in" },
   { name: "Airport", slug: "airport" },
 ];
@@ -116,13 +116,13 @@ export function Footer() {
           </div>
 
           {/* --- 5. RIGHT COLUMNS (Company, Blogs, Policy) --- */}
-          <div className="grid w-full gap-6 grid-cols-3 md:grid-row lg:gap-8">
+          <div className="grid w-full gap-10 sm:gap-6 grid-cols-3 md:grid-row lg:gap-8">
 
             {/* Renders Company, Blogs, and Policy columns from the updated array */}
             {defaultSections.map((section, sectionIdx) => (
               <div key={sectionIdx}>
                 <h3 className="mb-4 font-bold text-[#FF8C00] dark:text-white">{section.title}</h3>
-                <ul className="space-y-3 text-sm text-black">
+                <ul className="space-y-3 text-xs sm:text-sm text-black">
                   {section.links.map((link, linkIdx) => (
                     <li
                       key={linkIdx}
@@ -143,9 +143,9 @@ export function Footer() {
         {/* --- 6. BOTTOM BAR (Legal links are now removed from here) --- */}
         <div className="mt-4 border-t border-black/30 dark:border-gray-800 p-4 text-xs font-medium text-black">
 
-          <div className="flex flex-col-2 justify-between gap-4 md:flex-row md:items-center text-center md:text-left">
+          <div className="flex flex-col-2 justify-between gap-4 md:flex-row sm:items-center text-center md:text-left">
 
-            <p className="order-2 ">
+            <p className="order-2 md:text-md ">
               © 2025 SkyFlyWithUs. All rights reserved.
             </p>
 
@@ -161,7 +161,7 @@ export function Footer() {
           </div>
         </div>
         <h1
-            className={`relative z-20 text-[55px] md:text-[100px] lg:text-[150px] font-extrabold text-[#FF8C00] text-center select-none z-0 ${noto_sans.className}`}
+            className={`relative z-20 text-[40px] md:text-[100px] lg:text-[150px] font-extrabold text-[#FF8C00] text-center select-none z-0 ${noto_sans.className}`}
             aria-hidden="true"
           >
             SkyFlyWithUs
@@ -170,7 +170,7 @@ export function Footer() {
     </section>
     {/* Disclaimer Bar (bottom) */}
       <div className=" relative z-20 p-5 bg-[#FF8C00] text-center">
-        <p className="text-lg text-white">
+        <p className=" text-sm md:text-lg text-white">
           DISCLAIMER: This is a sample disclaimer line. You should replace this text with your official legal disclaimer.
         </p>
       </div>

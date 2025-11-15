@@ -87,7 +87,7 @@ function DestinationImageCard({ imageUrl, category, title, href }: DestinationIm
 export function PopularDestinations() {
   return (
     <section className="w-full mt-20 bg-gray-100 dark:bg-gray-900">
-      <div className=" mx-10 md:mx-5 px-4">
+      <div className=" mx-5">
         {/* Section Header */}
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-regular text-gray-900 dark:text-white">
