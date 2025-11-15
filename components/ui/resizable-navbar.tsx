@@ -10,13 +10,12 @@ import {
 } from "motion/react";
 
 import React, { useRef, useState } from "react";
-import { Plane } from "lucide-react"; // Make sure lucide-react is installed
-import { Volkhov } from 'next/font/google'; // <-- 1. Import the new font
+import { Noto_Sans } from 'next/font/google'; // <-- 1. Import the new font
 
 // 2. Initialize the font (Oswald needs a bold weight to be visible)
-const volkhov = Volkhov({
+const noto = Noto_Sans({
   subsets: ['latin'],
-  weight: '700', 
+  weight: '500', 
 });
 
 interface NavbarProps {
@@ -246,8 +245,7 @@ export const NavbarLogo = () => {
             href="/"
             className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
         >
-            <Plane className="h-7 w-7 text-black" />
-            <span className="text-lg font-medium text-black dark:text-white">
+            <span className={`text-xl font-medium text-black dark:text-white ${noto.className}`}>
               SkyFlywithus
             </span>
         </a>

@@ -55,7 +55,7 @@ export function PopularDestinations() {
   };
 
   return (
-    <section className="mx-10 md:mx-5 mt-20 bg-gray-100 dark:bg-gray-900">
+    <section className="mx-3 md:mx-5 mt-20 bg-gray-100 dark:bg-gray-900">
       <div className="container">
         {/* Section Header */}
         <div className="text-center mb-12">

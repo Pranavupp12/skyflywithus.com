@@ -119,11 +119,11 @@ export function BookingForm() {
   };
 
   return (
-    <section className="w-full bg-[#FF8C00] pt-25 mx-15 pb-25 text-center" id="booking-form-section">
+    <section className="w-full bg-[#FF8C00] pt-20 mx-10 pb-25 text-center" id="booking-form-section">
       {/* 2. Image Container */}
      <div className=" md:block hidden h-[400px] rounded-2xl overflow-hidden relative mb-[-10px] z-10">
         <Image
-          src="/images/booking-banner-2.png"
+          src="/images/skyflybanner4.png"
           fill
           className="object-cover"
           priority={true}
@@ -132,12 +132,12 @@ export function BookingForm() {
         />
 
         {/* Title */}
-        {/* FIX: Moved title up by changing 'top-1/2' to 'top-[40%]' and removing mb-14 */}
+        {/* FIX: Moved title up by changing 'top-1/2' to 'top-[40%]' and removing mb-14 
        { <h1 className="absolute z-10 top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2
           text-3xl md:text-7xl font-extrabold text-white drop-shadow-xl"
         >
           Your <span className={`${volkhov.className}`}>Trip</span> Starts here
-        </h1>}
+        </h1>}*/}
        
       </div>
 

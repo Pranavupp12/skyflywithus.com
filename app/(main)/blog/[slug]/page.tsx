@@ -112,7 +112,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
   // The sidebar will be static until we create a dedicated 'related posts' API.
 
   return (
-    <main className="container mx-10 md:mx-20 mt-20 mb-20">
+    <main className="mx-10 md:mx-20 mt-20 mb-20">
       <div className="flex flex-col lg:flex-row gap-8">
 
         {/* Main Content Area (2/3 width) */}

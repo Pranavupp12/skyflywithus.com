@@ -3,12 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
-import { Volkhov } from 'next/font/google'; // <-- 1. Import the new font
+import { Noto_Sans } from 'next/font/google'; // <-- 1. Import the new font
 
 // 2. Initialize the font (Oswald needs a bold weight to be visible)
-const volkhov = Volkhov({
+const noto_sans = Noto_Sans({
   subsets: ['latin'],
-  weight: '700', 
+  weight: '600', 
 });
 
 // --- Categories for Blog links ---
@@ -90,7 +90,7 @@ export function Footer() {
               Book cheap flights, read travel blogs, and plan your perfect experience with us.
             </p>*/}
             {/* --- 4. MOVED: Subscribe Section --- */}
-            <div className="w-full max-w-xs">
+            <div className="w-full max-w-xs hidden lg:block">
               <h3 className="mb-1 font-bold text-[#FF8C00] dark:text-white">Subscribe</h3>
               <p className=" text-sm text-black mb-4">
                 Get the latest travel tips and deals straight to your inbox.
@@ -158,7 +158,7 @@ export function Footer() {
           </div>
         </div>
         <h1
-            className={`relative z-20 text-[90px] md:text-[150px] font-extrabold text-[#FF8C00] text-center select-none z-0 ${volkhov.className}`}
+            className={`relative z-20 text-[55px] md:text-[100px] lg:text-[150px] font-extrabold text-[#FF8C00] text-center select-none z-0 ${noto_sans.className}`}
             aria-hidden="true"
           >
             SkyFlyWithUs

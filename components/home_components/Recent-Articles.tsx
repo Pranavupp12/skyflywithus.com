@@ -35,7 +35,7 @@ export async function RecentArticles() {
   const recentArticles = await getRecentBlogs();
 
   return (
-    <section className=" mx-10 md:mx-5 mb-20 p-10 ">
+    <section className=" mx-3 md:mx-5 mb-20 p-10 ">
       {/* Heading and View All Button */}
       <div className="relative flex justify-center items-center mb-12">
         {/* 1. Centered Text Block */}
@@ -53,9 +53,9 @@ export async function RecentArticles() {
           href="/blog"
           passHref
           // This positions the button on the right, vertically centered
-          className="absolute right-0 top-1/3  -translate-y-1/2"
+          className="absolute right-0 bottom-0 md:top-1/3 -translate-y-0 md:-translate-y-1/2"
         >
-          <Button variant="ghost" className="text-[#FF8C00] hover:text-white">
+          <Button variant="ghost" className="text-[#FF8C00] text-xs sm:text-md hover:text-white">
             View All <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </Link>

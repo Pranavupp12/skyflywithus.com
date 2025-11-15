@@ -7,7 +7,7 @@ import { Plane } from 'lucide-react';
 
 export function Testimonials() {
     return (
-        <section className="mt-20 mb-20 mx-10 md:mx-15 p-10 md:p-0">
+        <section className="mt-20 mb-20 mx-3 md:mx-15 p-10 md:p-0">
             <div className="max-w-8xl space-y-8 ">
                 <div className="relative z-10 mx-auto max-w-xl text-center md:space-y-12">
                     <h2 className="text-4xl font-medium font-regular lg:text-5xl mb-4">Trusted by <span className='text-[#FF8C00] font-bold'>Travelers</span></h2>

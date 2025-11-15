@@ -13,12 +13,12 @@ export function PreFooterBanner() {
   };
 
   return (
-    <section className="container mx-auto px-4 mb-20">
-      <div className="bg-[#FF8C00] p-5 md:p-0 rounded-2xl overflow-hidden  flex flex-col md:flex-row items-center justify-center relative shadow-lg">
+    <section className=" mx-3 md:mx-10 mb-20">
+      <div className="bg-[#FF8C00] p-5 rounded-2xl overflow-hidden  flex flex-col md:flex-row items-center justify-center relative shadow-lg">
         
         {/* Left Side: Image of Happy Person */}
         {/* --- ADJUSTED SIZE CLASSES HERE --- */}
-        <div className="relative w-full md:w-[50%] max-w-[450px] h-[300px] md:h-[400px] flex-shrink-0 mb-3 md:mb-0 md:mr-12">
+        <div className="relative w-full md:w-[60%] max-w-[450px] h-[300px] md:h-[400px] flex-shrink-0 mb-3 md:mb-0 md:mr-12">
           <Image
             src="/images/happy-cust-wbg2.png" // <--- CONFIRM THIS IMAGE PATH
             alt="Happy traveler looking at a phone"
