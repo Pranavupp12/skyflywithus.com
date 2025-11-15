@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import { Toaster } from "sonner";
 
 
-const figtree = Figtree({
+const figtree = Figtree({ 
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
 });
