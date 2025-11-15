@@ -7,7 +7,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { ConfirmationDialog } from "@/components/home_components/Confirmation-dialog";
 import { toast } from "sonner";
-import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker } from "react-icons/hi";
+import { HiOutlineMail } from "react-icons/hi";
+import { HiOutlinePhone } from "react-icons/hi";
+import { HiOutlineLocationMarker } from "react-icons/hi";
 
 // Rename the function to avoid conflicts
 export default function ContactPageClient() {

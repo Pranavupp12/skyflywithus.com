@@ -50,6 +50,7 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
           size="icon"
           // FIX: Disable if currentPage is 1
           disabled={isPrevDisabled} 
+          aria-label="Go to previous page"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
@@ -72,6 +73,7 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
           size="icon"
           // FIX: Disable if currentPage is totalPages
           disabled={isNextDisabled} 
+          aria-label="Go to Next page"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>

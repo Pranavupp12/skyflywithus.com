@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
 import { Noto_Sans } from 'next/font/google'; // <-- 1. Import the new font
 
 // 2. Initialize the font (Oswald needs a bold weight to be visible)

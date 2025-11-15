@@ -76,7 +76,7 @@ export function MeetTheTeam() {
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
                 {member.name}
               </h3>
-              <p className="text-[#FFA749] font-lg mb-2">{member.role}</p>
+              <p className="text-[#FF8C00] font-lg mb-2">{member.role}</p>
               <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                 {member.bio}
               </p>
@@ -84,12 +84,12 @@ export function MeetTheTeam() {
               {/* Social Links */}
               <div className="flex justify-center space-x-4 text-gray-500 dark:text-gray-400">
                 <Link href={member.social.twitter} passHref>
-                  <span className="cursor-pointer hover:text-[#FFA749]">
+                  <span className="cursor-pointer hover:text-[#FF8C00]">
                     <Twitter className="h-5 w-5" />
                   </span>
                 </Link>
                 <Link href={member.social.linkedin} passHref>
-                  <span className="cursor-pointer hover:text-[#FFA749]">
+                  <span className="cursor-pointer hover:text-[#FF8C00]">
                     <Linkedin className="h-5 w-5" />
                   </span>
                 </Link>

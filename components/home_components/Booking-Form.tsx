@@ -121,7 +121,7 @@ export function BookingForm() {
   return (
     <section className="w-full bg-[#FF8C00] pt-20 mx-10 pb-25 text-center" id="booking-form-section">
       {/* 2. Image Container */}
-     <div className=" md:block hidden h-[400px] rounded-2xl overflow-hidden relative mb-[-10px] z-10">
+     <div className=" lg:block hidden h-[400px] rounded-2xl overflow-hidden relative mb-[-10px] z-10">
         <Image
           src="/images/skyflybanner4.png"
           fill
@@ -159,7 +159,7 @@ export function BookingForm() {
       </div>
 
       {/* 3. Form Card */}
-      <Card className="max-w-6xl mx-8 md:mx-auto p-6 md:p-8 relative z-20 ">
+      <Card className="-w-6xl mx-10 md:mx-15 p-6 md:p-8 relative z-20 ">
         <CardContent className="p-0">
           <form onSubmit={handleSubmit} className="space-y-6">
             
@@ -204,6 +204,7 @@ export function BookingForm() {
                 className="rounded-full w-10 h-10 mx-auto flex-shrink-0"
                 type="button"
                 onClick={handleSwap}
+                aria-label="Swap departure and arrival"
               >
                 <ArrowRightLeft className="h-4 w-4 text-[#FF8C00]" />
               </Button>
