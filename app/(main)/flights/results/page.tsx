@@ -66,8 +66,8 @@ export default function FlightResultsPage({ searchParams }: any) {
         setLoading(true);
         setStatusText('');
 
-        //const apiUrl = `/api/flights?${params.toString()}`;
-        const apiUrl = `/api/fail-search`;
+        const apiUrl = `/api/flights?${params.toString()}`;
+        //const apiUrl = `/api/fail-search`;
 
         const searchPayload = Object.fromEntries(params);
 
