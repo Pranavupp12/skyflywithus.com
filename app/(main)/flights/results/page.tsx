@@ -24,7 +24,7 @@ const mapFlightData = (flightData: any) => {
     const firstSegment = flightData.flights[0];
     const lastSegment = flightData.flights[flightData.flights.length - 1];
     const durationText = formatDuration(flightData.total_duration);
-    const defaultImageUrl = "/images/airplane-front5.jpg";
+    const defaultImageUrl = "/images/airplane-wing2.jpg";
 
     return {
         imageUrl: defaultImageUrl,
@@ -136,7 +136,7 @@ export default function FlightResultsPage({ searchParams }: any) {
         const classText = params.get('travel_class') || 'Economy';
 
         return (
-            <main className="flex min-h-[500px] bg-white rounded-2xl mx-5 md:mx-80 mb-20 mt-20 flex-col items-center justify-center p-10">
+            <main className="flex min-h-[500px] bg-white rounded-2xl mx-3 sm:mx-10 lg:mx-80 mb-20 mt-20 flex-col items-center justify-center p-10">
                 <h2 className="text-2xl sm:text-5xl font-bold text-[#FF8C00] mb-3">
                     {/* Status text is used if available, otherwise generic message */}
                     {statusText}
@@ -182,7 +182,7 @@ export default function FlightResultsPage({ searchParams }: any) {
     // 2. Display Actual Results (Success: !loading AND hasResults)
     if (hasResults) {
         return (
-            <main className="mx-10 md:mx-20 bg-white rounded-2xl p-10 mb-20 mt-20">
+            <main className="mx-5 md:mx-15 bg-white rounded-2xl p-5 sm:p-10 mb-20 mt-20">
                 <h1 className="text-3xl md:text-5xl font-regular mb-3 text-black">
                     Flights from <span className='text-[#FF8C00] font-semibold'>{params.get('departure_id')}</span> to <span className='text-[#FF8C00] font-semibold'>{params.get('arrival_id')}</span>
                 </h1>

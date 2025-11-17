@@ -112,7 +112,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
   // The sidebar will be static until we create a dedicated 'related posts' API.
 
   return (
-    <main className="mx-5 md:mx-15 mt-20 mb-20">
+    <main className="mx-5 md:mx-10 mt-20 mb-20">
       <div className="flex flex-col lg:flex-row gap-8">
 
         {/* Main Content Area (2/3 width) */}
@@ -138,7 +138,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
               <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{post.authorName}</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">{post.publishDate}</p>
             </div>
-            <span className="ml-auto bg-[#FF8C00] text-white text-xs font-semibold px-3 py-1 rounded-full">
+            <span className="ml-auto bg-[#FF8C00] text-white text-xs font-regular px-3 py-1 rounded-full">
               {post.category}
             </span>
           </div>

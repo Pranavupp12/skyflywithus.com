@@ -82,7 +82,7 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
                         className="w-full h-full object-cover"
                     />
                     <div className="absolute top-0 right-0 p-3 bg-[#FF8C00] rounded-bl-xl shadow-md">
-                        <span className="text-white text-xl font-bold">${price}</span>
+                        <span className="text-white text-md sm:text-xl font-bold">${price}</span>
                     </div>
                 </div>
 
@@ -94,15 +94,15 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
                         className="flex items-center justify-between"
                     >
                         <div className="text-left">
-                            <p className="text-sm text-muted-foreground">{departureTime}</p>
-                            <p className="text-4xl font-bold text-card-foreground">
+                            <p className=" text-xs sm:text-sm text-muted-foreground">{departureTime}</p>
+                            <p className="text-2xl sm:text-4xl font-bold text-card-foreground">
                                 {departureCode}
                             </p>
                             <p className="text-xs text-muted-foreground">{departureCity}</p>
                         </div>
 
                         <div className="text-center">
-                            <p className="text-sm font-medium text-muted-foreground">{flightCode}</p>
+                            <p className=" text-xs sm:text-sm font-medium text-muted-foreground">{flightCode}</p>
                             <div className="flex items-center gap-2 my-1">
                                 <div className="h-px w-8 bg-border" />
                                 <Plane className="h-4 w-4 text-muted-foreground" />
@@ -111,8 +111,8 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
                         </div>
 
                         <div className="text-right">
-                            <p className="text-sm text-muted-foreground">{arrivalTime}</p>
-                            <p className="text-4xl font-bold text-card-foreground">
+                            <p className="text-xs sm:text-sm text-muted-foreground">{arrivalTime}</p>
+                            <p className="text-2xl sm:text-4xl font-bold text-card-foreground">
                                 {arrivalCode}
                             </p>
                             <p className="text-xs text-muted-foreground">{arrivalCity}</p>
@@ -128,7 +128,7 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
                     {/* Additional Details */}
                     <motion.div
                         variants={itemVariants}
-                        className="flex justify-between text-center"
+                        className="flex text-sm sm:text-lg justify-between text-center"
                     >
                         <InfoItem label="Airline" value={airline} />
                         <InfoItem label="Flight Code" value={flightCode} />

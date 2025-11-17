@@ -78,7 +78,7 @@ export function FlightSpinner({
             {/* --- 3. Status Text --- */}
             <ShiningText
                 text={statusText}
-                className="pt-4 text-lg sm:text-2xl pl-4 sm:pl-0" // Pass in original styles
+                className="pt-4 text-lg sm:text-2xl pl-12 sm:pl-0" // Pass in original styles
             />
         </div>
     );
