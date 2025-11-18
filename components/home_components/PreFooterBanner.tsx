@@ -13,8 +13,8 @@ export function PreFooterBanner() {
   };
 
   return (
-    <section className="mx-8 md:mx-15 lg:mx-50 mb-20">
-      <div className="bg-[#FF8C00] p-4 sm:p-3 rounded-2xl overflow-hidden flex flex-col md:flex-row items-center justify-center relative shadow-lg">
+    <section className="mx-8 md:mx-15 lg:mx-60 mb-20">
+      <div className="bg-[#FF8C00] p-2 sm:p-0  rounded-2xl overflow-hidden flex flex-col md:flex-row items-center justify-center relative shadow-lg">
         
         {/* Left Side: Image of Happy Person */}
         {/* --- ADJUSTED SIZE CLASSES HERE --- */}
@@ -23,9 +23,10 @@ export function PreFooterBanner() {
             src="/images/happy-cust-wbg2.png" // <--- CONFIRM THIS IMAGE PATH
             alt="Happy traveler looking at a phone"
             fill
-            className="object-contain object-center"
-            priority={false}
+            className="object-contain object-center lg:pr-10"
+            priority={true}
             sizes="(max-width: 768px) 100vw, 33vw"
+            loading="eager"
           />
         </div>
 

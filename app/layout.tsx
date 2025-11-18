@@ -17,6 +17,10 @@ export const metadata: Metadata = {
     template: '%s | SkyFlyWithUs', // %s will be replaced by the page's title
   },
   description: 'Book cheap flights and read travel blogs on SkyFlyWithUs.',
+  robots: {
+    index: false, // Tells search engines NOT to index any page
+    follow: false, // Tells search engines NOT to follow any links from any page
+  },
 };
 
 export default async function RootLayout({

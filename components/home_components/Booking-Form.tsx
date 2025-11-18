@@ -159,7 +159,7 @@ export function BookingForm() {
       </div>
 
       {/* 3. Form Card */}
-      <Card className="-w-6xl mx-5 md:mx-15 p-6 md:p-8 relative z-20 ">
+      <Card className="-w-6xl mx-5 md:mx-15 p-6 md:p-8 relative z-20 shadow-lg shadow-white/60">
         <CardContent className="p-0">
           <form onSubmit={handleSubmit} className="space-y-6">
             

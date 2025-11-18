@@ -11,11 +11,12 @@ import {
 
 import React, { useRef, useState } from "react";
 import { Noto_Sans } from 'next/font/google'; // <-- 1. Import the new font
+import Image from "next/image";
 
 // 2. Initialize the font (Oswald needs a bold weight to be visible)
 const noto = Noto_Sans({
-  subsets: ['latin'],
-  weight: '500', 
+    subsets: ['latin'],
+    weight: '500',
 });
 
 interface NavbarProps {
@@ -110,7 +111,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
                 minWidth: "800px",
             }}
             className={cn(
-            
+
                 "relative z-[60] hidden w-full flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
                 visible && "mx-auto rounded-full items-center justify-between bg-white/80 dark:bg-neutral-950/80",
                 className,
@@ -241,13 +242,21 @@ export const MobileNavToggle = ({
 // This is the logo component we modified
 export const NavbarLogo = () => {
     return (
+        
         <a
             href="/"
-            className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+            className="relative z-20 ml-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
         >
-            <span className={`text-xl font-medium text-black dark:text-white ${noto.className}`}>
-              SkyFlywithus
-            </span>
+            <Image
+                src="/images/fs-5.png" // <-- 3. IMPORTANT: Change this to your logo's path
+                alt="SkyFlyWithUs Logo"
+                width={64}  // Source width (at least 2x the 'w-8' class)
+                height={64} // Source height (at least 2x the 'h-8' class)
+                className="h-9 w-12" // Tailwind class to control the displayed size
+            />
+           { /*<span className={`text-xl font-medium text-black dark:text-white ${noto.className}`}>
+                SkyFlywithus
+            </span>*/}
         </a>
     );
 };
