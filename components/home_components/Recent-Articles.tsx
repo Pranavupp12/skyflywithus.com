@@ -33,7 +33,7 @@ export async function RecentArticles() {
   const recentArticles = await getRecentBlogs();
 
   return (
-    <section className="mx-5 md:mx-20 mb-20 ">
+    <section className="mx-5 md:mx-20 mb-20  lg:min-w-[70%]">
       {/* Heading and View All Button */}
       <div className="relative flex justify-center items-center mb-10">
         {/* 1. Centered Text Block */}
@@ -42,7 +42,7 @@ export async function RecentArticles() {
             Recent <span className="text-[#FF8C00] font-semibold">Blogs</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Stay up-to-date with our latest travel guides and tips.
+           There are some blog that tells experiences.
           </p>
         </div>
 

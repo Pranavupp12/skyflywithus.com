@@ -10,7 +10,7 @@ const teamMembers = [
     name: "Alex Johnson",
     role: "Founder & CEO",
     bio: "Alex is the visionary behind SkyFlyWithUs, dedicated to making travel accessible for everyone.",
-    imageUrl: "/images/team/member.jpg", // Add this image to public/images/team/
+    imageUrl: "/images/team/member-1.jpg", // Add this image to public/images/team/
     social: {
       linkedin: "#",
       twitter: "#",
@@ -20,7 +20,7 @@ const teamMembers = [
     name: "Maria Garcia",
     role: "Head of Content",
     bio: "Maria curates all the amazing travel blogs and guides you read on our site.",
-    imageUrl: "/images/team/member.jpg", // Add this image to public/images/team/
+    imageUrl: "/images/team/member-2.jpg", // Add this image to public/images/team/
     social: {
       linkedin: "#",
       twitter: "#",
@@ -30,7 +30,7 @@ const teamMembers = [
     name: "Lee Kim",
     role: "Lead Engineer",
     bio: "David is the technical wizard who built our platform and keeps the booking engine running smoothly.",
-    imageUrl: "/images/team/member.jpg", // Add this image to public/images/team/
+    imageUrl: "/images/team/member-3.jpg", // Add this image to public/images/team/
     social: {
       linkedin: "#",
       twitter: "#",
@@ -49,8 +49,7 @@ export function MeetTheTeam() {
             Meet <span className="text-[#FF8C00] font-semibold">Our Team</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            We are a passionate group of travelers, creators, and tech enthusiasts
-            dedicated to building your perfect travel experience.
+          We have an expert team that is reliable, experienced, dedicated, and highly skilled.
           </p>
         </div>
 

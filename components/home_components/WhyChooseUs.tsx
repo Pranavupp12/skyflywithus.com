@@ -6,18 +6,18 @@ import { Tag, BookOpen, Headset } from 'lucide-react';
 const features = [
   {
     icon: <Tag className="h-8 w-8 text-white" />,
-    title: "Exclusive Deals",
-    description: "We partner with top airlines to provide you with unpublished fares and exclusive deals you won't find anywhere else."
+    title: "Exclusive Deals, just for you ",
+    description: "Thanks to our direct partnerships with major airlines, we unlock hidden fares and limited-access discounts you won’t see on other booking sites. These exclusive offers are crafted to help you travel smarter — and save more."
   },
   {
     icon: <BookOpen className="h-8 w-8 text-white" />,
-    title: "Expert Travel Guides",
-    description: "Our dashboard isn't just for booking. Get access to expert-written blogs on compensation, upgrades, and travel tips."
+    title: "Trusted and responsible Travel Expertise",
+    description: "Beyond booking, your dashboard unlocks expert-crafted blogs covering compensation, upgrades, and practical travel advice."
   },
   {
     icon: <Headset className="h-8 w-8 text-white" />,
-    title: "24/7 Customer Support",
-    description: "Our dedicated support team is available around the clock to assist you with any booking or travel questions, anytime."
+    title: "24/7 helpline support",
+    description: "We are always here for your help, and we also provide the best customer support at all times just for our customers. Just for your comfort."
   }
 ];
 
@@ -32,7 +32,7 @@ export function WhyChooseUs() {
             Why Choose <span className="text-[#FF8C00] font-bold">SkyFly</span>withus <span className='text-[#FF8C00]'>?</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mt-3 max-w-2xl mx-auto">
-            We're more than just a booking site. We're your complete travel partner, from planning to landing.
+           From finding the perfect flight to helping you arrive smoothly at your destination.
           </p>
         </div>
         

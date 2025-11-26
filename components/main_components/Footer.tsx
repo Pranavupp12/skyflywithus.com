@@ -46,8 +46,8 @@ const defaultSections = [
   {
     title: "Policy",
     links: [
-      { name: "Terms and Conditions", href: "#" },
-      { name: "Privacy Policy", href: "#" },
+      { name: "Terms and Conditions", href: "/terms" },
+      { name: "Privacy Policy", href: "/privacy" },
     ],
   },
 ];
@@ -91,13 +91,13 @@ export function Footer() {
               </Link>
             </div>
             <p className="max-w-[70%] text-xs sm:text-sm text-gray-800 mb-5">
-              Book cheap flights, read travel blogs, and plan your perfect experience with us.
+              From local escapes to global adventures — SkyFlyWithUs gives all information.
             </p>
               {/* --- 4. MOVED: Subscribe Section --- */}
               <div className="w-full max-w-xs hidden lg:block">
                 <h3 className="mb-1 font-bold text-xl text-[#FF8C00] dark:text-white">Subscribe</h3>
                 <p className=" text-sm text-black mb-1">
-                  Get the latest travel tips and deals straight to your inbox.
+                  Get fast and great tips and deals. Add your email to the inbox below.
                 </p>
                 <form >
                   <input
@@ -171,8 +171,8 @@ export function Footer() {
       </section>
       {/* Disclaimer Bar (bottom) */}
       <div className=" relative z-20 p-5 bg-[#FF8C00] text-center overflow-y-hidden">
-        <p className=" text-sm md:text-lg text-white">
-          DISCLAIMER: This is a sample disclaimer line. You should replace this text with your official legal disclaimer.
+        <p className="mx-auto  text-xs md:text-sm text-white">
+          DISCLAIMER: Our website provides general information about flights and travel. While we have Professional duties to keep our content accurate and helpful, we cannot guarantee that all information is always complete or up to date. We are not legally responsible for any issues, losses, or decisions that result from using the information on our site. 
         </p>
         <p className=" mt-5 mb-3 text-xs text-white block sm:hidden ">
           © 2025 SkyFlyWithUs. All rights reserved.

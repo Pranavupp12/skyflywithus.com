@@ -67,7 +67,7 @@ export default function ContactPageClient() {
   };
 
   return (
-    <main >
+    <main>
       <div className=" mx-5 md:mx-30 mt-20 mb-20 ">
         <div className="max-w-lg mx-auto gap-6 justify-between lg:flex lg:max-w-5xl">
           {/* Left Side: Contact Info */}
@@ -77,16 +77,17 @@ export default function ContactPageClient() {
               Let us know how we can help
             </p>
             <p className="text-gray-800 text-lg dark:text-gray-300">
-              We are here to help and answer any question you might have. We look
-              forward to hearing from you! Please fill out the form, or use
-              the contact information below.
+              If you have any queries, contact us so you can fill out the form,
+              and our team can connect with you.
             </p>
             <div>
               <ul className="mt-6 flex flex-wrap gap-x-10 gap-y-6 items-center">
                 {contactMethods.map((item, idx) => (
                   <li key={idx} className="flex items-center gap-x-3">
                     <div className="flex-none text-[#FF8C00]">{item.icon}</div>
-                    <p className="text-gray-700 dark:text-gray-300">{item.contact}</p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      {item.contact}
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -99,25 +100,48 @@ export default function ContactPageClient() {
                 <Label htmlFor="full-name" className="font-medium">
                   Full name
                 </Label>
-                <Input id="full-name" name="full-name" type="text" required disabled={loading} />
+                <Input
+                  id="full-name"
+                  name="full-name"
+                  type="text"
+                  required
+                  disabled={loading}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email" className="font-medium">
                   Email
                 </Label>
-                <Input id="email" name="email" type="email" required disabled={loading} />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  disabled={loading}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="company" className="font-medium">
                   Company <span className="text-gray-500">(Optional)</span>
                 </Label>
-                <Input id="company" name="company" type="text" disabled={loading} />
+                <Input
+                  id="company"
+                  name="company"
+                  type="text"
+                  disabled={loading}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message" className="font-medium">
                   Message
                 </Label>
-                <Textarea id="message" name="message" required className="h-36" disabled={loading} />
+                <Textarea
+                  id="message"
+                  name="message"
+                  required
+                  className="h-36"
+                  disabled={loading}
+                />
               </div>
               <Button
                 type="submit"
@@ -131,10 +155,7 @@ export default function ContactPageClient() {
         </div>
       </div>
       {/* Confirmation Dialog */}
-      <ConfirmationDialog 
-        open={isSubmitted} 
-        onOpenChange={setIsSubmitted} 
-      />
+      <ConfirmationDialog open={isSubmitted} onOpenChange={setIsSubmitted} />
     </main>
   );
 }

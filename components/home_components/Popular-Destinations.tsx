@@ -34,7 +34,7 @@ const destinations = [
   {
     id: "rome",
     // Note: You had bali-small.jpeg for Rome, you may want to change this
-    imageUrl: "/images/destinations/bali-small.jpeg", 
+    imageUrl: "/images/destinations/rome-small.jpg", 
     category: "Italy",
     title: "Rome",
   },
@@ -96,7 +96,7 @@ export function PopularDestinations() {
             Most <span className="text-[#FF8C00] font-bold">Loved Destinations</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 mt-3 max-w-2xl mx-auto">
-            Explore our most popular travel spots, curated by travelers and experts.
+           Explore our most popular travel destinations — the places everyone is excited to visit.
           </p>
         </div>
 

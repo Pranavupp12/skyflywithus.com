@@ -10,8 +10,8 @@ export function Testimonials() {
         <section className="mt-20 mb-20 mx-5 md:mx-15 p-0">
             <div className="max-w-8xl space-y-8 ">
                 <div className="relative z-10 mx-auto max-w-xl text-center md:space-y-12">
-                    <h2 className="text-4xl font-medium font-regular lg:text-5xl mb-4">Trusted by <span className='text-[#FF8C00] font-bold'>Travelers</span></h2>
-                    <p className='text-lg text-gray-600'>See what our happy customers have to say about their booking experience with SkyFlyWithUs.</p>
+                    <h2 className="text-4xl font-medium font-regular lg:text-5xl mb-4">Customer Reviews &  <span className='text-[#FF8C00] font-bold'>Booking Experiences</span></h2>
+                    <p className='text-lg text-gray-600'>See what our happy customers have to say about how their blog helps to provide flight information. </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-rows-2">
