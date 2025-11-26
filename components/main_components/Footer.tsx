@@ -44,10 +44,11 @@ const defaultSections = [
     })),
   },
   {
-    title: "Policy",
+    title: "Links",
     links: [
       { name: "Terms and Conditions", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
+      { name: "Sitemap", href: "/public-sitemap" },
     ],
   },
 ];
