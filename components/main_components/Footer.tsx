@@ -8,6 +8,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { Noto_Sans } from 'next/font/google'; // <-- 1. Import the new font
 
+
 // 2. Initialize the font (Oswald needs a bold weight to be visible)
 const noto_sans = Noto_Sans({
   subsets: ['latin'],
@@ -65,29 +66,23 @@ export function Footer() {
   return (
     <>
       <section className="relative pt-2 sm:pt-5  w-full overflow-hidden min-h-[400px] bg-gray-100  dark:bg-gray-900 dark:border-gray-800">
-           {/* <Image
-          src="/images/airport.jpg" // <--- ENSURE THIS PATH IS CORRECT FOR YOUR IMAGE 1
-          alt="Airplane at sunset"
-          fill
-          loading="eager"
-          quality={100}
-          className="z-0 object-cover" // Ensure image is behind overlay
-        />
-
-     Orange Overlay */}
-        {/* Increased opacity to 90% for a stronger overlay like in the example 
-         <div className="absolute inset-0 bg-[#FFCA91] opacity-90 z-10"></div>
-       </div>*/}
-
-      
+          
         <div className="relative z-20 mx-15 md:mx-20 pt-5">
           <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-start lg:text-start">
 
             {/* --- 3. LEFT COLUMN (Logo, Desc, Social, Subscribe) --- */}
             <div className="flex w-full flex-col justify-between  lg:items-start">
               {/* Logo */}
+             
               <div className="flex items-center lg:justify-start mb-1">
-              <Link href="/" className="flex items-center">
+              <Link href="/" className="flex items-center gap-2">
+                <Image 
+                  src="/images/sf-foot-logo.png" // Ensure this path is correct
+                  alt="SkyFlyWithUs Logo"
+                  width={40} // Adjust width/height as needed
+                  height={40}
+                  className="h-10 w-10 object-contain" // Ensure it fits nicely
+                />
                 <h2 className="text-lg sm:text-2xl font-bold text-black dark:text-white"><span className="text-[#FF8C00]">SkyFly</span>WithUs</h2>
               </Link>
             </div>
@@ -114,7 +109,6 @@ export function Footer() {
                   </button>
                 </form>
               </div>
-              {/* --------------------------------- */}
             </div>
 
             {/* --- 5. RIGHT COLUMNS (Company, Blogs, Policy) --- */}
