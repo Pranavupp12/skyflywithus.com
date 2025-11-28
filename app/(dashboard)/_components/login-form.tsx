@@ -1,4 +1,4 @@
-"use client"; // This file is the Client Component
+"use client";
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
@@ -9,10 +9,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Plane } from "lucide-react";
 
-// Rename the default export
 export default function LoginForm() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,8 +19,8 @@ export default function LoginForm() {
     e.preventDefault();
     setLoading(true);
 
-    if (isLogin) {
-      // --- LOGIN LOGIC ---
+    try {
+      // Directly call signIn since we only support login now
       const result = await signIn("credentials", {
         redirect: false,
         email,
@@ -32,7 +29,7 @@ export default function LoginForm() {
 
       if (result?.error) {
         toast.error("Login Failed", {
-          description: result.error,
+          description: "Invalid email or password.",
         });
         setLoading(false);
       } else {
@@ -41,34 +38,11 @@ export default function LoginForm() {
         });
         router.push("/dashboard");
       }
-    } else {
-      // --- SIGNUP LOGIC ---
-      try {
-        const response = await fetch("/api/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          toast.success("Success", {
-            description: "Account created! Please log in.",
-          });
-          setIsLogin(true);
-        } else {
-          toast.error("Signup Failed", {
-            description: data.error || "Something went wrong.",
-          });
-        }
-      } catch (error) {
-        toast.error("Error", {
-          description: "An unexpected error occurred.",
-        });
-      } finally {
-        setLoading(false);
-      }
+    } catch (error) {
+      toast.error("Error", {
+        description: "An unexpected error occurred.",
+      });
+      setLoading(false);
     }
   };
 
@@ -77,7 +51,7 @@ export default function LoginForm() {
       <div className="w-full max-w-md space-y-8">
         <div className="flex flex-col items-center">
           <div className="flex items-center gap-2 mb-4">
-            <Plane className="h-8 w-8 text-indigo-600" />
+            <Plane className="h-8 w-8 text-[#FF8C00]" />
             <span className="text-3xl font-bold text-gray-900 dark:text-white">
               SkyFlyWithUs
             </span>
@@ -89,22 +63,10 @@ export default function LoginForm() {
 
         <div className="rounded-lg bg-white p-8 shadow-lg dark:bg-gray-800">
           <h3 className="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-white">
-            {isLogin ? "Welcome Back" : "Create Admin Account"}
+            Admin Login
           </h3>
+          
           <form onSubmit={handleSubmit} className="space-y-6">
-            {!isLogin && (
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  disabled={loading}
-                />
-              </div>
-            )}
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -114,6 +76,7 @@ export default function LoginForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
+                placeholder="teamdms@gmail.com"
               />
             </div>
             <div className="space-y-2">
@@ -129,23 +92,12 @@ export default function LoginForm() {
             </div>
             <Button
               type="submit"
-              className="w-full bg-indigo-600 hover:bg-indigo-700"
+              className="w-full bg-[#FF8C00] hover:bg-[#FFB667]"
               disabled={loading}
             >
-              {loading ? "Loading..." : isLogin ? "Login" : "Sign Up"}
+              {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
-
-          <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-300">
-            {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
-            <button
-              onClick={() => setIsLogin(!isLogin)}
-              className="font-medium text-indigo-600 hover:text-indigo-500 disabled:opacity-50"
-              disabled={loading}
-            >
-              {isLogin ? "Sign Up" : "Login"}
-            </button>
-          </p>
         </div>
       </div>
     </div>

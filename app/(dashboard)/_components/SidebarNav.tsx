@@ -42,8 +42,8 @@ export function SidebarNav() {
             className={cn(
               "flex items-center gap-3 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300",
               isActive
-                ? "bg-indigo-100 dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 font-medium"
-                : "hover:bg-indigo-50 dark:hover:bg-gray-800"
+                ? "bg-[#FFD8AD] dark:bg-gray-800 text-[#FF8C00] dark:text-indigo-400 font-medium"
+                : "hover:bg-[#FFD8AD] dark:hover:bg-gray-800"
             )}
           >
             {link.icon}

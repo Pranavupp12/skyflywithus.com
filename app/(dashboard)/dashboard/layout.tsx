@@ -25,7 +25,7 @@ export default function DashboardLayout({
         {/* Top section of sidebar */}
         <div >
           <div className="flex items-center gap-2 mb-8 p-2">
-            <Plane className="h-6 w-6 text-indigo-600" />
+            <Plane className="h-6 w-6 text-[#FF8C00]" />
             <span className="text-xl font-bold text-gray-900 dark:text-white">
               SkyFlyWithUs
             </span>

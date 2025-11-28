@@ -306,7 +306,7 @@ export function BlogForm() {
         </div>
 
         <div className="p-6 bg-gray-50 dark:bg-gray-900 border-t dark:border-gray-700 rounded-b-lg">
-          <Button type="submit" disabled={isFormSubmitting} className="bg-indigo-600 hover:bg-indigo-700">
+          <Button type="submit" disabled={isFormSubmitting} className="bg-[#FF8C00] hover:bg-[#FFB667]">
             {isFormSubmitting ? "Saving Post..." : "Save Post"}
           </Button>
         </div>
