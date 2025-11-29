@@ -121,9 +121,9 @@ export function BookingForm() {
   return (
     <section className="w-full bg-[#FF8C00] pt-20 mx-10 pb-25 text-center" id="booking-form-section">
       {/* 2. Image Container */}
-     <div className="lg:block hidden h-[400px] overflow-hidden relative mb-[-10px] z-10">
+     <div className="lg:block hidden h-[460px] overflow-hidden relative mb-[-10px] z-10">
         <Image
-          src="/images/web-banner-50.png"
+          src="/images/booking-banner-3.png"
           fill
           className="object-cover"
           priority={true}
