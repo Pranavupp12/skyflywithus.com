@@ -152,7 +152,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
               className="object-cover"
               loading="eager" 
               priority={true}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+              sizes="(max-width: 1024px) 100vw, 800px"
             />
           </div>
 
