@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
-
-// --- Your Provided Destination Data ---
+// --- Destination Data ---
 const destinations = [
   {
     id: "paris",
@@ -33,7 +33,6 @@ const destinations = [
   },
   {
     id: "rome",
-    // Note: You had bali-small.jpeg for Rome, you may want to change this
     imageUrl: "/images/destinations/rome-small.jpg", 
     category: "Italy",
     title: "Rome",
@@ -46,56 +45,56 @@ const destinations = [
   },
 ];
 
-// --- New Card Sub-Component (Styled like your image) ---
+// --- Card Component ---
 interface DestinationImageCardProps {
   imageUrl: string;
   category: string;
   title: string;
-  href: string; // Link for the card
+  href: string;
 }
 
 function DestinationImageCard({ imageUrl, category, title, href }: DestinationImageCardProps) {
   return (
-    <Link href={href} className="block group">
-      {/* This div is the card itself. We give it a fixed height
-        to create the vertical card shape from your example.
+    <Link href={href} className="block group h-full w-full">
+      {/* UPDATED: Removed fixed width (w-[250px]). 
+         Now uses w-full to fill the carousel slot.
+         Increased height to h-[400px] for a better poster look.
       */}
-      <div className="relative h-[300px] w-full overflow-hidden rounded-lg shadow-md transition-shadow duration-300 ease-in-out group-hover:shadow-xl">
+      <div className="relative h-[400px] w-full overflow-hidden rounded-2xl shadow-md transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
         {/* Background Image */}
         <Image
           src={imageUrl}
           alt={title}
           fill
-          loading="eager"
-          className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
         />
-        {/* Gradient Overlay (for text readability) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
         
-        {/* Text Content (styled to match your example) */}
-        <div className="absolute bottom-0 left-0 p-4 z-10">
-          <h3 className="text-2xl font-bold text-white uppercase tracking-wider">{title}</h3>
-          <p className="text-sm text-gray-200">{category}</p>
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+        
+        {/* Text Content */}
+        <div className="absolute bottom-0 left-0 p-6 z-10 w-full">
+          <p className="text-sm font-medium text-orange-400 mb-1 tracking-wide uppercase">{category}</p>
+          <h3 className="text-3xl font-bold text-white">{title}</h3>
         </div>
       </div>
     </Link>
   );
 }
-// --- End Card Sub-Component ---
 
-
-// --- Main PopularDestinations Component (Rebuilt) ---
+// --- Main Component ---
 export function PopularDestinations() {
   return (
-    <section className="w-full mt-20 bg-gray-100 dark:bg-gray-900">
-      <div className=" mx-5">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-regular text-gray-900 dark:text-white">
-            Most <span className="text-[#FF8C00] font-bold">Loved Destinations</span>
+    <section className="w-full py-20 bg-[#FFF5EB]/50">
+      <div className="container mx-auto px-6">
+        
+        {/* UPDATED: Header is now Left Aligned */}
+        <div className="text-left mb-12">
+          <h2 className="text-4xl  font-bold text-gray-900 mb-4">
+            Popular <span className="text-[#FF8C00]">Destinations</span>
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 mt-3 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl">
            Explore our most popular travel destinations — the places everyone is excited to visit.
           </p>
         </div>
@@ -106,17 +105,17 @@ export function PopularDestinations() {
             align: "start",
             loop: true,
           }}
-          className="w-full max-w-7xl mx-auto" // Set a max-width for the carousel
+          className="w-full"
         >
           <CarouselContent className="-ml-4">
             {destinations.map((dest) => (
               <CarouselItem 
                 key={dest.id} 
-                // This makes it show 4 cards on desktop, 2 on tablet, 1 on mobile
-                className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/5"
+                // Adjusted basis for better spacing: 1 on mobile, 2 on tablet, 3 on small desktop, 4 on large
+                className="pl-4 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
                 <DestinationImageCard
-                  href="#" // Placeholder link, you can change this later
+                  href="#" 
                   imageUrl={dest.imageUrl}
                   category={dest.category}
                   title={dest.title}
@@ -124,9 +123,14 @@ export function PopularDestinations() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="ml-12" />
-          <CarouselNext className="mr-12" />
+          
+          {/* Navigation Arrows - Positioned top right relative to carousel or standard sides */}
+          <div className="hidden md:block">
+            <CarouselPrevious className="absolute -left-12 top-1/2 bg-[#FF8C00] text-white hover:bg-[#FF8C00]/80 hover:text-white -translate-y-1/2" />
+            <CarouselNext className="absolute -right-12 top-1/2 bg-[#FF8C00] text-white hover:bg-[#FF8C00]/80 hover:text-white -translate-y-1/2" />
+          </div>
         </Carousel>
+
       </div>
     </section>
   );

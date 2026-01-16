@@ -13,7 +13,7 @@ export function PreFooterBanner() {
   };
 
   return (
-    <section className="mx-8 md:mx-15 lg:mx-60 mb-20">
+    <section className="mx-20 lg:mx-60 my-20">
       <div className="bg-[#FF8C00] p-2 sm:p-0  rounded-2xl overflow-hidden flex flex-col md:flex-row items-center justify-center relative shadow-lg">
         
         {/* Left Side: Image of Happy Person */}

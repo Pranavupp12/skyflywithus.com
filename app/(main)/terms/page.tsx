@@ -20,7 +20,7 @@ const TermsAndConditionsPage: React.FC = () => {
   return (
     <>
     
-      <div className="terms-and-conditions-page  max-w-5xl  container mx-auto p-4 md:p-8 lg:p-12">
+      <div className="terms-and-conditions-page  max-w-5xl  container mx-auto p-4 mt-25 md:p-8 lg:p-12">
         
         {/* Header Section */}
         <header className="mb-8">

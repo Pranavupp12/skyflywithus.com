@@ -5,48 +5,31 @@ import { LetterAvatar } from "@/components/ui/letter-avatar";
 import { Article } from "@/components/blog_components/blog-card";
 import { ArticleFaqs } from "@/components/blog_components/article-faq";
 import { Metadata } from "next";
+import { CalendarDays, Clock, ArrowLeft } from "lucide-react";
 
-// This file must be a Server Component (no "use client")
-// It handles the route /blog/[slug]
+// Define an extended interface
+interface SingleBlogArticle extends Article {
+  categories?: string[];
+}
 
 // --- Data Fetching Function ---
-async function getSingleBlog(slug: string): Promise<Article | null> {
-
-  // Ensure slug is present
-  if (!slug) {
-    return null;
-  }
-
+async function getSingleBlog(slug: string): Promise<SingleBlogArticle | null> {
+  if (!slug) return null;
   try {
     const response = await fetch(
       `${process.env.NEXTAUTH_URL}/api/blogs/${slug}`,
       { cache: 'no-store' }
     );
-
-    // --- REMOVED DEBUG LOGGING ---
-
-    if (response.status === 404) {
-      // If API returns 404, signal Next.js to show the proper 404 page
-      notFound();
-    }
-
-    if (!response.ok) {
-      // If status is 500 or another error, throw
-      throw new Error(`API returned status ${response.status}`);
-    }
-
-    // Return the parsed data
+    if (response.status === 404) notFound();
+    if (!response.ok) throw new Error(`API returned status ${response.status}`);
     return await response.json();
-
   } catch (error) {
-    // Keep a simplified log for tracking hard failures
     console.error('Individual Blog Fetch Failed:', error);
     return null;
   }
 }
 
-
-// --- New Related Posts Fetching Function ---
+// --- Related Posts Fetching Function ---
 async function getRelatedBlogs(slug: string): Promise<any[]> {
   try {
     const response = await fetch(
@@ -61,23 +44,12 @@ async function getRelatedBlogs(slug: string): Promise<any[]> {
   }
 }
 
-// 1. --- GENERATEMETADATA FUNCTION (THE FIX) ---
-// This runs first on the server to inject meta tags into the HTML <head>
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-
+// --- Metadata ---
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-
   const post = await getSingleBlog(slug);
+  if (!post) return { title: "Page Not Found", description: "Article not found." };
 
-  // Provide default metadata if the post is not found
-  if (!post) {
-    return {
-      title: "Page Not Found - SkyFlyWithUs",
-      description: "The requested article could not be found.",
-    };
-  }
-
-  // Use the fetched SEO fields
   return {
     title: post.metaTitle,
     description: post.metaDesc,
@@ -91,121 +63,154 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-// --- End Data Fetching ---
-
-// --- Rendering Logic ---
-
+// --- Main Page Component ---
 export default async function IndividualBlogPage({ params }: { params: Promise<{ slug: string }> }) {
-
   const { slug } = await params;
-
   const post = await getSingleBlog(slug);
   const relatedBlogs = await getRelatedBlogs(slug);
 
-  if (!post) {
-    // If no post is found, the router will show the 404 page.
-    // This also helps resolve the ambiguity with the category route.
-    notFound();
-  }
+  if (!post) notFound();
 
-  // NOTE: We need a related posts endpoint, but for simplicity, we skip it for now.
-  // The sidebar will be static until we create a dedicated 'related posts' API.
+  // Categories Logic (Safe Fallback)
+  const displayCategories = post.categories && post.categories.length > 0 
+    ? post.categories 
+    : [post.category];
 
   return (
-    <main className="mx-5 md:mx-10 mt-20 mb-20">
-      <div className="flex flex-col lg:flex-row gap-8">
-
-        {/* Main Content Area (2/3 width) */}
-        <div className="lg:w-2/3 bg-white rounded-2xl p-10">
-          {/* Breadcrumbs */}
-          <div className="text-sm text-gray-500 mb-6">
-            <Link href="/blog" className="hover:underline">Blog</Link>
-            <span className="mx-2">&gt;</span>
-            <Link href={`/blog/category/${post.categorySlug}`} className="hover:underline">
-              {post.category}
+    <main className="min-h-screen bg-[#FFF5EB]/50 py-24">
+      
+      {/* Container to align content */}
+      <div className="container mx-auto px-6 mt-10">
+        
+        {/* Back Link */}
+        <div className="mb-8">
+            <Link href="/blog" className="inline-flex items-center text-sm font-medium text-gray-500 hover:text-[#FF8C00] transition-colors">
+                <ArrowLeft className="w-4 h-4 mr-1" /> Back to Blogs
             </Link>
-          </div>
-
-          {/* Blog Title */}
-          <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-            {post.title}
-          </h1>
-
-          {/* Author Details */}
-          <div className="flex items-center gap-3 mb-6 border-b pb-4">
-            <LetterAvatar name={post.authorName} size={40} />
-            <div>
-              <p className="text-sm font-medium text-gray-800 dark:text-gray-100">{post.authorName}</p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">{post.publishDate}</p>
-            </div>
-            <span className="ml-auto bg-[#FF8C00] text-white text-xs font-regular px-3 py-1 rounded-full">
-              {post.category}
-            </span>
-          </div>
-
-          {/* Main Image */}
-          <div className="relative w-full h-80 lg:h-96 rounded-lg overflow-hidden mb-8">
-            <Image
-              src={post.imageUrl}
-              alt={post.title}
-              fill
-              className="object-cover"
-              loading="eager" 
-              priority={true}
-              sizes="(max-width: 1024px) 100vw, 800px"
-            />
-          </div>
-
-          {/* Blog Content */}
-          <div
-            className="prose dark:prose-invert max-w-none text-gray-700  dark:text-gray-200 mb-10"
-            // WARNING: Since Tiptap outputs HTML, we must use this.
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-
-          {/* FAQ Section */}
-          {post.faqs && post.faqs.length > 0 && (
-            <ArticleFaqs questions={post.faqs} />
-          )}
         </div>
 
-        {/* Sidebar (1/3 width) */}
-        <aside className="lg:w-1/3 space-y-8">
-          <div className="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-lg sticky top-24">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              More in <span className="text-[#FF8C00]">{post.category}</span>
-            </h2>
-            <div className="space-y-4">
-              {relatedBlogs.length > 0 ? (
-                relatedBlogs.map(relatedPost => (
-                  <Link key={relatedPost.id} href={`/blog/${relatedPost.slug}`} passHref>
-                    <div className="p-3 rounded-md hover:bg-[#FFCA91] dark:hover:bg-gray-700 transition cursor-pointer">
+        <div className="flex flex-col lg:flex-row gap-12">
 
-                      {/* 1. Post Title */}
-                      <p className="font-medium text-gray-900 dark:text-white line-clamp-2 mb-2">
-                        {relatedPost.title}
-                      </p>
+          {/* Main Content Area (2/3 width) */}
+          <div className="lg:w-2/3">
+            
+            {/* Article Header */}
+            <div className="mb-8">
+                {/* Category Badges */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                    {displayCategories.map((cat, index) => (
+                    <span 
+                        key={index} 
+                        className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-orange-100 text-xs font-bold uppercase tracking-wider text-[#FF8C00] shadow-sm"
+                    >
+                        {cat}
+                    </span>
+                    ))}
+                </div>
 
-                      {/* 2. Author Card Below Title (New Structure) */}
-                      <div className="flex items-center gap-2">
-                        <LetterAvatar name={relatedPost.authorName} size={24} />
-                        <p className="text-sm text-gray-700 dark:text-gray-300">
-                          By {relatedPost.authorName}
-                        </p>
-                        <span className="text-xs text-gray-400"> • </span>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {relatedPost.publishDate}
-                        </p>
-                      </div>
+                <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight mb-6">
+                    {post.title}
+                </h1>
+
+                {/* Author & Date Metadata */}
+                <div className="flex items-center gap-4 text-sm text-gray-500 pb-8 border-b border-gray-200 dark:border-gray-700">
+                    <div className="flex items-center gap-2">
+                        <LetterAvatar name={post.authorName} size={32} />
+                        <span className="font-semibold text-gray-900 dark:text-gray-100">{post.authorName}</span>
                     </div>
-                  </Link>
-                ))
-              ) : (
-                <p className="text-gray-500">No other related posts found.</p>
-              )}
+                    <span className="text-gray-300">|</span>
+                    <div className="flex items-center gap-1.5">
+                        <CalendarDays className="w-4 h-4" />
+                        <span>{post.publishDate}</span>
+                    </div>
+                     <span className="text-gray-300">|</span>
+                    <div className="flex items-center gap-1.5">
+                        <Clock className="w-4 h-4" />
+                        <span>5 min read</span>
+                    </div>
+                </div>
             </div>
+
+            {/* Main Image */}
+            <div className="relative w-full h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-lg mb-10">
+              <Image
+                src={post.imageUrl || "/images/airplane-wing2.jpg"} // Added fallback for main image too just in case
+                alt={post.title}
+                fill
+                className="object-cover"
+                loading="eager" 
+                priority={true}
+                sizes="(max-width: 1024px) 100vw, 800px"
+              />
+            </div>
+
+            {/* Blog Content */}
+            <article className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-a:text-[#FF8C00] max-w-none bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 mb-10">
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            </article>
+
+            {/* FAQ Section */}
+            {post.faqs && post.faqs.length > 0 && (
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                  <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Frequently Asked Questions</h3>
+                  <ArticleFaqs questions={post.faqs} />
+              </div>
+            )}
           </div>
-        </aside>
+
+          {/* Sidebar (1/3 width) */}
+          <aside className="lg:w-1/3 space-y-8">
+            {/* Sticky Container */}
+            <div className="sticky top-24 space-y-4">
+                
+                {/* Related Posts Card */}
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-6 border-l-4 border-[#FF8C00] pl-3">
+                    More in {post.category}
+                    </h2>
+                    <div className="flex flex-col gap-6">
+                    {relatedBlogs.length > 0 ? (
+                        relatedBlogs.map(relatedPost => (
+                        <Link key={relatedPost.id} href={`/blog/articles/${relatedPost.slug}`} className="group block">
+                            <div className="flex gap-4 items-start">
+                                {/* Thumbnail */}
+                                <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                                    {/* FIX: Added fallback logic (||) to prevent empty src error */}
+                                    <Image 
+                                        src={relatedPost.image || "/images/airplane-wing2.jpg"} 
+                                        alt={relatedPost.title} 
+                                        fill 
+                                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                    />
+                                </div>
+                                <div>
+                                    <h4 className="font-semibold text-gray-900 dark:text-white line-clamp-2 group-hover:text-[#FF8C00] transition-colors leading-snug mb-2">
+                                        {relatedPost.title}
+                                    </h4>
+                                    <p className="text-xs text-gray-500">{relatedPost.publishDate}</p>
+                                </div>
+                            </div>
+                        </Link>
+                        ))
+                    ) : (
+                        <p className="text-gray-500 text-sm">No other related posts found.</p>
+                    )}
+                    </div>
+                </div>
+
+                {/* Optional: Newsletter / Promo Box */}
+                <div className="bg-[#FF8C00] p-8 rounded-2xl text-white text-center shadow-lg">
+                    <h3 className="text-xl font-bold mb-2">Want cheaper flights?</h3>
+                    <p className="text-white/90 text-sm mb-6">Join 10,000+ travelers getting our weekly deal alerts.</p>
+                    <Link href="/contacts">
+                        <button className="bg-white text-[#FF8C00] font-bold py-3 px-6 rounded-full w-full hover:bg-orange-50 transition-colors shadow-md">
+                            Get Alerts
+                        </button>
+                    </Link>
+                </div>
+            </div>
+          </aside>
+        </div>
       </div>
     </main>
   );

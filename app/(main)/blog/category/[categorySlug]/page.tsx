@@ -65,7 +65,7 @@ async function getFilteredBlogs(categoryName: string, page:number): Promise<{ da
 // --- End Data Fetching ---
 
 // --- ADD THIS FUNCTION ---
-export async function generateMetadata({ params }: { params: { categorySlug: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ categorySlug: string }> }): Promise<Metadata> {
 
   const { categorySlug } = await params;
   
@@ -105,42 +105,55 @@ export default async function CategoryBlogPage({ params, searchParams }: Categor
   const { data: filteredBlogs, metadata } = await getFilteredBlogs(category.name, currentPage);
 
   return (
-    <main className="mx-5 md:mx-15  mt-20 mb-20">
-      {/* Page Header with Breadcrumbs */}
-      <div className="text-center mb-12">
-        <div className="text-sm text-gray-500 mb-2">
-          <Link href="/blog" className="hover:underline">Blog</Link>
-          <span className="mx-2">&gt;</span>
-          <span>{category.name}</span>
+    // FIX: Applied negative margins to stretch background full width
+    // Added min-h-screen to ensure background covers tall screens
+    <main className="w-full min-h-screen bg-[#FFF5EB]/50 py-24">
+      
+      {/* Container to align content */}
+      <div className="container mx-auto px-6 mt-10">
+      
+        {/* Page Header with Breadcrumbs */}
+        <div className="text-center mb-16">
+          <div className="text-sm text-gray-500 mb-3 uppercase tracking-wide font-semibold">
+            <Link href="/blog" className="hover:text-[#FF8C00] transition-colors">Blog</Link>
+            <span className="mx-2 text-gray-300">/</span>
+            <span className="text-[#FF8C00]">{category.name}</span>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            {category.name}
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Explore all expert articles, tips, and guides related to {category.name.toLowerCase()}.
+          </p>
         </div>
-        <h1 className="text-3xl md:text-5xl font-semibold text-[#FF8C00] dark:text-white mb-4">
-          {category.name}
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Explore all articles and guides related to this category.
-        </p>
-      </div>
 
-      {/* Filtered Articles Grid */}
-      {/* Filtered Articles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredBlogs.length > 0 ? (
-            filteredBlogs.map((article: Article) => (
-                <BlogCard key={article.id} article={article} />
-            ))
-        ) : (
-            <div className="text-center text-gray-500 py-16 col-span-3">
-                <h3 className="text-2xl font-semibold mb-2">No Articles Found</h3>
-                <p>There are no articles in this category just yet. Check back soon!</p>
-            </div>
-        )}
-      </div>
+        {/* Filtered Articles Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredBlogs.length > 0 ? (
+              filteredBlogs.map((article: Article) => (
+                  <BlogCard key={article.id} article={article} />
+              ))
+          ) : (
+              <div className="col-span-3 text-center py-20">
+                <p className="text-xl text-gray-500 font-medium">No articles found in this category.</p>
+                <p className="text-gray-400 mt-2">Check back later for new updates.</p>
+                <Link href="/blog" className="inline-block mt-6 text-[#FF8C00] font-semibold hover:underline">
+                    View all blogs &rarr;
+                </Link>
+              </div>
+          )}
+        </div>
 
-      {/* Pagination Controls */}
-      <PaginationControls 
-        currentPage={metadata.currentPage}
-        totalPages={metadata.totalPages}
-      />
+        {/* Pagination Controls */}
+        <div className="mt-16">
+            <PaginationControls 
+                currentPage={metadata.currentPage}
+                totalPages={metadata.totalPages}
+            />
+        </div>
+      
+      </div>
     </main>
   );
 }

@@ -45,7 +45,7 @@ model Blog {
   id            String   @id @default(auto()) @map("_id") @db.ObjectId
   title         String
   slug          String   @unique 
-  category      String  
+  categories    String[]  
   content       String
   image         String
   metaTitle     String

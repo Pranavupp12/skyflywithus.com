@@ -1,4 +1,4 @@
-"use client"; // This file is the Client Component
+"use client"; 
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,6 @@ import { HiOutlineMail } from "react-icons/hi";
 import { HiOutlinePhone } from "react-icons/hi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-// Rename the function to avoid conflicts
 export default function ContactPageClient() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -67,93 +66,118 @@ export default function ContactPageClient() {
   };
 
   return (
-    <main>
-      <div className=" mx-5 md:mx-30 mt-20 mb-20 ">
-        <div className="max-w-lg mx-auto gap-6 justify-between lg:flex lg:max-w-5xl">
+    // FIX APPLIED HERE:
+    // 1. Added '-mx-5 md:-mx-15' to stretch background full width
+    // 2. Added 'bg-[#FFF5EB]/50'
+    // 3. Added 'py-20' for vertical spacing
+    <main className="w-full py-24 bg-[#FFF5EB]/50 min-h-screen">
+      
+      {/* Container to align content properly */}
+      <div className="container mx-auto px-6 mt-10">
+        
+        <div className="max-w-lg mx-auto gap-12 justify-between lg:flex lg:max-w-6xl">
+          
           {/* Left Side: Contact Info */}
-          <div className="max-w-lg space-y-3">
-            <h3 className="text-[#FF8C00] text-lg font-semibold">Contact</h3>
-            <p className="text-black dark:text-white text-3xl font-semibold sm:text-4xl">
-              Let us know how we can help
+          <div className="max-w-lg space-y-3 lg:pt-10">
+            <h3 className="text-[#FF8C00] text-lg font-bold uppercase tracking-wider">Contact Us</h3>
+            <p className="text-black dark:text-white text-4xl font-bold sm:text-5xl leading-tight">
+              Let us know how <br /> we can help
             </p>
-            <p className="text-gray-800 text-lg dark:text-gray-300">
-              If you have any queries, contact us so you can fill out the form,
-              and our team can connect with you.
+            <p className="text-gray-600 text-lg dark:text-gray-300 mt-4 leading-relaxed">
+              If you have any queries about bookings, cancellations, or just want to say hello, 
+              fill out the form and our team will get back to you shortly.
             </p>
-            <div>
-              <ul className="mt-6 flex flex-wrap gap-x-10 gap-y-6 items-center">
+            
+            <div className="pt-8">
+              <ul className="space-y-6">
                 {contactMethods.map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-x-3">
-                    <div className="flex-none text-[#FF8C00]">{item.icon}</div>
-                    <p className="text-gray-700 dark:text-gray-300">
-                      {item.contact}
-                    </p>
+                  <li key={idx} className="flex items-start gap-x-4">
+                    <div className="flex-none p-3 rounded-full bg-white text-[#FF8C00] shadow-sm">
+                        {item.icon}
+                    </div>
+                    <div>
+                        <p className="font-semibold text-gray-900 dark:text-white">
+                            {idx === 0 ? "Email" : idx === 1 ? "Phone" : "Office"}
+                        </p>
+                        <p className="text-gray-600 dark:text-gray-400">
+                        {item.contact}
+                        </p>
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
           </div>
+
           {/* Right Side: Form */}
-          <div className="flex-1 p-10 border border-[#FF8C00] bg-white rounded-xl mt-12 sm:max-w-lg lg:max-w-md">
+          <div className="flex-1 p-8 sm:p-10 border border-orange-100 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-2xl shadow-xl mt-12 lg:mt-0 sm:max-w-lg lg:max-w-md">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="full-name" className="font-medium">
+                <Label htmlFor="full-name" className="font-medium text-gray-700 dark:text-gray-200">
                   Full name
                 </Label>
                 <Input
                   id="full-name"
                   name="full-name"
                   type="text"
+                  placeholder="John Doe"
                   required
                   disabled={loading}
+                  className="h-11 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus-visible:ring-[#FF8C00]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="font-medium">
+                <Label htmlFor="email" className="font-medium text-gray-700 dark:text-gray-200">
                   Email
                 </Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
+                  placeholder="john@example.com"
                   required
                   disabled={loading}
+                  className="h-11 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus-visible:ring-[#FF8C00]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="company" className="font-medium">
-                  Company <span className="text-gray-500">(Optional)</span>
+                <Label htmlFor="company" className="font-medium text-gray-700 dark:text-gray-200">
+                  Company <span className="text-gray-400 text-sm font-normal">(Optional)</span>
                 </Label>
                 <Input
                   id="company"
                   name="company"
                   type="text"
+                  placeholder="Your Company"
                   disabled={loading}
+                  className="h-11 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus-visible:ring-[#FF8C00]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="message" className="font-medium">
+                <Label htmlFor="message" className="font-medium text-gray-700 dark:text-gray-200">
                   Message
                 </Label>
                 <Textarea
                   id="message"
                   name="message"
                   required
-                  className="h-36"
+                  placeholder="How can we help you?"
+                  className="h-36 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 focus-visible:ring-[#FF8C00] resize-none"
                   disabled={loading}
                 />
               </div>
               <Button
                 type="submit"
-                className="w-full bg-[#FF8C00] hover:bg-[#FFA749]"
+                className="w-full h-12 text-base font-bold bg-[#FF8C00] hover:bg-[#ff9514] text-white rounded-lg shadow-md transition-all hover:shadow-lg mt-2"
                 disabled={loading}
               >
-                {loading ? "Submitting..." : "Submit"}
+                {loading ? "Sending Message..." : "Send Message"}
               </Button>
             </form>
           </div>
         </div>
       </div>
+      
       {/* Confirmation Dialog */}
       <ConfirmationDialog open={isSubmitted} onOpenChange={setIsSubmitted} />
     </main>

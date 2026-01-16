@@ -49,8 +49,6 @@ const categories = [
   { name: "Airport", slug: "airport" },
 ];
 
-const sortedCategories = [...categories].sort((a, b) => a.name.localeCompare(b.name));
-
 export default async function BlogPage({ searchParams }: { searchParams: Promise<{ page?: string }>}) {
 
   // 1. Await the searchParams object to ensure it is resolved
@@ -62,51 +60,63 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
   const { data: allBlogs, metadata } = await getAllBlogs(currentPage);
 
   return (
-    <main className="mx-5 md:mx-15 mt-20 mb-20">
-      {/* Page Header */}
-      <div className="text-center mb-10">
-        <h1 className="text-5xl font-regular text-black dark:text-white mb-4">
-          Our <span className="text-[#FF8C00] font-semibold">Blogs</span>
-        </h1>
-        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          All the latest travel tips, airline guides, and booking advice from
-          the SkyFlyWithUs team.
-        </p>
-      </div>
+    // FIX: Applied negative margins to stretch background full width
+    // Added min-h-screen to ensure background covers tall screens
+    <main className="w-full min-h-screen bg-[#FFF5EB]/50 py-24">
+      
+      {/* Container to align content */}
+      <div className="container mx-auto px-6 mt-10">
+        
+        {/* NEW DESIGN: Hero Section (Title + Categories) */}
+        <div className="flex flex-col items-center text-center mb-16">
+          <span className="text-[#FF8C00] font-bold tracking-wider uppercase text-sm mb-3">
+            Travel Insights
+          </span>
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
+            Our <span className="text-[#FF8C00]">Journal</span>
+          </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Expert advice on flight cancellations, refunds, and travel hacks. 
+            Everything you need to fly smarter.
+          </p>
 
-      {/* NEW: Browse by Category Section */}
-      <div className="mb-10">
-        <h2 className="text-2xl font-regular mb-6 text-center">
-          Browse by Category
-        </h2>
-        <div className="flex flex-wrap h-auto justify-center gap-2">
-          {categories.map((category) => (
-            <Link
-              key={category.slug}
-              href={`/blog/category/${category.slug}`}
-              className="bg-[#FF8C00] hover:bg-[#FFA749] dark:bg-gray-800 dark:hover:bg-gray-700 text-white dark:text-gray-200 px-4 py-2 rounded-full text-sm font-medium transition-colors"
-            >
-              {category.name}
-            </Link>
-          ))}
+          {/* Categories Filter */}
+          <div className="flex flex-wrap justify-center gap-3 max-w-4xl">
+            {categories.map((category) => (
+              <Link
+                key={category.slug}
+                href={`/blog/category/${category.slug}`}
+                className="bg-white dark:bg-gray-800 border border-transparent hover:border-[#FF8C00] text-gray-700 dark:text-gray-200 hover:text-[#FF8C00] px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-sm hover:shadow-md"
+              >
+                {category.name}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {allBlogs.length > 0 ? (
-            allBlogs.map((article) => (
-              <BlogCard key={article.id} article={article} />
-            ))
-        ) : (
-            <p className="text-center text-gray-500 py-8 col-span-3">No articles found in the database.</p>
-        )}
-      </div>
+        {/* Blog Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {allBlogs.length > 0 ? (
+              allBlogs.map((article) => (
+                <BlogCard key={article.id} article={article} />
+              ))
+          ) : (
+              <div className="col-span-3 text-center py-20">
+                <p className="text-xl text-gray-500 font-medium">No articles found.</p>
+                <p className="text-gray-400">Check back later for new updates.</p>
+              </div>
+          )}
+        </div>
 
-      {/* Pagination Controls */}
-      <PaginationControls 
-        currentPage={metadata.currentPage}
-        totalPages={metadata.totalPages}
-      />
+        {/* Pagination Controls */}
+        <div className="mt-16">
+            <PaginationControls 
+                currentPage={metadata.currentPage}
+                totalPages={metadata.totalPages}
+            />
+        </div>
+      
+      </div>
     </main>
   );
 }

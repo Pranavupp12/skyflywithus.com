@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react"; // Make sure ArrowRight is imported
 import { BlogCard, Article } from "@/components/blog_components/blog-card";
 
 // --- Data Fetching Function ---
 async function getRecentBlogs(): Promise<Article[]> {
   try {
-    // Fetch data from the new endpoint
     const response = await fetch(`${process.env.NEXTAUTH_URL}/api/blogs/all`, {
-      // Essential to prevent caching and ensure fresh data
       cache: 'no-store',
     });
 
@@ -18,7 +17,6 @@ async function getRecentBlogs(): Promise<Article[]> {
       return [];
     }
 
-    // We only want the top 3 recent articles for the homepage
     const allBlogs: Article[] = await response.json();
     return allBlogs.slice(0, 3);
 
@@ -33,12 +31,15 @@ export async function RecentArticles() {
   const recentArticles = await getRecentBlogs();
 
   return (
-    <section className="mx-5 md:mx-20 mb-20  lg:min-w-[70%]">
-      {/* Heading and View All Button */}
-      <div className="relative flex justify-center items-center mb-10">
-        {/* 1. Centered Text Block */}
-        <div className="text-center">
-          <h2 className="text-5xl font-regular text-black dark:text-white mb-2">
+    <section className="w-full bg-[#FFF5EB]/50 py-20">
+      <div className="container mx-auto px-6">
+      {/* Header Container */}
+      {/* FIX: Changed 'justify-center' to 'justify-start' to align content to the left */}
+      <div className="relative flex justify-start items-center mb-12">
+        
+        {/* 1. Left-Aligned Text Block */}
+        <div className="text-left">
+          <h2 className="text-4xl font-bold text-black dark:text-white mb-4">
             Recent <span className="text-[#FF8C00] font-semibold">Blogs</span>
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300">
@@ -46,15 +47,15 @@ export async function RecentArticles() {
           </p>
         </div>
 
-        {/* 2. Absolutely Positioned Button */}
+        {/* 2. Absolutely Positioned Button (Stays on the right) */}
         <Link
           href="/blog"
           passHref
-          // This positions the button on the right, vertically centered
-          className="absolute right-0 top-1/3 -translate-y-0"
+          // Centered vertically relative to the container
+          className="absolute right-0 top-1/2 -translate-y-1/2" 
         >
-          <Button variant="ghost" className="text-[#FF8C00] text-sm hover:text-white hidden lg:block">
-            View All 
+          <Button variant="ghost" className="text-[#FF8C00] text-sm hover:text-white hidden lg:flex items-center">
+            View All <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </Link>
       </div>
@@ -68,6 +69,7 @@ export async function RecentArticles() {
         ) : (
           <p className="text-center text-gray-500 py-8 col-span-3">No recent articles found.</p>
         )}
+      </div>
       </div>
     </section>
   );

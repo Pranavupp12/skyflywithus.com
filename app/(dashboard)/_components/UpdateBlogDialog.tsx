@@ -13,9 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import {
-    Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
-} from "@/components/ui/select";
+import { MultiSelect } from "@/components/ui/multi-select";
 import { RichTextEditor } from "./rich_text_editor";
 
 // --- HARDCODED CATEGORIES (Added) ---
@@ -42,12 +40,14 @@ function slugify(text: string) {
     .replace(/\-\-+/g, '-');
 }
 
+const categoryOptions = blogCategories.map(cat => ({ label: cat.name, value: cat.name }));
+
 // Define the shape of the data received from the table and used in the form
 interface BlogData {
     id: string;
     title: string;
     slug: string;
-    category: string;
+    categories: string[];
     content: string;
     image: string; // Current image URL
     metaTitle: string;
@@ -217,28 +217,20 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
                     
                     {/* Category */}
                     <div className="space-y-2">
-                      <Label htmlFor="category">Category</Label>
+                      <Label htmlFor="categories">Categories</Label>
                       <Controller
-                        name="category"
+                        name="categories"
                         control={control}
-                        rules={{ required: "Category is required" }}
+                        rules={{ required: "At least one category is required" }}
                         render={({ field }) => (
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a category" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {/* --- CATEGORIES USED HERE --- */}
-                              {blogCategories.map((cat) => (
-                                <SelectItem key={cat.slug} value={cat.name}>
-                                  {cat.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <MultiSelect 
+                            options={categoryOptions}
+                            selected={field.value || []} // Ensure array
+                            onChange={field.onChange}
+                          />
                         )}
                       />
-                      {errors.category && <p className="text-sm text-red-500">{errors.category.message}</p>}
+                      {errors.categories && <p className="text-sm text-red-500">{errors.categories.message}</p>}
                     </div>
 
                     {/* Content (Tiptap) */}

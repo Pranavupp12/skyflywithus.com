@@ -19,18 +19,32 @@ import {
   PlaneTakeoff,
   PlaneLanding,
   Search,
-  CheckCircle,
+  Tag,      // New import
+  BookOpen, // New import
+  Headset   // New import
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import { useRouter } from 'next/navigation'; // <-- Import useRouter
-import { Volkhov } from 'next/font/google'; // <-- 1. Import the new font
+import { useRouter } from 'next/navigation';
 
-// 2. Initialize the font (Oswald needs a bold weight to be visible)
-const volkhov = Volkhov({
-  subsets: ['latin'],
-  weight: '700', 
-});
+// --- FEATURES DATA ---
+const features = [
+  {
+    icon: <Tag className="h-6 w-6 text-white" />,
+    title: "Exclusive Deals",
+    description: "Unlock hidden fares and limited-access discounts thanks to our direct partnerships with major airlines. Travel smarter and save more."
+  },
+  {
+    icon: <BookOpen className="h-6 w-6 text-white" />,
+    title: "Expert Travel Advice",
+    description: "Beyond booking, access expert-crafted guides on compensation, upgrades, and practical travel tips to smooth your journey."
+  },
+  {
+    icon: <Headset className="h-6 w-6 text-white" />,
+    title: "24/7 Helpline Support",
+    description: "We are always here for you. Enjoy round-the-clock customer support dedicated purely to your comfort and peace of mind."
+  }
+];
 
 // Reusable component for the form fields
 function BookingField({
@@ -45,8 +59,8 @@ function BookingField({
   className?: string;
 }) {
   return (
-    <div className={cn("text-left", className)}>
-      <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
+    <div className={cn("text-left p-2 rounded-md hover:bg-gray-50 transition-colors", className)}>
+      <div className="flex items-center gap-2 text-xs font-medium text-gray-500 mb-1 uppercase tracking-wider">
         {icon}
         <span>{label}</span>
       </div>
@@ -57,16 +71,16 @@ function BookingField({
 
 export function BookingForm() {
   const router = useRouter();
-  
-  // --- State from previous form ---
+
+  // --- Form State ---
   const [fromDate, setFromDate] = useState<Date | undefined>(undefined);
   const [toDate, setToDate] = useState<Date | undefined>(undefined);
   const [adults, setAdults] = useState(1);
   const [infants, setInfants] = useState(0);
-  const [fromValue, setFromValue] = useState("DEL"); // Using IATA Code for testing
-  const [toValue, setToValue] = useState("LHR"); // Using IATA Code for testing
-  const [travelClass, setTravelClass] = useState("business"); 
-  const [loading, setLoading] = useState(false); // Used for UI feedback
+  const [fromValue, setFromValue] = useState("DEL");
+  const [toValue, setToValue] = useState("LHR");
+  const [travelClass, setTravelClass] = useState("business");
+  const [loading, setLoading] = useState(false);
 
   const today = new Date(new Date().setHours(0, 0, 0, 0));
   const passengersLabel = `${adults} Passenger${adults > 1 ? 's' : ''}${infants > 0 ? `, ${infants} Infant${infants > 1 ? 's' : ''}` : ''}`;
@@ -77,236 +91,230 @@ export function BookingForm() {
     setToValue(temp);
   };
 
-  // --- FINAL SUBMISSION HANDLER ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validation
     if (!fromDate || !toDate || !fromValue || !toValue) {
       toast.error("Please fill in all departure, arrival, and date fields.");
       return;
     }
-    
-    setLoading(true); // Start loading feedback
-
+    setLoading(true);
     try {
-        // 1. Format dates correctly for YYYY-MM-DD API format
-        const outbound_date = format(fromDate, 'yyyy-MM-dd');
-        const return_date = format(toDate, 'yyyy-MM-dd');
-
-        // 2. Construct the query string for the API/redirect
-        const queryString = new URLSearchParams({
-            departure_id: fromValue,
-            arrival_id: toValue,
-            outbound_date: outbound_date,
-            return_date: return_date,
-            travel_class: travelClass, // Pass travel class name (e.g., "business")
-            adults: adults.toString(),
-            infants_on_lap: infants.toString(),
-            // Infants are not included as a separate field in the base SerpApi adults count
-        }).toString();
-
-        // 3. Perform client-side redirect to the results page
-        router.push(`/flights/results?${queryString}`);
-
+      const outbound_date = format(fromDate, 'yyyy-MM-dd');
+      const return_date = format(toDate, 'yyyy-MM-dd');
+      const queryString = new URLSearchParams({
+        departure_id: fromValue,
+        arrival_id: toValue,
+        outbound_date: outbound_date,
+        return_date: return_date,
+        travel_class: travelClass,
+        adults: adults.toString(),
+        infants_on_lap: infants.toString(),
+      }).toString();
+      router.push(`/flights/results?${queryString}`);
     } catch (error: any) {
-      toast.error("Search Failed", {
-        description: "An error occurred during search preparation.",
-      });
+      toast.error("Search Failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <section className="w-full bg-[#FF8C00] pt-20 mx-10 pb-25 text-center" id="booking-form-section">
-      {/* 2. Image Container */}
-     <div className="lg:block hidden h-[460px] overflow-hidden relative mb-[-10px] z-10">
-        <Image
-          src="/images/booking-banner-3.png"
-          fill
-          className="object-cover"
-          priority={true}
-          sizes="(max-width: 768px) 100vw, 100vw"
-          alt="Airplane landing"
-        />
+    <section className="relative w-full overflow-hidden bg-[#fdfdfd]" id="booking-form-section">
 
-        {/* Title */}
-        {/* FIX: Moved title up by changing 'top-1/2' to 'top-[40%]' and removing mb-14 
-       { <h1 className="absolute z-10 top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2
-          text-3xl md:text-7xl font-extrabold text-white drop-shadow-xl"
-        >
-          Your <span className={`${volkhov.className}`}>Trip</span> Starts here
-        </h1>}*/}
-       
+      {/* 1. Shared Background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-orange-50/40 via-white to-white" />
       </div>
 
-      {/* Feature Pills */}
-      {/* FIX: Increased negative margin to pull pills higher onto the image */}
-      <div className="relative z-20 flex flex-wrap justify-center gap-3 mt-[-60px] mb-5">
-        <div className="flex items-center gap-2 rounded-full bg-white shadow-md px-4 py-1.5">
-          <CheckCircle className="h-4 w-4 text-[#FF8C00]" />
-          <span className="text-sm font-medium text-gray-700">Best Price Guarantee</span>
+      {/* 2. The Main Glow (Extended to flow behind everything) */}
+      <div
+        className="absolute top-[600px] left-1/2 -translate-x-1/2 -translate-y-1/2 
+                   w-[800px] h-[500px] 
+                   rounded-full bg-[#FF8C00] 
+                   blur-[200px] opacity-25 z-0 pointer-events-none"
+      />
+
+      {/* 3. Main Content Container */}
+      <div className="relative z-10 container mx-auto px-6 pt-20 pb-24 md:pt-24">
+
+        {/* --- PART 1: HERO & FORM --- */}
+        <div className="mb-32"> {/* Added margin-bottom to separate from features */}
+
+          {/* Headline */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center mb-10 mt-10">
+
+            {/* Left Column: Text */}
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-gray-900 leading-[1.1] mb-6">
+                Your Dream Trip <br />
+                Starts with a <span className="text-[#FF8C00]">Smart Search</span>
+              </h1>
+              <p className="text-lg text-gray-600 font-normal max-w-lg leading-relaxed">
+                We&apos;ve streamlined the booking process. Enter your details below to compare the world's best airlines and lock in your perfect itinerary in seconds.
+              </p>
+            </div>
+
+            {/* Right Column: Image */}
+            <div className="relative w-full flex justify-center lg:justify-end">
+              {/* Adjust width/height as needed based on your actual image dimensions */}
+              <div className="relative w-[500px] h-[370px]">
+                <Image
+                  src="/images/booking-img.png"
+                  alt="Booking Process"
+                  fill
+                  className="object-contain drop-shadow-xl " // Added drop-shadow for better blending
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Form Card */}
+          <Card className="w-full max-w-4xl mx-auto border-none shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-[2rem] bg-white relative">
+            <CardContent className="p-5 md:p-6">
+              <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Top Row */}
+                <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr_auto_1.2fr_1fr] gap-2 items-center">
+                  {/* From */}
+                  <BookingField icon={<PlaneTakeoff className="h-3.5 w-3.5" />} label="From">
+                    <AirportAutocomplete
+                      placeholder="City/Airport"
+                      value={fromValue}
+                      onChange={(id) => setFromValue(id)}
+                      className="text-black bg-transparent border-none shadow-none font-bold text-base md:text-lg p-0 h-auto focus-visible:ring-0"
+                    />
+                  </BookingField>
+                  {/* Departure */}
+                  <BookingField icon={<CalendarIcon className="h-3.5 w-3.5" />} label="Departure">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-bold bg-transparent border-none shadow-none p-0 h-auto text-base md:text-lg hover:bg-transparent", !fromDate && "text-muted-foreground")}>
+                          {fromDate ? format(fromDate, "d MMM, yyyy") : <span className="text-gray-300">Add Date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar mode="single" selected={fromDate} onSelect={setFromDate} disabled={(date) => date < today} autoFocus />
+                      </PopoverContent>
+                    </Popover>
+                  </BookingField>
+                  {/* Swap */}
+                  <div className="flex justify-center md:px-2">
+                    <Button variant="ghost" size="icon" className="rounded-full w-8 h-8 bg-gray-100 hover:bg-orange-100 text-gray-600 hover:text-[#FF8C00]" type="button" onClick={handleSwap}>
+                      <ArrowRightLeft className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {/* To */}
+                  <BookingField icon={<PlaneLanding className="h-3.5 w-3.5" />} label="To">
+                    <AirportAutocomplete
+                      placeholder="City/Airport"
+                      value={toValue}
+                      onChange={(id) => setToValue(id)}
+                      className="text-black bg-transparent border-none shadow-none font-bold text-base md:text-lg p-0 h-auto focus-visible:ring-0"
+                    />
+                  </BookingField>
+                  {/* Return */}
+                  <BookingField icon={<CalendarIcon className="h-3.5 w-3.5" />} label="Return">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant={"outline"} className={cn("w-full justify-start text-left font-bold bg-transparent border-none shadow-none p-0 h-auto text-base md:text-lg hover:bg-transparent", !toDate && "text-muted-foreground")}>
+                          {toDate ? format(toDate, "d MMM, yyyy") : <span className="text-gray-300">Add Date</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar mode="single" selected={toDate} onSelect={setToDate} disabled={(date) => date < (fromDate || today)} initialFocus />
+                      </PopoverContent>
+                    </Popover>
+                  </BookingField>
+                </div>
+                {/* Divider */}
+                <div className="h-px bg-gray-100 my-4" />
+                {/* Bottom Row */}
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1.5fr] gap-4 items-center">
+                  {/* Class */}
+                  <BookingField icon={<Armchair className="h-3.5 w-3.5" />} label="Class">
+                    <Select defaultValue={travelClass} onValueChange={setTravelClass}>
+                      <SelectTrigger className="w-full font-bold bg-transparent border-none shadow-none p-0 h-auto text-base focus:ring-0 focus:ring-offset-0 hover:bg-transparent">
+                        <SelectValue placeholder="Class" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="economy">Economy</SelectItem>
+                        <SelectItem value="premium economy">Premium Eco</SelectItem>
+                        <SelectItem value="business">Business</SelectItem>
+                        <SelectItem value="first">First Class</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </BookingField>
+                  {/* Travelers */}
+                  <BookingField icon={<Users className="h-3.5 w-3.5" />} label="Travelers">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" className="w-full justify-start text-left font-bold bg-transparent border-none shadow-none p-0 h-auto text-base hover:bg-transparent">
+                          <span className="truncate">{passengersLabel}</span>
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-4 flex flex-col gap-3">
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="font-medium">Adults</span>
+                          <div className="flex items-center gap-2">
+                            <Button type="button" variant="outline" size="icon" className="h-8 w-8" onClick={() => setAdults(Math.max(1, adults - 1))}><Minus className="h-3 w-3" /></Button>
+                            <span className="w-6 text-center font-semibold">{adults}</span>
+                            <Button type="button" variant="outline" size="icon" className="h-8 w-8" onClick={() => setAdults(adults + 1)}><Plus className="h-3 w-3" /></Button>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between gap-4">
+                          <span className="font-medium">Infants</span>
+                          <div className="flex items-center gap-2">
+                            <Button type="button" variant="outline" size="icon" className="h-8 w-8" onClick={() => setInfants(Math.max(0, infants - 1))}><Minus className="h-3 w-3" /></Button>
+                            <span className="w-6 text-center font-semibold">{infants}</span>
+                            <Button type="button" variant="outline" size="icon" className="h-8 w-8" onClick={() => setInfants(infants + 1)}><Plus className="h-3 w-3" /></Button>
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                  </BookingField>
+                  {/* Submit Button */}
+                  <div className="md:pl-2">
+                    <Button type="submit" size="lg" className="w-full h-12 text-base font-bold bg-[#FF8C00] hover:bg-[#ff9514] rounded-xl shadow-lg shadow-orange-200 transition-all hover:shadow-orange-300 hover:scale-[1.01]" disabled={loading}>
+                      {loading ? "Searching..." : (
+                        <>
+                          <Search className="mr-2 h-4 w-4" />
+                          Search Flights
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-white shadow-md px-4 py-1.5">
-          <CheckCircle className="h-4 w-4 text-[#FF8C00]" />
-          <span className="text-sm font-medium text-gray-700">24/7 Customer Support</span>
+
+        {/* --- PART 2: WHY CHOOSE US --- */}
+
+        {/* 3-Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {features.map((feature, idx) => (
+            <div
+              key={idx}
+              className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center text-center relative z-10"
+            >
+              {/* Icon Wrapper */}
+              <div className="flex-shrink-0 mb-6 p-4 bg-[#FF8C00] rounded-full shadow-lg shadow-orange-200 group-hover:scale-110 transition-transform duration-300">
+                {feature.icon}
+              </div>
+
+              {/* Card Content */}
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {feature.description}
+              </p>
+            </div>
+          ))}
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-white shadow-md px-4 py-1.5">
-          <CheckCircle className="h-4 w-4 text-[#FF8C00]" />
-          <span className="text-sm font-medium text-gray-700">No Hidden Fees</span>
-        </div>
+
       </div>
-
-      {/* 3. Form Card */}
-      <Card className="-w-6xl mx-5 md:mx-15 p-6 md:p-8 relative z-20 shadow-lg shadow-white/60">
-        <CardContent className="p-0">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            
-            {/* Top Row: From, Dates, To, Return Date */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
-              
-              {/* From (Departure ID) */}
-              <BookingField icon={<PlaneTakeoff className="h-4 w-4 text-[#FF8C00]" />} label="From">
-                <AirportAutocomplete
-                  placeholder="City or Airport Code (e.g., London)"
-                  value={fromValue}
-                  // We only need the ID, so we ignore the name for now
-                  onChange={(id) => setFromValue(id)} 
-                  className="text-black"
-                />
-              </BookingField>
-              
-              {/* Departure Date (Outbound Date) */}
-              <BookingField icon={<CalendarIcon className="h-4 w-4 text-[#FF8C00]" />} label="Departure">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-semibold border-0 border-b rounded-none p-0 text-md",
-                        !fromDate && "text-muted-foreground"
-                      )}
-                    >
-                      {fromDate ? format(fromDate, "PP") : <span className="text-black">Select a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar mode="single" selected={fromDate} onSelect={setFromDate} disabled={(date) => date < today} autoFocus />
-                  </PopoverContent>
-                </Popover>
-              </BookingField>
-
-              {/* Swap Button */}
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full w-10 h-10 mx-auto flex-shrink-0"
-                type="button"
-                onClick={handleSwap}
-                aria-label="Swap departure and arrival"
-              >
-                <ArrowRightLeft className="h-4 w-4 text-[#FF8C00]" />
-              </Button>
-
-              {/* To (Arrival ID) */}
-              <BookingField icon={<PlaneLanding className="h-4 w-4 text-[#FF8C00]" />} label="To">
-                <AirportAutocomplete
-                  placeholder="City or Airport Code (e.g., Dubai)"
-                  value={toValue}
-                  onChange={(id) => setToValue(id)}
-                  className="text-black"
-                />
-              </BookingField>
-
-              {/* Return Date (Return Date) */}
-              <BookingField icon={<CalendarIcon className="h-4 w-4 text-[#FF8C00]" />} label="Return">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full justify-start text-left font-semibold border-0 border-b rounded-none p-0 text-md",
-                        !toDate && "text-muted-foreground"
-                      )}
-                    >
-                      {toDate ? format(toDate, "PP") : <span className="text-black">Select a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar mode="single" selected={toDate} onSelect={setToDate} disabled={(date) => date < (fromDate || today)} initialFocus />
-                  </PopoverContent>
-                </Popover>
-              </BookingField>
-            </div>
-
-            {/* Bottom Row: Class, Travelers, Submit */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-              
-              {/* Travel Class */}
-              <BookingField icon={<Armchair className="h-4 w-4 text-[#FF8C00]" />} label="Travel Class">
-                <Select 
-                  defaultValue={travelClass} // Use state value
-                  onValueChange={setTravelClass} 
-                >
-                  <SelectTrigger className="w-full font-semibold border-0 border-b rounded-none p-0 text-md focus:ring-0 focus:ring-offset-0">
-                    <SelectValue placeholder="Choose your Class" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {/* Travel Class Options (maps to API codes 1-4) */}
-                    <SelectItem value="economy">Economy</SelectItem>
-                    <SelectItem value="premium economy">Premium Economy</SelectItem>
-                    <SelectItem value="business">Business</SelectItem>
-                    <SelectItem value="first">First</SelectItem>
-                  </SelectContent>
-                </Select>
-              </BookingField>
-
-              {/* Travelers (Adults only for API) */}
-              <BookingField icon={<Users className="h-4 w-4 text-[#FF8C00]" />} label="Travelers">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-semibold border-0 border-b rounded-none p-0 text-md"
-                    >
-                      <span className="truncate">{passengersLabel}</span>
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-4 flex flex-col gap-3">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Adults</span>
-                      <div className="flex items-center gap-2">
-                        <Button type="button" variant="outline" size="icon" onClick={() => setAdults(Math.max(1, adults - 1))}><Minus className="h-4 w-4" /></Button>
-                        <span className="w-6 text-center">{adults}</span>
-                        <Button type="button" variant="outline" size="icon" onClick={() => setAdults(adults + 1)}><Plus className="h-4 w-4" /></Button>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium">Infants</span>
-                      <div className="flex items-center gap-2">
-                        <Button type="button" variant="outline" size="icon" onClick={() => setInfants(Math.max(0, infants - 1))}><Minus className="h-4 w-4" /></Button>
-                        <span className="w-6 text-center">{infants}</span>
-                        <Button type="button" variant="outline" size="icon" onClick={() => setInfants(infants + 1)}><Plus className="h-4 w-4" /></Button>
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </BookingField>
-
-              {/* Submit Button */}
-              <Button type="submit" size="lg" className="w-full h-14 text-lg bg-[#FF8C00] hover:bg-[#FFA749]" disabled={loading}>
-                {loading ? "Searching..." : (
-                  <>
-                    <Search className="mr-2 h-5 w-5" />
-                    Find Your Ticket
-                  </>
-                )}
-              </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
     </section>
   );
 }

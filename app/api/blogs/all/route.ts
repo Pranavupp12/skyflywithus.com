@@ -17,22 +17,29 @@ export async function GET() {
             },
         });
 
-        // We must map the data to the format the frontend expects (AuthorName, ImageUrl, etc.)
+        // We must map the data to the format the frontend expects
         const formattedBlogs = blogs.map(blog => ({
             id: blog.id,
             title: blog.title,
             slug: blog.slug,
-            category: blog.category,
-            categorySlug: blog.category.toLowerCase().replace(/\s+/g, '-'), // Generate slug for links
+            
+            // FIX: Map the first category from the array to the single string expected by the UI
+            category: blog.categories[0] || "Uncategorized",
+            categories: blog.categories, // Pass the full array just in case
+            
+            // FIX: Generate slug from the first category
+            categorySlug: (blog.categories[0] || "").toLowerCase().replace(/\s+/g, '-'), 
+            
             description: blog.metaDesc, // Using metaDesc as the card description
             imageUrl: blog.image,
-            authorName: blog.author.name,
+            // Added safety check for author
+            authorName: blog.author?.name || "Unknown Author",
             publishDate: new Date(blog.createdAt).toLocaleDateString('en-GB'), // Use GB format (dd/mm/yyyy)
             content: blog.content,
             metaTitle: blog.metaTitle,
             metaDesc: blog.metaDesc,
             metaKeywords: blog.metaKeywords,
-            faqs: [], // Placeholder for now, as the card doesn't need them
+            faqs: [], // Placeholder for now
         }));
 
         return NextResponse.json(formattedBlogs, { status: 200 });

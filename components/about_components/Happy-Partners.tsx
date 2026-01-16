@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { LogoCloud } from "@/components/ui/Logo-Cloud"; // Import the new component
 
 // Using the same demo brands for now.
@@ -48,16 +47,16 @@ const logos = [
 
 export function HappyPartners() {
   return (
-    <section className="relative mx-10 mt-10  md:mx-5 max-w-full w-full">
-      {/*<h2 className="mb-5 text-center  font-regular text-4xl  md:text-5xl ">
+    <section className="relative py-15 max-w-full w-full">
+      <h2 className="mb-5 text-center font-regular text-4xl ">
         <span className="text-black">Our</span>{" "}
         <span className=" text-[#FF8C00] font-semibold">Partners</span>
       </h2>
-      <div className="mx-auto my-5 h-px max-w-sm bg-[#FF8C00] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />*/}
+      <div className="mx-auto my-5 h-px max-w-sm bg-[#FF8C00] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
 
       <LogoCloud logos={logos} />
 
-      {/*<div className="mt-5 h-px bg-[#FF8C00] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />*/}
+      <div className="mt-5 h-px bg-[#FF8C00] [mask-image:linear-gradient(to_right,transparent,black,transparent)]" />
     </section>
   );
 }

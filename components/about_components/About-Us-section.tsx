@@ -1,67 +1,88 @@
 "use client";
 
 import Image from "next/image";
-// We no longer need to import Tabs
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; 
+import { CheckCircle2 } from "lucide-react"; 
 
 export function AboutUsSection() {
-  // Placeholder image URL - you will replace this
-  
   return (
-    <section className=" rounded-2xl mx-5 md:mx-15 mt-25 ">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    // FIX APPLIED HERE:
+    // Added '-mx-5 md:-mx-15' to counteract the parent page's margins.
+    <section className="w-full py-24 bg-[#FFF5EB]/50">
+      
+      {/* This container keeps the internal content centered and aligned */}
+      <div className="container mx-auto px-6 mt-15">
         
-        {/* Left Column: Text Content */}
-        <div className="flex flex-col">
-          {/* Main Heading */}
-          <h2 className="text-5xl font-regular mb-2 text-gray-900 dark:text-white">
-            Built for Sellers,
-            <br />
-            <span className="text-[#FF8C00] dark:text-gray-500 font-bold">Backed by Innovation</span>
-          </h2>
-
-          {/* Removed Tabs Wrapper */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12  items-center">
           
-          {/* Main Paragraph (from "Our Story") */}
-          <p className="mt-6 text-lg text-gray-600 dark:text-gray-200 leading-relaxed mb-2">
-            At SkyFlyWithUs, we design powerful, easy-to-use tools that help
-            online sellers thrive in a fast-changing digital world. Our
-            platform combines smart technology with deep eCommerce
-            insight to simplify selling, amplify marketing, and drive real
-            growth — all in one place.
-          </p>
+          {/* LEFT COLUMN: Image Composition */}
+          <div className="relative">
+            {/* Main Image */}
+            <div className="relative h-[400px] md:h-[500px] w-full rounded-3xl overflow-hidden">
+              <Image
+                src="/images/airplane-wing2.jpg" 
+                alt="SkyFlyWithUs Travel Experience"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+              <div className="absolute inset-0 bg-black/10"></div>
+            </div>
 
-        </div>
+            {/* Floating Experience Badge */}
+            <div className="absolute -bottom-6 -right-6 md:bottom-10 md:-left-10 md:right-auto bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl max-w-[200px] border border-gray-100 dark:border-gray-700 hidden md:block">
+              <p className="text-4xl font-bold text-[#FF8C00]">10+</p>
+              <p className="text-sm text-gray-600 dark:text-gray-300 font-medium mt-1">
+                Years of Finding The Best Deals
+              </p>
+            </div>
+          </div>
 
-        {/* Right Column: Image */}
-        <div className="relative w-full h-[300px] rounded-2xl overflow-hidden ">
-          <Image
-            src="/images/airplane-wing2.jpg" // Use the placeholder URL defined above
-            alt="Two women collaborating on a tablet"
-            fill
-            className=" rounded-2xl object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            loading="eager"
-          />
-        </div>
-      </div>
+          {/* RIGHT COLUMN: Content */}
+          <div className="flex flex-col">
 
-      {/* Statistics Section (below the two columns) */}
-      <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-16 text-center">
-        {/* Statistic 1 */}
-        <div className="flex flex-col items-center">
-          <h3 className=" text-3xl md:text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">10+</h3>
-          <p className=" text-sm text-gray-600 dark:text-gray-300">Years Experience</p>
-        </div>
-        {/* Statistic 2 */}
-        <div className="flex flex-col items-center">
-          <h3 className="text-3xl md:text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">10K+</h3>
-          <p className=" text-sm text-gray-600 dark:text-gray-300">People Trust FlightFareMart</p>
-        </div>
-        {/* Statistic 3 */}
-        <div className="flex flex-col items-center">
-          <h3 className="text-3xl md:text-5xl font-bold text-[#FF8C00] dark:text-white mb-2">98 %</h3>
-          <p className=" text-sm text-gray-600 dark:text-gray-300">Satisfied Clients</p>
+            {/* Heading */}
+            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              Travel Smarter, <br />
+              <span className="text-[#FF8C00]">Fly Cheaper.</span>
+            </h2>
+
+            {/* Paragraph */}
+            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+              At SkyFlyWithUs, we believe exploring the world shouldn't cost a fortune. 
+              We are dedicated to hunting down the absolute best flight deals and empowering 
+              you with the knowledge to travel like a pro. From hidden fare hacks to 
+              essential destination guides, we are your co-pilot for smarter, more affordable adventures.
+            </p>
+
+            {/* Key Features List - Tailored to Travel Info */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                {[
+                    "Unbeatable Deals",
+                    "Expert Travel Hacks",
+                    "Hidden Gems",
+                    "Smart Guides"
+                ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                        <CheckCircle2 className="h-5 w-5 text-[#FF8C00]" />
+                        <span className="text-gray-700 dark:text-gray-200 font-medium">{item}</span>
+                    </div>
+                ))}
+            </div>
+
+            {/* Stats Cards Row */}
+            <div className="grid grid-cols-2 gap-4">
+                <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
+                    <h3 className="text-3xl font-bold text-[#FF8C00] mb-1">50K+</h3>
+                    <p className="text-xs text-gray-500 font-medium uppercase">Happy Travelers</p>
+                </div>
+                <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
+                    <h3 className="text-3xl font-bold text-[#FF8C00] mb-1">100%</h3>
+                    <p className="text-xs text-gray-500 font-medium uppercase">Free Advice</p>
+                </div>
+            </div>
+
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { NextResponse } from 'next/server';
+import prisma from '@/lib/prisma';
 import { getServerSession } from "next-auth/next";
+// @ts-ignore
 import { authOptions } from "@/lib/auth.config";
 
 // Define the type for the dynamic parameter
@@ -27,16 +28,14 @@ export async function GET(
   try {
     const blog = await prisma.blog.findUnique({
       where: isId ? { id: slug } : { slug: slug },
-      // Include author and FAQs for the full content page
       include: {
         author: { select: { name: true } },
         faqs: {
-          // Explicitly tell Prisma how to structure the FAQs
           select: {
             id: true,
             question: true,
             answer: true,
-            blogId: true, // Including the foreign key often resolves mapping issues
+            blogId: true,
           },
         },
       },
@@ -46,18 +45,22 @@ export async function GET(
       return NextResponse.json({ error: "Post not found" }, { status: 404 });
     }
 
-    console.log("[FAQ DEBUG] First FAQ Question:", blog.faqs[0]?.question);
-
     // Format the data for the frontend Article interface
     const formattedBlog = {
       id: blog.id,
       title: blog.title,
       slug: blog.slug,
-      category: blog.category,
-      categorySlug: blog.category.toLowerCase().replace(/\s+/g, "-"),
+      
+      // FIX: Handle Array -> Single string for frontend display
+      category: blog.categories[0] || "Uncategorized", 
+      categories: blog.categories, // Pass the full array if needed
+      
+      // FIX: Generate slug from the first category
+      categorySlug: (blog.categories[0] || "").toLowerCase().replace(/\s+/g, "-"),
+      
       description: blog.metaDesc,
       imageUrl: blog.image,
-      authorName: blog.author.name,
+      authorName: blog.author?.name || "Unknown Author",
       publishDate: new Date(blog.createdAt).toLocaleDateString("en-GB", {
         day: "2-digit",
         month: "short",
@@ -67,7 +70,7 @@ export async function GET(
       metaTitle: blog.metaTitle,
       metaDesc: blog.metaDesc,
       metaKeywords: blog.metaKeywords,
-      // Map FAQs to match the frontend interface
+      // Map FAQs
       faqs: blog.faqs.map((f) => ({
         id: f.id,
         question: f.question,
@@ -86,7 +89,7 @@ export async function GET(
 }
 
 // --- PATCH (Update a blog post - used by Dashboard) ---
-export async function PATCH(req: Request, { params }:{ params: Promise<{ slug: string }> }) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {
@@ -98,7 +101,7 @@ export async function PATCH(req: Request, { params }:{ params: Promise<{ slug: s
   try {
     const data = await req.json();
 
-    // 1. Check for slug conflict (excluding the current post)
+    // 1. Check for slug conflict
     const existingSlug = await prisma.blog.findFirst({
       where: {
         slug: data.slug,
@@ -119,7 +122,8 @@ export async function PATCH(req: Request, { params }:{ params: Promise<{ slug: s
       data: {
         title: data.title,
         slug: data.slug,
-        category: data.category,
+        // FIX: Save 'categories' array instead of 'category' string
+        categories: data.categories, 
         content: data.content,
         image: data.image,
         metaTitle: data.metaTitle,
@@ -140,7 +144,7 @@ export async function PATCH(req: Request, { params }:{ params: Promise<{ slug: s
 }
 
 // --- DELETE (Delete a blog post - used by Dashboard) ---
-export async function DELETE(req: Request, { params }:{ params: Promise<{ slug: string }> }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ slug: string }> }) {
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user) {

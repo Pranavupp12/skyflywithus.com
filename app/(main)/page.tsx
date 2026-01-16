@@ -4,7 +4,6 @@ import { PopularDestinations } from "@/components/home_components/Popular-Destin
 import { RecentArticles } from "@/components/home_components/Recent-Articles";
 import { Testimonials } from "@/components/home_components/Testimonials";
 import type { Metadata } from 'next';
-import { WhyChooseUs } from "@/components/home_components/WhyChooseUs";
 
 export const metadata: Metadata = {
   title: 'Find Cheap Flights & Travel Guides', // This will override the default
@@ -14,9 +13,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
 
-    <main className="flex min-h-screen flex-col items-center justify-between ">
+    <main className="flex min-h-screen bg-white flex-col items-center justify-between ">
       <BookingForm />
-      <WhyChooseUs/>
       <PopularDestinations/>
       <Testimonials/>
       <RecentArticles/>

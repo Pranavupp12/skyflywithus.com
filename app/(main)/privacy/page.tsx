@@ -18,7 +18,7 @@ const PrivacyPolicyPage: React.FC = () => {
     <>
       
 
-      <div className="privacy-policy-page max-w-5xl container mx-auto  p-4 md:p-8 lg:p-12">
+      <div className="privacy-policy-page max-w-5xl container mx-auto  p-4 md:p-8 lg:p-12 mt-25">
         
         {/* Header Section */}
         <header className="mb-8">
@@ -83,7 +83,7 @@ const PrivacyPolicyPage: React.FC = () => {
               <li>Special offers directly in your inbox</li>
             </ul>
             <p className="mt-3">
-              Whether it’s last-minute discounts or expert travel guidance, our newsletter is designed to help you travel smarter and save more every time you fly.
+              Whether it&apos;s last-minute discounts or expert travel guidance, our newsletter is designed to help you travel smarter and save more every time you fly.
             </p>
           </section>
           

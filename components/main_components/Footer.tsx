@@ -65,7 +65,7 @@ const defaultSocialLinks = [
 export function Footer() {
   return (
     <>
-      <section className="relative pt-2 sm:pt-5  w-full overflow-hidden min-h-[400px] bg-gray-100  dark:bg-gray-900 dark:border-gray-800">
+      <section className="relative pt-2 sm:pt-5  w-full overflow-hidden min-h-[400px] bg-[#FFF5EB]/50">
           
         <div className="relative z-20 mx-15 md:mx-20 pt-5">
           <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-start lg:text-start">
