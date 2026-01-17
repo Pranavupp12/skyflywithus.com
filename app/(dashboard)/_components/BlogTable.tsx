@@ -11,6 +11,7 @@ import Link from "next/link";
 // --- NEW IMPORTS ---
 import { PaginationControls } from "@/components/ui/pagination-controls";
 import { Prisma } from "@prisma/client";
+import { SeoReportDialog } from "./SeoReportDialog";
 // -------------------
 
 // Define the expected payload type (Blog with Author name)
@@ -117,6 +118,7 @@ export async function BlogTable({ searchParams }:  BlogTableProps) {
               <TableCell>{blog.author.name}</TableCell>
               <TableCell>{formatDate(blog.createdAt)}</TableCell>
               <TableCell className="flex gap-2">
+               <SeoReportDialog blog={blog} />
                <UpdateBlogDialog blog={blog} />
                <DeleteBlogDialog blogSlug={blog.slug} blogTitle={blog.title} />
                <Link href={`/dashboard/blogs/faqs/${blog.id}`} passHref>

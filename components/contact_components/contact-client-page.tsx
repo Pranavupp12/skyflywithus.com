@@ -66,10 +66,6 @@ export default function ContactPageClient() {
   };
 
   return (
-    // FIX APPLIED HERE:
-    // 1. Added '-mx-5 md:-mx-15' to stretch background full width
-    // 2. Added 'bg-[#FFF5EB]/50'
-    // 3. Added 'py-20' for vertical spacing
     <main className="w-full py-24 bg-[#FFF5EB]/50 min-h-screen">
       
       {/* Container to align content properly */}
@@ -92,7 +88,7 @@ export default function ContactPageClient() {
               <ul className="space-y-6">
                 {contactMethods.map((item, idx) => (
                   <li key={idx} className="flex items-start gap-x-4">
-                    <div className="flex-none p-3 rounded-full bg-white text-[#FF8C00] shadow-sm">
+                    <div className="flex-none p-3 rounded-full bg-white border border-gray-200 text-[#FF8C00]">
                         {item.icon}
                     </div>
                     <div>
@@ -110,7 +106,7 @@ export default function ContactPageClient() {
           </div>
 
           {/* Right Side: Form */}
-          <div className="flex-1 p-8 sm:p-10 border border-orange-100 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-2xl shadow-xl mt-12 lg:mt-0 sm:max-w-lg lg:max-w-md">
+          <div className="flex-1 p-8 sm:p-10 border border-orange-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-2xl mt-12 lg:mt-0 sm:max-w-lg lg:max-w-md">
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="full-name" className="font-medium text-gray-700 dark:text-gray-200">

@@ -1,0 +1,10 @@
+# public/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://skyflywithus.com/sitemap.xml

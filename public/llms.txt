@@ -1,0 +1,30 @@
+# public/llms.txt
+
+# SkyFlyWithUs - Flight Booking & Travel Guides
+# We provide flight comparisons, travel tips, and airline policy guides.
+
+Title: SkyFlyWithUs
+Description: A comprehensive travel platform for comparing flight prices, booking deals, and accessing expert guides on airline policies (cancellations, refunds, baggage, and upgrades).
+
+# --- Core Navigation ---
+# Main entry points for users and general site information.
+- Home: https://skyflywithus.com/ (Landing page with search widgets and featured deals)
+- About: https://skyflywithus.com/about (Company mission, values, and trust signals)
+- Contact: https://skyflywithus.com/contact (Customer support channels, including email and phone)
+
+# --- Flight Tools ---
+# Functional pages for finding and booking air travel.
+- Flights Search: https://skyflywithus.com/flights (Main search interface for finding flights)
+- Flight Results: https://skyflywithus.com/flights/results (Dynamic search results showing real-time pricing and availability)
+
+# --- Knowledge Base & Guides ---
+# Educational content regarding travel rules and airline specific policies.
+- Blog Index: https://skyflywithus.com/blog (List of all travel articles and guides)
+- Airline Policies: https://skyflywithus.com/blog/category/airline-policies (Specific guides on refunds, cancellations, and baggage rules)
+- Travel Tips: https://skyflywithus.com/blog/category/travel-tips (General advice for smarter travel)
+
+# --- Technical & Legal ---
+# Machine-readable data and legal disclaimers.
+- Sitemap: https://skyflywithus.com/sitemap.xml (Complete list of all indexable URLs)
+- Privacy Policy: https://skyflywithus.com/privacy
+- Terms of Service: https://skyflywithus.com/terms

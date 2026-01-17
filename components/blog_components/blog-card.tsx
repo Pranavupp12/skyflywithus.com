@@ -44,13 +44,16 @@ export function BlogCard({ article, className }: ArticleCardProps) {
       ? article.categories 
       : [article.category];
 
+  // We limit to 3 categories to keep the card clean
+  const visibleCategories = displayCategories.slice(0, 3);
+
   return (
     <Link 
       href={`/blog/${article.slug}`} 
       key={article.id} 
       className={cn("group block h-full", className)}
     >
-      <div className="relative flex flex-col h-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:-translate-y-1 dark:border-gray-800 dark:bg-gray-900">
+      <div className="relative flex flex-col h-full overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
         
         {/* Image Container with Zoom Effect */}
         <div className="relative aspect-[16/10] w-full overflow-hidden">
@@ -58,31 +61,28 @@ export function BlogCard({ article, className }: ArticleCardProps) {
             src={article.imageUrl}
             alt={article.title}
             fill
-            className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          
-          {/* Floating Category Badges */}
-          <div className="absolute top-4 left-4 z-10 flex flex-wrap gap-2 max-w-[90%]">
-            {displayCategories.slice(0, 3).map((cat, index) => (
-              <span 
-                key={index} 
-                className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-md px-3 py-1 text-xs font-bold uppercase tracking-wider text-[#FF8C00] shadow-sm"
-              >
-                {cat}
-              </span>
-            ))}
-            {/* Optional: Show +X if there are too many categories */}
-            {displayCategories.length > 3 && (
-               <span className="inline-flex items-center rounded-full bg-white/90 backdrop-blur-md px-2 py-1 text-xs font-bold text-gray-500 shadow-sm">
-                 +{displayCategories.length - 3}
-               </span>
-            )}
-          </div>
+          {/* Floating badges removed from here */}
         </div>
 
         {/* Card Content */}
         <div className="flex flex-1 flex-col p-6">
+          
+          {/* UPDATED: Categories (Placed above title | Style: Cat 1 | Cat 2) */}
+          <div className="mb-3 flex flex-wrap items-center text-xs font-bold uppercase tracking-wider text-[#FF8C00]">
+            {visibleCategories.map((cat, index) => (
+              <div key={index} className="flex items-center">
+                <span>{cat}</span>
+                {/* Add pipe separator if it's not the last item in the list */}
+                {index < visibleCategories.length - 1 && (
+                   <span className="mx-2 text-gray-300 font-light text-[10px]">|</span>
+                )}
+              </div>
+            ))}
+          </div>
+
           {/* Title & Arrow */}
           <div className="flex justify-between items-start gap-4 mb-3">
             <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight line-clamp-2 group-hover:text-[#FF8C00] transition-colors">

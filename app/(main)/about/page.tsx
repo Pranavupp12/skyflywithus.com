@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between ">
+        <main className="flex min-h-screen flex-col items-center justify-between bg-white ">
             <AboutUsSection />
             <HappyPartners />
             <MeetTheTeam /> 

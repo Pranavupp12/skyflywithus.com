@@ -29,7 +29,7 @@ export function ArticleFaqs({ questions }: ArticleFaqsProps) {
     return (
         <div className="mx-auto w-full space-y-7">
             <div className="space-y-2">
-                <h2 className=" text-2xl sm:text-3xl text-[#FF8C00] font-semibold md:text-4xl">Frequently Asked Questions</h2>
+                <h2 className=" text-2xl md:text-3xl text-black font-semibold ">Frequently Asked Questions</h2>
                 <p className="text-gray-600 dark:text-gray-400 max-w-2xl">
                     Here are some common questions related to this article.
                 </p>
@@ -37,17 +37,17 @@ export function ArticleFaqs({ questions }: ArticleFaqsProps) {
             <Accordion
                 type="single"
                 collapsible
-                className="bg-card dark:bg-card/50 w-full -space-y-px rounded-lg border dark:border-gray-700" 
+                className="bg-card dark:bg-card/50 w-full -space-y-px " 
                 defaultValue="item-1"
             >
                 {questions.map((item) => (
                     <AccordionItem
                         value={item.id}
                         key={item.id}
-                        className="relative border-x-0 first:rounded-t-lg last:rounded-b-lg border-b dark:border-gray-700"
+                        className="relative border-none dark:border-gray-700"
                     >
                         <AccordionTrigger 
-                            className="px-4 py-4 text-[14px] sm:text-[17px] leading-6 hover:no-underline text-left text-[#FF8C00] dark:text-indigo-400 font-medium"
+                            className="px-4 py-4 text-[20px] leading-6 hover:no-underline text-left text-[#FF8C00] dark:text-indigo-400 font-medium"
                         >
                             {/* FIX 1: Map 'question' to the trigger text */}
                             {item.question}

@@ -15,31 +15,31 @@ import { cn } from "@/lib/utils";
 const destinations = [
   {
     id: "paris",
-    imageUrl: "/images/destinations/paris-small.jpeg",
+    imageUrl: "/images/destinations/paris.png",
     category: "France",
     title: "Paris",
   },
   {
     id: "bali",
-    imageUrl: "/images/destinations/bali-small.jpeg",
+    imageUrl: "/images/destinations/bali.png",
     category: "Indonesia",
     title: "Bali",
   },
   {
     id: "tokyo",
-    imageUrl: "/images/destinations/tokyo-small.jpeg",
+    imageUrl: "/images/destinations/tokyo.png",
     category: "Japan",
     title: "Tokyo",
   },
   {
     id: "rome",
-    imageUrl: "/images/destinations/rome-small.jpg", 
+    imageUrl: "/images/destinations/rome.png", 
     category: "Italy",
     title: "Rome",
   },
   {
     id: "dubai",
-    imageUrl: "/images/destinations/dubai-small.jpeg",
+    imageUrl: "/images/destinations/dubai.png",
     category: "UAE",
     title: "Dubai",
   },
@@ -60,13 +60,13 @@ function DestinationImageCard({ imageUrl, category, title, href }: DestinationIm
          Now uses w-full to fill the carousel slot.
          Increased height to h-[400px] for a better poster look.
       */}
-      <div className="relative h-[400px] w-full overflow-hidden rounded-2xl shadow-md transition-all duration-300 ease-in-out group-hover:shadow-xl group-hover:-translate-y-1">
+      <div className="relative h-[400px] w-full overflow-hidden rounded-2xl shadow-md group-hover:shadow-xl">
         {/* Background Image */}
         <Image
           src={imageUrl}
           alt={title}
           fill
-          className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+          className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
         />
         

@@ -1,21 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-import { Noto_Sans } from 'next/font/google'; // <-- 1. Import the new font
+import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
-
-// 2. Initialize the font (Oswald needs a bold weight to be visible)
-const noto_sans = Noto_Sans({
-  subsets: ['latin'],
-  weight: '600',
-});
-
-// --- Categories for Blog links ---
 const categories = [
   { name: "Cancellation & Refund", slug: "cancellation-and-refund" },
   { name: "Change Flight", slug: "change-flight" },
@@ -27,7 +14,6 @@ const categories = [
   { name: "Airport", slug: "airport" },
 ];
 
-// --- 1. UPDATED: Link sections now include "Policy" ---
 const defaultSections = [
   {
     title: "Company",
@@ -38,14 +24,14 @@ const defaultSections = [
     ],
   },
   {
-    title: "Blogs",
+    title: "Travel Guides", 
     links: categories.map(cat => ({
       name: cat.name,
       href: `/blog/category/${cat.slug}`
     })),
   },
   {
-    title: "Links",
+    title: "Legal",
     links: [
       { name: "Terms and Conditions", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
@@ -54,7 +40,6 @@ const defaultSections = [
   },
 ];
 
-// --- (Social links remain the same) ---
 const defaultSocialLinks = [
   { icon: <FaInstagram className="size-5" />, href: "#", label: "Instagram" },
   { icon: <FaFacebook className="size-5" />, href: "#", label: "Facebook" },
@@ -64,115 +49,136 @@ const defaultSocialLinks = [
 
 export function Footer() {
   return (
-    <>
-      <section className="relative pt-2 sm:pt-5  w-full overflow-hidden min-h-[400px] bg-[#FFF5EB]/50">
-          
-        <div className="relative z-20 mx-15 md:mx-20 pt-5">
-          <div className="flex w-full flex-col justify-between gap-4 lg:flex-row lg:items-start lg:text-start">
-
-            {/* --- 3. LEFT COLUMN (Logo, Desc, Social, Subscribe) --- */}
-            <div className="flex w-full flex-col justify-between  lg:items-start">
-              {/* Logo */}
-             
-              <div className="flex items-center lg:justify-start mb-1">
-              <Link href="/" className="flex items-center gap-2">
-                <Image 
-                  src="/images/sf-foot-logo.png" // Ensure this path is correct
-                  alt="SkyFlyWithUs Logo"
-                  width={40} // Adjust width/height as needed
-                  height={40}
-                  className="h-10 w-10 object-contain" // Ensure it fits nicely
-                />
-                <h2 className="text-lg sm:text-2xl font-bold text-black dark:text-white"><span className="text-[#FF8C00]">SkyFly</span>WithUs</h2>
+    <footer className="w-full bg-[#FFF5EB] text-gray-600 font-sans">
+      
+      {/* --- TOP SECTION: Brand & Newsletter --- */}
+      <div className="border-b border-orange-200/60">
+        <div className="container mx-auto px-6 py-12 lg:px-20">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+            
+            {/* Brand Intro */}
+            <div className="max-w-md">
+              <Link href="/" className="flex items-center gap-3 mb-4 group">
+                <h2 className="text-2xl font-semibold text-gray-900 tracking-tight">
+                  <span className="text-[#FF8C00]">SkyFly</span>WithUs
+                </h2>
               </Link>
-            </div>
-            <p className="max-w-[70%] text-xs sm:text-sm text-gray-800 mb-5">
-              From local escapes to global adventures — SkyFlyWithUs gives all information.
-            </p>
-              {/* --- 4. MOVED: Subscribe Section --- */}
-              <div className="w-full max-w-xs hidden lg:block">
-                <h3 className="mb-1 font-bold text-xl text-[#FF8C00] dark:text-white">Subscribe</h3>
-                <p className=" text-sm text-black mb-1">
-                  Get fast and great tips and deals. Add your email to the inbox below.
-                </p>
-                <form >
-                  <input
-                    type="email"
-                    placeholder="Your email address"
-                    className="w-[60%] p-2  border border-gray-800 text-black focus:outline-none focus:ring-2 focus:ring-[#FF8C00]"
-                  />
-                  <button
-                    type="submit"
-                    className="w-[40%]  p-2.5 bg-[#FF8C00] text-white  font-semibold hover:bg-[#FFA749] transition-colors"
-                  >
-                    Subscribe
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            {/* --- 5. RIGHT COLUMNS (Company, Blogs, Policy) --- */}
-            <div className="grid w-full gap-5 md:gap-10 grid-row sm:grid-cols-3  ">
-
-              {/* Renders Company, Blogs, and Policy columns from the updated array */}
-              {defaultSections.map((section, sectionIdx) => (
-                <div key={sectionIdx}>
-                  <h3 className="mb-4 font-bold text-[#FF8C00] dark:text-white">{section.title}</h3>
-                  <ul className="space-y-3 text-xs sm:text-sm text-black">
-                    {section.links.map((link, linkIdx) => (
-                      <li
-                        key={linkIdx}
-                        className="font-medium hover:text-[#FFA749]"
-                      >
-                        <Link href={link.href}>{link.name}</Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-
-              {/* The subscribe form that was here is now GONE */}
-
-            </div>
-          </div>
-
-          {/* --- 6. BOTTOM BAR (Legal links are now removed from here) --- */}
-          <div className="mt-4 border-t border-black/30 dark:border-gray-800 p-4 text-xs font-medium text-black">
-
-            <div className="flex flex-col-2 justify-between gap-4 md:flex-row sm:items-center text-center md:text-left">
-
-              <p className="order-2 md:text-md hidden sm:block ">
-                © 2025 SkyFlyWithUs. All rights reserved.
+              <p className="text-sm text-gray-600 leading-relaxed">
+                From local escapes to global adventures — we provide the insights 
+                you need to travel smarter, cheaper, and faster.
               </p>
-
-              <ul className="flex ml-11 md:ml-0  items-center space-x-6 text-black">
-                {defaultSocialLinks.map((social, idx) => (
-                  <li key={idx} className="font-medium hover:text-[#FFA749]">
-                    <a href={social.href} aria-label={social.label}>
-                      {social.icon}
-                    </a>
-                  </li>
-                ))}
-              </ul>
             </div>
+
+            {/* Newsletter */}
+            <div className="w-full lg:w-auto min-w-[340px]">
+              <h3 className="text-gray-900 font-bold mb-2">Join our newsletter</h3>
+              <p className="text-xs text-gray-500 mb-4">Get fast tips and exclusive deals directly to your inbox.</p>
+              
+              <form className="relative flex items-center">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="w-full bg-white text-gray-900 rounded-full py-3 pl-5 pr-32 focus:outline-none focus:ring-2 focus:ring-[#FF8C00] shadow-sm border border-orange-100 placeholder:text-gray-400"
+                />
+                <button 
+                  type="submit" 
+                  className="absolute right-1 top-1 bottom-1 bg-[#FF8C00] hover:bg-[#ff9d24] text-white font-medium rounded-full px-5 text-sm transition-colors flex items-center gap-2 shadow-md"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+
           </div>
-          {/*<h1
-            className={`relative hidden sm:block z-20 text-[30px] md:text-[80px] lg:text-[100px] font-extrabold text-[#FF8C00] text-center select-none z-0 ${noto_sans.className}`}
-            aria-hidden="true"
-          >
-            SkyFlyWithUs
-          </h1>*/}
         </div>
-      </section>
-      {/* Disclaimer Bar (bottom) */}
-      <div className=" relative z-20 p-5 bg-[#FF8C00] text-center overflow-y-hidden">
-        <p className="mx-auto  text-xs md:text-sm text-white">
-          DISCLAIMER: Our website provides general information about flights and travel. While we have Professional duties to keep our content accurate and helpful, we cannot guarantee that all information is always complete or up to date. We are not legally responsible for any issues, losses, or decisions that result from using the information on our site. 
-        </p>
-        <p className=" mt-5 mb-3 text-xs text-white block sm:hidden ">
-          © 2025 SkyFlyWithUs. All rights reserved.
-        </p>
       </div>
-    </>
+
+      {/* --- MIDDLE SECTION: 4 Column Grid --- */}
+      <div className="container mx-auto px-6 py-16 lg:px-20">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 items-start">
+          
+          {/* 1. Company Links */}
+          <div>
+            <h4 className="text-gray-900 font-bold mb-6 text-lg">Company</h4>
+            <ul className="space-y-4">
+              {defaultSections[0].links.map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="hover:text-[#FF8C00] transition-colors text-sm font-medium">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 2. Blog Links (Single Vertical Column) */}
+          <div>
+            <h4 className="text-gray-900 font-bold mb-6 text-lg">Travel Guides</h4>
+            {/* CHANGED: Removed 'grid', added 'space-y-4' for vertical list */}
+            <ul className="space-y-4">
+              {defaultSections[1].links.map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="hover:text-[#FF8C00] transition-colors text-sm font-medium flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF8C00] opacity-50"></span>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 3. Legal Links */}
+          <div>
+            <h4 className="text-gray-900 font-bold mb-6 text-lg">Legal</h4>
+            <ul className="space-y-4">
+              {defaultSections[2].links.map((link, idx) => (
+                <li key={idx}>
+                  <Link href={link.href} className="hover:text-[#FF8C00] transition-colors text-sm font-medium">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* 4. Social Links (Vertical, Transparent BG) */}
+          <div>
+            <h4 className="text-gray-900 font-bold mb-6 text-lg">Follow Us</h4>
+            <ul className="space-y-4">
+              {defaultSocialLinks.map((social, idx) => (
+                <li key={idx}>
+                  <a 
+                    href={social.href} 
+                    // CHANGED: Removed bg-white/shadow/padding. Added flex alignment.
+                    className="flex items-center gap-3 text-gray-500 hover:text-[#FF8C00] transition-colors duration-300 group"
+                    aria-label={social.label}
+                  >
+                    <span className="group-hover:scale-110 transition-transform">
+                        {social.icon}
+                    </span>
+                    <span className="text-sm font-medium">{social.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      {/* --- BOTTOM SECTION: Disclaimer --- */}
+      <div className="bg-[#FF8C00] text-white">
+        <div className="container mx-auto px-6 py-6 lg:px-20 text-center">
+          <p className="text-xs md:text-sm leading-relaxed opacity-95 max-w-4xl mx-auto font-medium">
+            DISCLAIMER: Our website provides general information about flights and travel. While we have Professional duties to keep our content accurate and helpful, we cannot guarantee that all information is always complete or up to date. We are not legally responsible for any issues, losses, or decisions that result from using the information on our site.
+          </p>
+          <div className="mt-4 pt-4 border-t border-white/20 flex flex-col md:flex-row justify-between items-center text-xs opacity-80">
+            <p>© 2025 SkyFlyWithUs. All rights reserved.</p>
+            <p className="mt-2 md:mt-0">Made for travelers, by travelers.</p>
+          </div>
+        </div>
+      </div>
+
+    </footer>
   );
-};
+}

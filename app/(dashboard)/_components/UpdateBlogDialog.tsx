@@ -18,26 +18,26 @@ import { RichTextEditor } from "./rich_text_editor";
 
 // --- HARDCODED CATEGORIES (Added) ---
 const blogCategories = [
-  { name: "Cancellation and Refund", slug: "cancellation-and-refund" },
-  { name: "Change Flight", slug: "change-flight" },
-  { name: "Compensation", slug: "compensation" },
-  { name: "Seat Upgrade", slug: "seat-upgrade" },
-  { name: "Voucher", slug: "voucher" },
-  { name: "Lost and Found", slug: "lost-and-found" },
-  { name: "Check In", slug: "check-in" },
-  { name: "Airport", slug: "airport" },
+    { name: "Cancellation and Refund", slug: "cancellation-and-refund" },
+    { name: "Change Flight", slug: "change-flight" },
+    { name: "Compensation", slug: "compensation" },
+    { name: "Seat Upgrade", slug: "seat-upgrade" },
+    { name: "Voucher", slug: "voucher" },
+    { name: "Lost and Found", slug: "lost-and-found" },
+    { name: "Check In", slug: "check-in" },
+    { name: "Airport", slug: "airport" },
 ];
 // ------------------------------------
 
 // Helper function to create a slug
 function slugify(text: string) {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-');
+    return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w\-]+/g, '')
+        .replace(/\-\-+/g, '-');
 }
 
 const categoryOptions = blogCategories.map(cat => ({ label: cat.name, value: cat.name }));
@@ -51,6 +51,7 @@ interface BlogData {
     content: string;
     image: string; // Current image URL
     metaTitle: string;
+    focusKeyword?: string;
     metaDesc: string;
     metaKeywords: string;
     author: { name: string };
@@ -65,7 +66,7 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [imageSourceType, setImageSourceType] = useState(blog.image && blog.image.startsWith('http') ? "url" : "upload"); 
+    const [imageSourceType, setImageSourceType] = useState(blog.image && blog.image.startsWith('http') ? "url" : "upload");
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [isSlugManuallyEdited, setIsSlugManuallyEdited] = useState(false);
 
@@ -78,7 +79,10 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
         formState: { errors },
         reset,
     } = useForm<BlogData>({
-        defaultValues: blog,
+        defaultValues: {
+            ...blog,
+            focusKeyword: blog.focusKeyword || ""
+        },
     });
 
     // --- Slug Generation Logic ---
@@ -111,7 +115,7 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
             toast.warning("No file selected.");
         }
     };
-    
+
     const onSubmit = async (data: BlogData) => {
         setLoading(true);
         toast.loading(`Updating ${data.title}...`, { id: 'update-status' });
@@ -134,9 +138,9 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
                     const errorData = await uploadResponse.json();
                     throw new Error(errorData.error || "Upload failed.");
                 }
-                
+
                 const uploadData = await uploadResponse.json();
-                finalImageUrl = uploadData.imageUrl; 
+                finalImageUrl = uploadData.imageUrl;
                 toast.success("New image uploaded!", { id: 'image-upload' });
 
             } catch (error: any) {
@@ -145,7 +149,7 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
                 return;
             }
         }
-        
+
         // 2. Final URL check and submission
         if (!finalImageUrl) {
             toast.error("Missing Image", { description: "Please provide an image URL or upload a file." });
@@ -155,8 +159,8 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
 
         try {
             // Send PATCH request to the dynamic route /api/blogs/[id]
-            const response = await fetch(`/api/blogs/${blog.slug}`, { 
-                method: 'PATCH', 
+            const response = await fetch(`/api/blogs/${blog.slug}`, {
+                method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...data, image: finalImageUrl }), // Use final URL
             });
@@ -166,17 +170,17 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
                 throw new Error(errorData.error || "Failed to update post.");
             }
 
-            toast.success("Post Updated", { 
+            toast.success("Post Updated", {
                 description: `Changes to "${data.title}" saved successfully.`,
-                id: 'update-status' 
+                id: 'update-status'
             });
-            setOpen(false); 
+            setOpen(false);
             router.refresh();
 
         } catch (error: any) {
-            toast.error("Update Failed", { 
+            toast.error("Update Failed", {
                 description: error.message,
-                id: 'update-status' 
+                id: 'update-status'
             });
         } finally {
             setLoading(false);
@@ -207,50 +211,50 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
                     {/* Slug */}
                     <div className="space-y-2">
                         <Label htmlFor="slug">Blog URL (Slug)</Label>
-                        <Input 
-                            id="slug" 
+                        <Input
+                            id="slug"
                             {...register("slug", { required: "Slug is required" })}
                             onInput={() => setIsSlugManuallyEdited(true)}
                         />
                         {errors.slug && <p className="text-sm text-red-500">{errors.slug.message}</p>}
                     </div>
-                    
+
                     {/* Category */}
                     <div className="space-y-2">
-                      <Label htmlFor="categories">Categories</Label>
-                      <Controller
-                        name="categories"
-                        control={control}
-                        rules={{ required: "At least one category is required" }}
-                        render={({ field }) => (
-                          <MultiSelect 
-                            options={categoryOptions}
-                            selected={field.value || []} // Ensure array
-                            onChange={field.onChange}
-                          />
-                        )}
-                      />
-                      {errors.categories && <p className="text-sm text-red-500">{errors.categories.message}</p>}
+                        <Label htmlFor="categories">Categories</Label>
+                        <Controller
+                            name="categories"
+                            control={control}
+                            rules={{ required: "At least one category is required" }}
+                            render={({ field }) => (
+                                <MultiSelect
+                                    options={categoryOptions}
+                                    selected={field.value || []} // Ensure array
+                                    onChange={field.onChange}
+                                />
+                            )}
+                        />
+                        {errors.categories && <p className="text-sm text-red-500">{errors.categories.message}</p>}
                     </div>
 
                     {/* Content (Tiptap) */}
                     <div className="space-y-2">
-                      <Label>Content</Label>
-                      <Controller
-                        name="content"
-                        control={control}
-                        rules={{ required: "Content is required" }}
-                        render={({ field }) => (
-                          <RichTextEditor
-                            value={field.value}
-                            onChange={field.onChange}
-                            onBlur={field.onBlur}
-                          />
-                        )}
-                      />
-                      {errors.content && <p className="text-sm text-red-500">{errors.content.message}</p>}
+                        <Label>Content</Label>
+                        <Controller
+                            name="content"
+                            control={control}
+                            rules={{ required: "Content is required" }}
+                            render={({ field }) => (
+                                <RichTextEditor
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                    onBlur={field.onBlur}
+                                />
+                            )}
+                        />
+                        {errors.content && <p className="text-sm text-red-500">{errors.content.message}</p>}
                     </div>
-                    
+
                     {/* --- Image Configuration --- */}
                     <div className="space-y-2 border-t pt-4">
                         <Label>Featured Image (Current Image: {blog.image ? "Available" : "None"})</Label>
@@ -296,6 +300,15 @@ export function UpdateBlogDialog({ blog }: UpdateBlogDialogProps) {
                     {/* --- SEO Section --- */}
                     <div className="space-y-4 pt-4 border-t dark:border-gray-700">
                         <h3 className="text-lg font-medium">SEO Settings</h3>
+                        <div className="space-y-2">
+                            <Label htmlFor="focusKeyword" className="text-[#FF8C00]">Focus Keyword</Label>
+                            <Input
+                                id="focusKeyword"
+                                {...register("focusKeyword")}
+                                placeholder="e.g. flight refund"
+                            />
+                            <p className="text-xs text-muted-foreground">Used for SEO analysis scoring.</p>
+                        </div>
                         <div className="space-y-2">
                             <Label htmlFor="metaTitle">Meta Title</Label>
                             <Input id="metaTitle" {...register("metaTitle", { required: "Meta Title is required" })} />

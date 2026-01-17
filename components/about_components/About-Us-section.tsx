@@ -30,7 +30,7 @@ export function AboutUsSection() {
             </div>
 
             {/* Floating Experience Badge */}
-            <div className="absolute -bottom-6 -right-6 md:bottom-10 md:-left-10 md:right-auto bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-xl max-w-[200px] border border-gray-100 dark:border-gray-700 hidden md:block">
+            <div className="absolute -bottom-6 -right-6 md:bottom-10 md:-left-10 md:right-auto bg-white dark:bg-gray-800 p-6 rounded-2xl max-w-[200px] border border-gray-200 dark:border-gray-700 hidden md:block">
               <p className="text-4xl font-bold text-[#FF8C00]">10+</p>
               <p className="text-sm text-gray-600 dark:text-gray-300 font-medium mt-1">
                 Years of Finding The Best Deals
@@ -72,11 +72,11 @@ export function AboutUsSection() {
 
             {/* Stats Cards Row */}
             <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
+                <div className="p-4 rounded-xl bg-white border border-gray-200">
                     <h3 className="text-3xl font-bold text-[#FF8C00] mb-1">50K+</h3>
                     <p className="text-xs text-gray-500 font-medium uppercase">Happy Travelers</p>
                 </div>
-                <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm">
+                <div className="p-4 rounded-xl bg-white border border-gray-200">
                     <h3 className="text-3xl font-bold text-[#FF8C00] mb-1">100%</h3>
                     <p className="text-xs text-gray-500 font-medium uppercase">Free Advice</p>
                 </div>

@@ -53,7 +53,7 @@ export function MeetTheTeam() {
             <div
               key={member.name}
               // FIX 3: White background for cards with shadow and border
-              className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center border border-gray-200 "
             >
               {/* Member Image */}
               <div className="relative w-32 h-32 mx-auto mb-6">

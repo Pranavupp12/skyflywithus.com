@@ -8,9 +8,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    // We remove <html>, <body>, and SessionProvider.
-    // We just return the layout for the main site.
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#FFF5EB]/50">
       <SiteHeader /> 
       <main className="flex-grow ">
         {children}

@@ -48,6 +48,7 @@ model Blog {
   categories    String[]  
   content       String
   image         String
+  focusKeyword  String   @default("")
   metaTitle     String
   metaDesc      String
   metaKeywords  String

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import Image from "next/image"; // Import Image component
+import Image from "next/image"; 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -50,8 +50,6 @@ export function BlogForm() {
   const [imageSourceType, setImageSourceType] = useState("url");
   const [isSlugManuallyEdited, setIsSlugManuallyEdited] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  
-  // NEW: State for showing the image preview
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const {
@@ -66,11 +64,8 @@ export function BlogForm() {
 
   const watchedValues = watch(); 
   const titleValue = watch("title");
-  
-  // Watch the image URL input to update preview live
   const imageUrlValue = watch("image");
 
-  // Update preview when URL input changes (only for "url" mode)
   useEffect(() => {
     if (imageSourceType === "url" && imageUrlValue) {
       setPreviewUrl(imageUrlValue);
@@ -89,12 +84,10 @@ export function BlogForm() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] || null;
     setImageFile(file);
-    
     if (file) {
-        // Create a fake local URL just for previewing
         const objectUrl = URL.createObjectURL(file);
         setPreviewUrl(objectUrl);
-        setValue("image", "", { shouldValidate: true }); // Clear URL field to avoid conflicts
+        setValue("image", "", { shouldValidate: true }); 
     } else {
         setPreviewUrl(null);
     }
@@ -106,9 +99,9 @@ export function BlogForm() {
     
     let finalImageUrl = data.image; 
 
-    // --- UPLOAD LOGIC (Happens on Save) ---
+    // --- UPLOAD LOGIC ---
     if (imageSourceType === "upload" && imageFile) {
-        toast.loading(`Uploading image: ${imageFile.name}...`, { id: 'blog-submit' }); // Update toast
+        toast.loading(`Uploading image: ${imageFile.name}...`, { id: 'blog-submit' });
         try {
             const formData = new FormData();
             formData.append('file', imageFile);
@@ -133,12 +126,13 @@ export function BlogForm() {
     }
 
     try {
-      const { focusKeyword, ...submissionData } = data; 
+      // 👇 CHANGED: Removed the line that stripped 'focusKeyword'. 
+      // We now send 'data' directly so focusKeyword is saved.
 
       const response = await fetch("/api/blogs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...submissionData, image: finalImageUrl }), 
+        body: JSON.stringify({ ...data, image: finalImageUrl }), // 'data' includes focusKeyword
       });
 
       if (!response.ok) {
@@ -149,7 +143,7 @@ export function BlogForm() {
       toast.success("Blog post created successfully!", { id: 'blog-submit' });
       reset(); 
       setImageFile(null);
-      setPreviewUrl(null); // Clear preview
+      setPreviewUrl(null); 
       router.refresh(); 
 
     } catch (error: any) {
@@ -159,14 +153,12 @@ export function BlogForm() {
     }
   };
 
-
   return (
     <div className="rounded-lg border bg-white dark:bg-gray-800 dark:border-gray-700 shadow-md">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="p-6 space-y-6">
           <h2 className="text-2xl font-semibold">Create New Blog Post</h2>
           
-          {/* Title & Slug Inputs (Unchanged) */}
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input id="title" placeholder="Title" {...register("title", { required: "Title is required" })} />
@@ -210,10 +202,9 @@ export function BlogForm() {
            <div className="space-y-4 border p-4 rounded-md bg-gray-50 dark:bg-gray-900/50">
             <Label className="text-lg font-medium">Featured Image</Label>
             
-            {/* Image Source Toggle */}
             <RadioGroup defaultValue="url" className="flex gap-4 mb-4" onValueChange={(val) => {
                 setImageSourceType(val);
-                setPreviewUrl(null); // Clear preview on switch
+                setPreviewUrl(null); 
             }}>
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="url" id="r-url" />
@@ -225,7 +216,6 @@ export function BlogForm() {
               </div>
             </RadioGroup>
 
-            {/* Input Fields */}
             {imageSourceType === "url" ? (
                 <div className="space-y-2">
                     <Input id="image" placeholder="https://..." {...register("image")} />
@@ -238,7 +228,6 @@ export function BlogForm() {
                 </div>
             )}
 
-            {/* PREVIEW BOX */}
             {previewUrl && (
                 <div className="relative mt-4 w-full h-64 rounded-lg overflow-hidden border border-gray-200">
                     <Image 
@@ -253,16 +242,16 @@ export function BlogForm() {
                 </div>
             )}
           </div>
-          {/* ----------------------------- */}
 
-          {/* SEO Section (Unchanged) */}
+          {/* SEO Section */}
           <div className="pt-6 border-t dark:border-gray-700">
              <div className="grid gap-8 lg:grid-cols-2">
                 <div className="space-y-4">
                     <h3 className="text-lg font-medium">SEO Metadata</h3>
                     <div className="space-y-2">
-                        <Label htmlFor="focusKeyword" className="text-[#FF8C00]">Focus Keyword (Analysis Only)</Label>
-                        <Input id="focusKeyword" {...register("focusKeyword")} />
+                        <Label htmlFor="focusKeyword" className="text-[#FF8C00]">Focus Keyword</Label>
+                        <Input id="focusKeyword" {...register("focusKeyword")} placeholder="e.g. flight cancellation" />
+                        <p className="text-xs text-muted-foreground">This keyword will be saved for future SEO analysis.</p>
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="metaKeywords">Meta Keywords (Tags)</Label>

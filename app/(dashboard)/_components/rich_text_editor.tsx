@@ -38,7 +38,7 @@ const MenuBar = ({ editor, addImage }: { editor: Editor | null, addImage: () => 
   };
 
   return (
-    <div className="border rounded-t-md p-2 flex flex-wrap gap-2 sticky top-0 bg-background z-10 border-b-0 bg-white dark:bg-gray-800">
+    <div className="border rounded-t-md p-2 flex flex-wrap gap-2 sticky top-0 bg-background z-20 border-b bg-white dark:bg-gray-800">
       {/* --- Heading Buttons --- */}
       <Button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} variant={editor.isActive('heading', { level: 1 }) ? 'secondary' : 'outline'} size="sm">
         <Heading1 className="h-4 w-4" />

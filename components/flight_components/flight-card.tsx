@@ -1,14 +1,33 @@
-// components/ui/flight-card.tsx (Paste the provided code here)
 "use client";
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Plane } from "lucide-react";
+import { Plane, Clock, CalendarDays, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Define the props for the FlightCard component
+// --- HELPERS ---
+const formatTime = (dateString: string) => {
+    if (!dateString) return "--:--";
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+    }).format(date);
+};
+
+const formatDate = (dateString: string) => {
+    if (!dateString) return "--/--/----";
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat("en-GB", { 
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    }).format(date);
+};
+
 export interface FlightCardProps {
-    imageUrl: string;
+    imageUrl?: string; // Optional now, as we use CSS background
     airline: string;
     flightCode: string;
     flightClass: string;
@@ -20,14 +39,13 @@ export interface FlightCardProps {
     arrivalTime: string;
     duration: string;
     className?: string;
-    price: number; // Add price for display
+    price: number;
 }
 
-// Main component definition
 export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
     (
         {
-            imageUrl,
+            imageUrl, // Not used in background anymore, but kept for interface compatibility
             airline,
             flightCode,
             flightClass,
@@ -38,102 +56,108 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
             arrivalCity,
             arrivalTime,
             duration,
-            price, // Destructure price
+            price,
             className,
         },
         ref
     ) => {
-        // Animation variants for the container and its children
-        const cardVariants = {
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-                opacity: 1,
-                y: 0,
-                transition: {
-                    duration: 0.5,
-                    when: "beforeChildren",
-                    staggerChildren: 0.1,
-                },
-            },
-        };
-
-        const itemVariants = {
-            hidden: { opacity: 0, y: 10 },
-            visible: { opacity: 1, y: 0 },
-        };
+        
+        const depTimeFormatted = formatTime(departureTime);
+        const depDateFormatted = formatDate(departureTime);
+        const arrTimeFormatted = formatTime(arrivalTime);
 
         return (
             <motion.div
                 ref={ref}
                 className={cn(
-                    "max-w-sm w-full font-sans rounded-2xl overflow-hidden shadow-lg bg-card border border-border",
+                    "group relative w-full max-w-sm font-sans rounded-3xl bg-white border border-gray-200 overflow-hidden flex flex-col justify-between",
                     className
                 )}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover={{ scale: 1.03, transition: { duration: 0.3 } }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -5 }}
             >
-                {/* Price Overlay (New Addition) */}
-                <div className="relative h-40">
-                    <img
-                        src={imageUrl}
-                        alt="View from airplane window"
-                        className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-0 right-0 p-3 bg-[#FF8C00] rounded-bl-xl shadow-md">
-                        <span className="text-white text-md sm:text-xl font-bold">${price}</span>
+                {/* 1. Header: Solid Orange Background */}
+                <div className="relative h-28 w-full overflow-hidden bg-[#FF8C00]">
+                    
+                    {/* Decorative Watermark Icon (Adds texture) */}
+                    <Plane className="absolute -right-6 -bottom-12 w-48 h-48 text-white/10 rotate-[-15deg] pointer-events-none" />
+
+                    {/* Airline Info */}
+                    <div className="absolute top-6 left-6 z-20 flex flex-col text-white">
+                        <span className="font-bold text-2xl tracking-tight">{airline}</span>
+                        <div className="flex items-center gap-2 mt-1.5">
+                             <span className="text-[10px] font-bold uppercase tracking-wider bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/10">
+                                {flightClass}
+                             </span>
+                             <span className="text-xs opacity-90 font-medium">
+                                • {flightCode}
+                             </span>
+                        </div>
                     </div>
                 </div>
 
-                {/* Flight Details Container */}
-                <div className="p-6 pt-4">
-                    {/* Main Flight Route */}
-                    <motion.div
-                        variants={itemVariants}
-                        className="flex items-center justify-between"
-                    >
-                        <div className="text-left">
-                            <p className=" text-xs sm:text-sm text-muted-foreground">{departureTime}</p>
-                            <p className="text-2xl sm:text-4xl font-bold text-card-foreground">
-                                {departureCode}
-                            </p>
-                            <p className="text-xs text-muted-foreground">{departureCity}</p>
+                {/* 2. Main Flight Info */}
+                <div className="px-6 pt-6 pb-2">
+                    <div className="flex items-center justify-between w-full">
+                        
+                        {/* DEPARTURE */}
+                        <div className="flex flex-col text-left min-w-[80px]">
+                            <span className="text-3xl font-bold text-gray-900 leading-none">{departureCode}</span>
+                            <span className="text-lg font-bold text-[#FF8C00] mt-1">{depTimeFormatted}</span>
+                            <span className="text-xs text-gray-400 mt-1 truncate max-w-[100px] font-medium">{departureCity}</span>
                         </div>
 
-                        <div className="text-center">
-                            <p className=" text-xs sm:text-sm font-medium text-muted-foreground">{flightCode}</p>
-                            <div className="flex items-center gap-2 my-1">
-                                <div className="h-px w-8 bg-border" />
-                                <Plane className="h-4 w-4 text-muted-foreground" />
+                        {/* VISUAL PATH */}
+                        <div className="flex flex-col items-center flex-1 px-2">
+                            <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1">
+                                {duration}
+                            </span>
+                            <div className="relative w-full flex items-center justify-center">
+                                {/* Dotted Line */}
+                                <div className="absolute w-full h-px border-t-2 border-dotted border-gray-300"></div>
+                                {/* Plane Icon */}
+                                <div className="z-10 bg-white p-1.5 rounded-full border border-gray-100 shadow-sm transform rotate-90">
+                                    <Plane className="w-3.5 h-3.5 text-[#FF8C00]" />
+                                </div>
                             </div>
-                            <p className="text-xs font-medium text-muted-foreground">{duration}</p>
+                            <span className="text-[10px] text-green-600 font-bold mt-1 uppercase tracking-wider bg-green-50 px-2 py-0.5 rounded-full">
+                                Direct
+                            </span>
                         </div>
 
-                        <div className="text-right">
-                            <p className="text-xs sm:text-sm text-muted-foreground">{arrivalTime}</p>
-                            <p className="text-2xl sm:text-4xl font-bold text-card-foreground">
-                                {arrivalCode}
-                            </p>
-                            <p className="text-xs text-muted-foreground">{arrivalCity}</p>
+                        {/* ARRIVAL */}
+                        <div className="flex flex-col text-right min-w-[80px]">
+                            <span className="text-3xl font-bold text-gray-900 leading-none">{arrivalCode}</span>
+                            <span className="text-lg font-bold text-[#FF8C00] mt-1">{arrTimeFormatted}</span>
+                            <span className="text-xs text-gray-400 mt-1 truncate max-w-[100px] font-medium">{arrivalCity}</span>
                         </div>
-                    </motion.div>
+                    </div>
+                </div>
 
-                    {/* Divider */}
-                    <motion.div
-                        variants={itemVariants}
-                        className="border-t border-dashed border-border my-5"
-                    />
+                {/* 3. Footer: Date & Price */}
+                <div className="px-6 pb-6 pt-2 mt-auto">
+                    {/* Dashed Separator */}
+                    <div className="border-t border-dashed border-gray-200 mb-4"></div>
+                    
+                    <div className="flex items-center justify-between">
+                        {/* Date */}
+                        <div className="flex items-center gap-2 text-gray-500 bg-gray-50 px-3 py-2 rounded-xl border border-gray-100">
+                            <CalendarDays className="w-4 h-4 text-[#FF8C00]" />
+                            <span className="text-xs font-bold uppercase tracking-wide">{depDateFormatted}</span>
+                        </div>
 
-                    {/* Additional Details */}
-                    <motion.div
-                        variants={itemVariants}
-                        className="flex text-sm sm:text-lg justify-between text-center"
-                    >
-                        <InfoItem label="Airline" value={airline} />
-                        <InfoItem label="Flight Code" value={flightCode} />
-                        <InfoItem label="Class" value={flightClass} />
-                    </motion.div>
+                        {/* Price & Action */}
+                        <div className="flex items-center gap-4">
+                             <div className="text-right">
+                                <span className="block text-[10px] text-gray-400 font-bold uppercase tracking-wider">Total</span>
+                                <span className="text-2xl font-black text-gray-900 leading-none">${price}</span>
+                             </div>
+                             <button className="bg-[#FF8C00] hover:bg-black text-white p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 group-hover:bg-black">
+                                <ArrowRight className="w-5 h-5" />
+                             </button>
+                        </div>
+                    </div>
                 </div>
             </motion.div>
         );
@@ -141,11 +165,3 @@ export const FlightCard = React.forwardRef<HTMLDivElement, FlightCardProps>(
 );
 
 FlightCard.displayName = "FlightCard";
-
-// Helper component for bottom info items
-const InfoItem = ({ label, value }: { label: string; value: string }) => (
-    <div className="flex flex-col items-center">
-        <span className="text-xs text-muted-foreground">{label}</span>
-        <span className="font-semibold text-card-foreground">{value}</span>
-    </div>
-);

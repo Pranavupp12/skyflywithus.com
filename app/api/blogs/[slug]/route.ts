@@ -51,11 +51,11 @@ export async function GET(
       title: blog.title,
       slug: blog.slug,
       
-      // FIX: Handle Array -> Single string for frontend display
+      // Handle Array -> Single string for frontend display
       category: blog.categories[0] || "Uncategorized", 
       categories: blog.categories, // Pass the full array if needed
       
-      // FIX: Generate slug from the first category
+      // Generate slug from the first category
       categorySlug: (blog.categories[0] || "").toLowerCase().replace(/\s+/g, "-"),
       
       description: blog.metaDesc,
@@ -67,6 +67,10 @@ export async function GET(
         year: "numeric",
       }),
       content: blog.content,
+      
+      // 👇 NEW: Return focusKeyword to frontend (default empty string)
+      focusKeyword: blog.focusKeyword || "",
+
       metaTitle: blog.metaTitle,
       metaDesc: blog.metaDesc,
       metaKeywords: blog.metaKeywords,
@@ -122,10 +126,13 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ slug: 
       data: {
         title: data.title,
         slug: data.slug,
-        // FIX: Save 'categories' array instead of 'category' string
         categories: data.categories, 
         content: data.content,
         image: data.image,
+        
+        // 👇 NEW: Allow updating the focusKeyword
+        focusKeyword: data.focusKeyword,
+
         metaTitle: data.metaTitle,
         metaDesc: data.metaDesc,
         metaKeywords: data.metaKeywords,

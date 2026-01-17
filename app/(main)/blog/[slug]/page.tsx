@@ -7,6 +7,9 @@ import { ArticleFaqs } from "@/components/blog_components/article-faq";
 import { Metadata } from "next";
 import { CalendarDays, Clock, ArrowLeft } from "lucide-react";
 
+// 1. Schema Import
+import ArticleSchema from "@/components/seo/article-schema"; 
+
 // Define an extended interface
 interface SingleBlogArticle extends Article {
   categories?: string[];
@@ -44,11 +47,18 @@ async function getRelatedBlogs(slug: string): Promise<any[]> {
   }
 }
 
-// --- Metadata ---
+// --- UPDATED: Metadata Generation with Safe Image URL ---
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await getSingleBlog(slug);
+  
   if (!post) return { title: "Page Not Found", description: "Article not found." };
+
+  // SAFETY CHECK: Ensure Image URL is absolute for WhatsApp/Facebook
+  const siteUrl = process.env.NEXTAUTH_URL || "https://skyflywithus.com";
+  const fullImageUrl = post.imageUrl.startsWith("http") 
+    ? post.imageUrl 
+    : `${siteUrl}${post.imageUrl}`;
 
   return {
     title: post.metaTitle,
@@ -57,9 +67,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: post.metaTitle,
       description: post.metaDesc,
-      url: `${process.env.NEXTAUTH_URL}/blog/articles/${post.slug}`,
-      images: [post.imageUrl],
+      url: `${siteUrl}/blog/articles/${post.slug}`,
+      siteName: 'SkyFlyWithUs',
+      images: [
+        {
+          url: fullImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        }
+      ],
+      type: 'article', // More specific than 'website'
     },
+    twitter: {
+        card: 'summary_large_image',
+        title: post.metaTitle,
+        description: post.metaDesc,
+        images: [fullImageUrl],
+    }
   };
 }
 
@@ -79,6 +104,9 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
   return (
     <main className="min-h-screen bg-[#FFF5EB]/50 py-24">
       
+      {/* 2. Schema Injection for Google */}
+      <ArticleSchema article={post} />
+
       {/* Container to align content */}
       <div className="container mx-auto px-6 mt-10">
         
@@ -96,15 +124,17 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
             
             {/* Article Header */}
             <div className="mb-8">
-                {/* Category Badges */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                
+                {/* Category UI */}
+                <div className="flex flex-wrap items-center mb-4 text-sm font-bold uppercase tracking-wider text-[#FF8C00]">
                     {displayCategories.map((cat, index) => (
-                    <span 
-                        key={index} 
-                        className="inline-flex items-center px-3 py-1 rounded-full bg-white border border-orange-100 text-xs font-bold uppercase tracking-wider text-[#FF8C00] shadow-sm"
-                    >
-                        {cat}
-                    </span>
+                        <div key={index} className="flex items-center">
+                            <span>{cat}</span>
+                            {/* Add pipe separator if it's not the last item */}
+                            {index < displayCategories.length - 1 && (
+                                <span className="mx-3 text-gray-300 font-light">|</span>
+                            )}
+                        </div>
                     ))}
                 </div>
 
@@ -132,9 +162,9 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
             </div>
 
             {/* Main Image */}
-            <div className="relative w-full h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-lg mb-10">
+            <div className="relative w-full h-[300px] md:h-[500px] border border-gray-200 rounded-2xl overflow-hidden mb-10">
               <Image
-                src={post.imageUrl || "/images/airplane-wing2.jpg"} // Added fallback for main image too just in case
+                src={post.imageUrl || "/images/airplane-wing2.jpg"} 
                 alt={post.title}
                 fill
                 className="object-cover"
@@ -145,14 +175,13 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
             </div>
 
             {/* Blog Content */}
-            <article className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-a:text-[#FF8C00] max-w-none bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 mb-10">
+            <article className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-600 prose-a:text-[#FF8C00] max-w-none bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl border border-gray-200 dark:border-gray-700 mb-10">
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
             </article>
 
             {/* FAQ Section */}
             {post.faqs && post.faqs.length > 0 && (
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-                  <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Frequently Asked Questions</h3>
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl border border-gray-200 dark:border-gray-700">
                   <ArticleFaqs questions={post.faqs} />
               </div>
             )}
@@ -164,7 +193,7 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
             <div className="sticky top-24 space-y-4">
                 
                 {/* Related Posts Card */}
-                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-gray-200 dark:border-gray-700">
                     <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-6 border-l-4 border-[#FF8C00] pl-3">
                     More in {post.category}
                     </h2>
@@ -175,9 +204,8 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
                             <div className="flex gap-4 items-start">
                                 {/* Thumbnail */}
                                 <div className="relative w-20 h-20 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                                    {/* FIX: Added fallback logic (||) to prevent empty src error */}
                                     <Image 
-                                        src={relatedPost.image || "/images/airplane-wing2.jpg"} 
+                                        src={relatedPost.imageUrl || relatedPost.image || "/images/airplane-wing2.jpg"} 
                                         alt={relatedPost.title} 
                                         fill 
                                         className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -198,16 +226,6 @@ export default async function IndividualBlogPage({ params }: { params: Promise<{
                     </div>
                 </div>
 
-                {/* Optional: Newsletter / Promo Box */}
-                <div className="bg-[#FF8C00] p-8 rounded-2xl text-white text-center shadow-lg">
-                    <h3 className="text-xl font-bold mb-2">Want cheaper flights?</h3>
-                    <p className="text-white/90 text-sm mb-6">Join 10,000+ travelers getting our weekly deal alerts.</p>
-                    <Link href="/contacts">
-                        <button className="bg-white text-[#FF8C00] font-bold py-3 px-6 rounded-full w-full hover:bg-orange-50 transition-colors shadow-md">
-                            Get Alerts
-                        </button>
-                    </Link>
-                </div>
             </div>
           </aside>
         </div>

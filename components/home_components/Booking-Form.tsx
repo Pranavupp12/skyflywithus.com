@@ -144,25 +144,25 @@ export function BookingForm() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center mb-10 mt-10">
 
             {/* Left Column: Text */}
-            <div className="text-center sm:text-left">
+            <div className="text-center sm:text-left pl-10">
               <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-gray-900 leading-[1.1] mb-6">
                 Your Dream Trip <br />
                 Starts with a <span className="text-[#FF8C00]">Smart Search</span>
               </h1>
-              <p className="text-lg text-gray-600 font-normal max-w-lg leading-relaxed">
+              <p className="text-lg text-gray-600 font-normal max-w-xl leading-relaxed">
                 We&apos;ve streamlined the booking process. Enter your details below to compare the world's best airlines and lock in your perfect itinerary in seconds.
               </p>
             </div>
 
             {/* Right Column: Image */}
-            <div className="relative w-full flex justify-center lg:justify-end">
+            <div className="relative w-full hidden md:block flex justify-center lg:justify-end">
               {/* Adjust width/height as needed based on your actual image dimensions */}
-              <div className="relative w-[500px] h-[370px]">
+              <div className="relative w-[600px] h-[500px]">
                 <Image
-                  src="/images/booking-img.png"
+                  src="/images/booking-banner.png"
                   alt="Booking Process"
                   fill
-                  className="object-contain drop-shadow-xl " // Added drop-shadow for better blending
+                  className="object-cover drop-shadow-xl " // Added drop-shadow for better blending
                   priority
                 />
               </div>
@@ -296,7 +296,7 @@ export function BookingForm() {
           {features.map((feature, idx) => (
             <div
               key={idx}
-              className="group bg-white p-8 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col items-center text-center relative z-10"
+              className="group bg-white p-8 rounded-3xl border border-gray-200 flex flex-col items-center text-center relative z-10"
             >
               {/* Icon Wrapper */}
               <div className="flex-shrink-0 mb-6 p-4 bg-[#FF8C00] rounded-full shadow-lg shadow-orange-200 group-hover:scale-110 transition-transform duration-300">
